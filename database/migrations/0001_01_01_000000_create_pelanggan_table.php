@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id()->length(4);
             $table->foreignId('jenis_kelamin_id');
             $table->string('nama_pelanggan', length: 50);
-            $table->string('username_pelanggan', length: 50)->unique();
-            $table->string('password_pelanggan');
-            $table->text('alamat_pelanggan');
+            $table->string('username', length: 50)->unique();
+            $table->string('password');
+            $table->text('alamat');
             $table->rememberToken();
             $table->timestamps();
         });
