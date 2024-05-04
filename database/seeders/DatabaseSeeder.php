@@ -27,9 +27,9 @@ class DatabaseSeeder extends Seeder
         Pelanggan::create([
             'jenis_kelamin_id' => 1,
             'nama_pelanggan' => 'Ronggo Widjoyo',
-            'username_pelanggan' => 'ronggo',
-            'password_pelanggan' => bcrypt('12345'),
-            'alamat_pelanggan' => 'Brondong, Lamongan'
+            'username' => 'ronggo',
+            'password' => bcrypt('12345'),
+            'alamat' => 'Brondong, Lamongan'
         ]);
     }
 }
