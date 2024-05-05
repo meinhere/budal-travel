@@ -1,26 +1,74 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
-    <div class="mt-14 md:mt-20 w-full md:w-3/4 md:h-3/5 text-secondary-base">
-        <form action="/search" class="rounded-r-xl shadow-lg relative justify-between bg-white flex rounded-xl">
-          @method('GET')
-          <div class="flex flex-col items-start w-full md:w-1/2 px-5 md:px-12 py-5">
-            <label for="kota" class="text-slate-400">DAERAH</label>
-            <input list="list-kota" id="kota" name="kota" class="border-0 px-0 focus:ring-0 border-b-2 md:mt-2 border-secondary-base outline-none focus:border-primary-300 text-secondary-base w-full">
-  
-            <datalist id="list-kota">
-              <option value="Semarang, Jawa Tengah">
-              <option value="Lamongan, Jawa Timur">
-              <option value="Surabaya, Jawa Timur">
-              <option value="Malang, Jawa Timur">
-            </datalist>
-          </div>
-          <button type="submit" class="bg-secondary-base px-6 rounded-r-xl text-primary-base">
-            Cari dan Pesan Tiket
-            <svg class="w-8 h-8 text-primary-base inline-block" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4"/>
-            </svg>
-          </button>
-          
-        </form>
+    <x-slot:background>{{ $background }}</x-slot:background>
+    
+    <x-input-search />
+
+    <div class="text-base">
+      <div class="items-center hidden w-full gap-4 px-3 py-2 mx-auto mt-5 bg-white shadow-lg sm:flex md:w-3/4 md:h-3/5 text-secondary-base rounded-xl md:px-8">
+        <div class="basis-1/4">Bus</div>
+        <div class="text-center basis-1/5">Kecepatan Maks</div>
+        <div class="basis-1/6">Total Kursi</div>
+        <div class="text-center basis-1/6">Status</div>
+        <div class="text-center basis-1/6">Detail</div>
       </div>
+  
+      <div class="flex flex-wrap items-center w-full gap-4 px-3 mx-auto mt-5 bg-white shadow-lg md:w-3/4 md:h-3/5 text-secondary-base rounded-xl sm:flex-nowrap md:px-8 py-7">
+        <div class="text-2xl text-center basis-full sm:basis-1/4 sm:text-base sm:text-left">Jetbus 5 Adiputro Malang</div>
+        <div class="basis-full sm:basis-3/4">
+          <div class="flex justify-between">
+            <div class="text-center basis-1/3 sm:basis-full">127km/jam</div>
+            <div class="text-center basis-1/3 sm:basis-3/4 sm:text-left">60 Penumpang</div>
+            <div class="flex items-center justify-center basis-1/3 sm:basis-full">
+              <svg class="w-5 h-5 mr-1 text-lime-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm13.707-1.293a1 1 0 0 0-1.414-1.414L11 12.586l-1.793-1.793a1 1 0 0 0-1.414 1.414l2.5 2.5a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/>
+              </svg>
+              Tersedia
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center basis-full sm:basis-1/6">
+          <a href="#" class="px-5 py-3 text-sm font-medium rounded-md bg-primary-200 text-secondary-base">PESAN</a>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center w-full gap-4 px-3 mx-auto mt-5 bg-white shadow-lg md:w-3/4 md:h-3/5 text-secondary-base rounded-xl sm:flex-nowrap md:px-8 py-7">
+        <div class="text-2xl text-center basis-full sm:basis-1/4 sm:text-base sm:text-left">Jetbus 3+ Voyager by Adiputro Malang</div>
+        <div class="basis-full sm:basis-3/4">
+          <div class="flex justify-between">
+            <div class="text-center basis-1/3 sm:basis-full">116km/jam</div>
+            <div class="text-center basis-1/3 sm:basis-3/4 sm:text-left">55 Penumpang</div>
+            <div class="flex items-center justify-center basis-1/3 sm:basis-full">
+              <svg class="w-5 h-5 mr-1 text-lime-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm13.707-1.293a1 1 0 0 0-1.414-1.414L11 12.586l-1.793-1.793a1 1 0 0 0-1.414 1.414l2.5 2.5a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/>
+              </svg>
+              Tersedia
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center basis-full sm:basis-1/6">
+          <a href="#" class="px-5 py-3 text-sm font-medium rounded-md bg-primary-200 text-secondary-base">PESAN</a>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center w-full gap-4 px-3 mx-auto mt-5 bg-white shadow-lg md:w-3/4 md:h-3/5 text-secondary-base rounded-xl sm:flex-nowrap md:px-8 py-7">
+        <div class="text-2xl text-center basis-full sm:basis-1/4 sm:text-base sm:text-left">Jetbus 4+ Voyager by Adiputro Malang</div>
+        <div class="basis-full sm:basis-3/4">
+          <div class="flex justify-between">
+            <div class="text-center basis-1/3 sm:basis-full">112km/jam</div>
+            <div class="text-center basis-1/3 sm:basis-3/4 sm:text-left">65 Penumpang</div>
+            <div class="flex items-center justify-center basis-1/3 sm:basis-full">
+              <svg class="w-5 h-5 mr-1 text-red-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm7.707-3.707a1 1 0 0 0-1.414 1.414L10.586 12l-2.293 2.293a1 1 0 1 0 1.414 1.414L12 13.414l2.293 2.293a1 1 0 0 0 1.414-1.414L13.414 12l2.293-2.293a1 1 0 0 0-1.414-1.414L12 10.586 9.707 8.293Z" clip-rule="evenodd"/>
+              </svg>
+              Habis 
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center basis-full sm:basis-1/6">
+          <a class="px-5 py-3 text-sm font-medium rounded-md bg-grey-100 text-secondary-base">PESAN</a>
+        </div>
+      </div>
+      
+    </div>
 </x-layout>
