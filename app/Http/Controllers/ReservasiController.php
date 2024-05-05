@@ -10,15 +10,15 @@ class ReservasiController extends Controller
     public function index() {
         $data = [
             'title' => "Halaman Home",
+            'background' => '/img/bg/background-landing.jpg',
         ];
         return view('home', $data);
     }
-
+    
     public function search(Request $request) {
         $data = [
             'title' => "Halaman Search",
-            'kota' => $request->kota,
-            // 'wisata' => Wisata::find('kota_id', $request->kota)
+            'background' => '/img/bg/background-landing2.jpg',
         ];
         return view('search', $data);
     }

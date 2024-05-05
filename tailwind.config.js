@@ -20,7 +20,7 @@ export default {
                 "landing-page": "url('/public/img/bg/background-landing.jpg')",
                 "landing-page-2":
                     "url('/public/img/bg/background-landing2.jpg')",
-                "landing-detail-page":
+                "landing-page-detail":
                     "url('/public/img/bg/background-detail.jpg')",
             },
             colors: {
