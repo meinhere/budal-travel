@@ -7,6 +7,7 @@ use App\Http\Controllers\ReservasiController;
 
 Route::get('/', [ReservasiController::class, 'index'])->name('home');
 Route::get('/search/{kota}', [ReservasiController::class, 'search'])->name('search');
+Route::get('/order/{kota}', [ReservasiController::class, 'order'])->name('order');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
