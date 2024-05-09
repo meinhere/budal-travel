@@ -12,6 +12,9 @@ export default {
 
     theme: {
         extend: {
+            container: {
+                center: true,
+            },
             plugins: [require("flowbite/plugin")],
             fontFamily: {
                 sans: ["Poppins", ...defaultTheme.fontFamily.sans],
@@ -28,6 +31,7 @@ export default {
                 "primary-300": "#FF62BD",
                 "primary-200": "#FFAAD5",
                 "secondary-base": "#3C486B",
+                "secondary-100": "#D9DDEC",
                 "grey-100": "#EDEBEC",
             },
         },

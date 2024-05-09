@@ -22,4 +22,12 @@ class ReservasiController extends Controller
         ];
         return view('search', $data);
     }
+
+    public function order(Request $request) {
+        $data = [
+            'title' => "Halaman Order",
+            'background' => '/img/bg/background-detail.jpg',
+        ];
+        return view('order', $data);
+    }
 }

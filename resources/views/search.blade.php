@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="flex justify-center basis-full sm:basis-1/6">
-          <a href="#" class="px-5 py-3 text-sm font-medium rounded-md bg-primary-200 text-secondary-base">PESAN</a>
+          <a href="/order/1" class="px-5 py-3 text-sm font-medium rounded-md bg-primary-200 text-secondary-base">PESAN</a>
         </div>
       </div>
 
