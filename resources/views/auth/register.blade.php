@@ -1,72 +1,121 @@
 <x-guest-layout>
+    <x-slot:title>{{ $title }}</x-slot:title>
+    <x-slot:background>{{ $background }}</x-slot:background>
+    <!-- Session Status -->
+    <x-auth-session-status class="mb-4" :status="session('status')" />
+    
+    {{-- Logo --}}
+    <div class="flex justify-center pb-2">
+        <a href="/"><x-application-logo class="w-56" /></a>
+    </div>
+
+    {{-- Heading --}}
+    <div class="pb-7">
+        <h2 class="text-3xl font-semibold text-primary-200">Daftar</h2>
+        <p class="pt-2 text-xs tracking-wider text-grey-200 font-extralight">Daftar akun untuk menikmati fitur yang tersedia</p>
+    </div>
+
+    {{-- Form --}}
     <form method="POST" action="{{ route('register') }}">
         @csrf
-
-        <!-- Name -->
-        <div>
-            <x-input-label for="nama_pelanggan" :value="__('Nama Lengkap')" />
-            <x-text-input id="nama_pelanggan" class="block mt-1 w-full" type="text" name="nama_pelanggan" :value="old('nama_pelanggan')" autofocus />
-            <x-input-error :messages="$errors->get('nama_pelanggan')" class="mt-2" />
+        
+        {{-- Nama Lengkap --}}
+        <div class="flex flex-col gap-2 mb-4">
+          <div class="relative h-11">
+            <x-input-auth type="text" id="nama_pelanggan" name="nama_pelanggan" value="{{ old('nama_pelanggan') }}" />
+            <x-label-auth for="nama_pelanggan">Nama Lengkap</x-label-auth>
+          </div>
+          <x-input-error :messages="$errors->get('nama_pelanggan')" class="mb-3"></x-input-error>
         </div>
 
-        <!-- Username -->
-        <div class="mt-4">
-            <x-input-label for="username" :value="__('Username')" />
-            <x-text-input id="username" class="block mt-1 w-full" type="text" name="username" :value="old('username')" />
-            <x-input-error :messages="$errors->get('username')" class="mt-2" />
+        {{-- Username --}}
+        <div class="flex flex-col gap-2 mb-4">
+          <div class="relative h-11">
+            <x-input-auth type="text" id="username" name="username" value="{{ old('username') }}" />
+            <x-label-auth for="username">Username</x-label-auth>
+          </div>
+          <x-input-error :messages="$errors->get('username')" class="mb-3"></x-input-error>
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Konfirmasi Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        {{-- Jenis Kelamin --}}
+        <div class="flex flex-col gap-2 mb-4">
+          <div class="relative h-11">
+            <p class="pl-2 tracking-wide text-primary-base font-extralight">Jenis Kelamin</p>
+            <div class="flex justify-center gap-5 pt-1 text-sm tracking-wide text-primary-base font-extralight">
+              <div>
+                <input type="radio" name="jenis_kelamin_id" id="laki_laki" value="1" checked>
+                <label for="laki_laki">Laki-Laki</label>
+              </div>
+              <div>
+                <input type="radio" name="jenis_kelamin_id" id="perempuan" value="2">
+                <label for="perempuan">Perempuan</label>
+              </div>
+            </div>
+          </div>
+          <x-input-error :messages="$errors->get('username')" class="mb-3"></x-input-error>
         </div>
         
-        <!-- Jenis Kelamin -->
-        <div class="mt-4">
-            <x-input-label for="jenis_kelamin_id" :value="__('Jenis Kelamin')" />
-
-            <select name="jenis_kelamin_id" id="jenis_kelamin_id">
-                <option value="1">Laki-Laki</option>
-                <option value="2">Laki-Laki</option>
-            </select>
-
-            <x-input-error :messages="$errors->get('jenis_kelamin_id')" class="mt-2" />
+        {{-- Alamat --}}
+        <div class="flex flex-col gap-2 mb-4">
+          <div class="relative h-11">
+            <x-input-auth type="text" id="alamat" name="alamat" value="{{ old('alamat') }}" />
+            <x-label-auth for="alamat">Alamat</x-label-auth>
+          </div>
+          <x-input-error :messages="$errors->get('alamat')" class="mb-3"></x-input-error>
         </div>
 
-        <!-- Alamat -->
-        <div class="mt-4">
-            <x-input-label for="alamat" :value="__('Alamat')" />
+        {{-- No HP --}}
+        <div class="flex flex-col gap-2 mb-4">
+          <div class="relative h-11">
+            <x-input-auth type="text" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" />
+            <x-label-auth for="no_hp">No HP</x-label-auth>
+          </div>
+          <x-input-error :messages="$errors->get('no_hp')" class="mb-3"></x-input-error>
+        </div>
+        
+        {{-- Password --}}
+        <div class="flex flex-col gap-2 mb-4" x-data="{ show: false, val: '' }">
+          <div class="relative h-11">
+            <x-input-auth x-show="!show" type="password" id="password" name="password" x-model="val" />
+            <x-input-auth x-show="show" type="text" id="password" name="password" x-model="val" value="{{ old('password') }}" />
+            <x-label-auth for="password">Password</x-label-auth> 
 
-            <textarea name="alamat" id="alamat" cols="30" rows="10"></textarea>
+            <button type="button" @click="show = !show">
+              <x-bi-eye-fill x-show="show" class="absolute block w-6 h-6 top-3 right-4 text-primary-base hover:cursor-pointer"/>
+              <x-bi-eye-slash-fill x-show="!show" class="absolute block w-6 h-6 top-3 right-4 text-primary-base hover:cursor-pointer"/>
+            </button>
+          </div>
+          <x-input-error :messages="$errors->get('password')" class="mb-3"></x-input-error>
+        </div>
+        
+        {{-- Konfirmasi Password --}}
+        <div class="flex flex-col gap-2 mb-4" x-data="{ show: false, val: '' }">
+          <div class="relative h-11">
+            <x-input-auth x-show="!show" type="password" id="password_confirmation" name="password_confirmation" x-model="val" />
+            <x-input-auth x-show="show" type="text" id="password_confirmation" name="password_confirmation" x-model="val" />
+            <x-label-auth for="password_confirmation">Konfirmasi Password</x-label-auth>
 
-            <x-input-error :messages="$errors->get('alamat')" class="mt-2" />
+            <button type="button" @click="show = !show">
+              <x-bi-eye-fill x-show="show" class="absolute block w-6 h-6 top-3 right-4 text-primary-base hover:cursor-pointer"/>
+              <x-bi-eye-slash-fill x-show="!show" class="absolute block w-6 h-6 top-3 right-4 text-primary-base hover:cursor-pointer"/>
+            </button>
+          </div>
+          <x-input-error :messages="$errors->get('password_confirmation')" class="mb-3"></x-input-error>
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
+        <button
+          class="block w-full px-6 py-3 mt-6 text-xs tracking-wider text-center text-white align-middle bg-blue-500 rounded-lg "
+          type="submit"
+        >
+          Daftar
+        </button>
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
+        <p class="block mt-6 text-sm antialiased font-normal leading-relaxed text-center text-gray-500">
+          Sudah punya akun? 
+          <a class="underline transition-colors text-primary-base hover:text-primary-200"
+            href="/login">
+            Login
+          </a>
+        </p>
     </form>
 </x-guest-layout>

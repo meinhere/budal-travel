@@ -9,15 +9,15 @@
   <div class="max-w-6xl p-4 mx-auto sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <a href="/" class="flex-shrink-0">
-        <img class="w-17 h-17" src="{{ url('/img/logo.svg') }}" alt="Logo Budal Travel">
+        <x-application-logo class="w-28 h-28" />
       </a>
       <div class="block">
         <div class="flex items-center ml-4 md:ml-6">
           <div class="block">
               <div class="flex items-baseline ml-10 space-x-4">
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="#" class="px-5 py-3 rounded-md text-primary-base hover:bg-primary-base hover:text-secondary-base" aria-current="page">Login</a>
-                <a href="#" class="px-5 py-3 rounded-md bg-primary-base text-secondary-base">Daftar</a>
+                <a href="/login" class="px-5 py-3 rounded-md text-primary-base hover:bg-primary-base hover:text-secondary-base" aria-current="page">Login</a>
+                <a href="/register" class="px-5 py-3 rounded-md bg-primary-base text-secondary-base">Daftar</a>
               </div>
             </div>
         </div>

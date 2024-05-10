@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Reservasi;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReservasiController;
@@ -10,7 +9,7 @@ Route::get('/search/{kota}', [ReservasiController::class, 'search'])->name('sear
 Route::get('/order/{kota}', [ReservasiController::class, 'order'])->name('order');
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('layouts.dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
