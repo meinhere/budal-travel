@@ -16,7 +16,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('auth.login');
+        $data = [
+            'title' => "Halaman Login",
+            'background' => '/img/bg/background-landing.jpg',
+        ];
+        return view('auth.login', $data);
     }
 
     /**

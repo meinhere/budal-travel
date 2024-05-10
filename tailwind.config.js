@@ -33,6 +33,7 @@ export default {
                 "secondary-base": "#3C486B",
                 "secondary-100": "#D9DDEC",
                 "grey-100": "#EDEBEC",
+                "grey-200": "#C8C2C5",
             },
         },
     },

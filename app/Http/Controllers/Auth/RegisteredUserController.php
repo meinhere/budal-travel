@@ -19,7 +19,11 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $data = [
+            'title' => "Halaman Login",
+            'background' => '/img/bg/background-landing.jpg',
+        ];
+        return view('auth.register', $data);
     }
 
     /**
@@ -33,6 +37,7 @@ class RegisteredUserController extends Controller
             'jenis_kelamin_id' => 'required|exists:jenis_kelamin,id',
             'nama_pelanggan' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:pelanggan'],
+            'no_hp' => ['required', 'phone:ID,BE'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'alamat' => 'required',
         ]);
@@ -41,6 +46,7 @@ class RegisteredUserController extends Controller
             'jenis_kelamin_id' => $request->jenis_kelamin_id,
             'nama_pelanggan' => $request->nama_pelanggan,
             'username' => $request->username,
+            'no_hp' => $request->no_hp,
             'password' => Hash::make($request->password),
             'alamat' => $request->alamat,
         ]);

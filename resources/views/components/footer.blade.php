@@ -1,7 +1,7 @@
 <div class="w-full py-4 text-sm text-white h-3xl px-4xl pb-3xl bg-slate-600 md:text-xs">
     <div class="flex flex-wrap items-start justify-center max-w-6xl gap-10 px-4 mx-auto my-12 sm:px-6 lg:px-8">
         <div class="flex flex-col items-center order-4 w-full gap-4 sm:w-auto md:order-1">
-            <img class="w-26" src="{{ url('/img/logo.svg') }}" />
+            <x-application-logo />
             <p class="text-center">Copyright © BudalTravel 2024 All rights reserved</p>
         </div>
         <div class="flex flex-col items-center order-2 w-full gap-3 md:items-start sm:w-auto">
