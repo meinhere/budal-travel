@@ -16,9 +16,13 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        $data = [
+            'title' => "Edit Profile",
+            'background' => '/img/bg/background-landing.jpg',
             'user' => $request->user(),
-        ]);
+        ];
+
+        return view('profile.edit', $data);
     }
 
     /**
