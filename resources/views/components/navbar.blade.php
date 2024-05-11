@@ -11,6 +11,59 @@
       <a href="/" class="flex-shrink-0">
         <x-application-logo class="w-28 h-28" />
       </a>
+
+      @auth
+      {{-- Nav Links --}}
+      <div class="flex items-baseline ml-10 space-x-4">
+        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+        <a href="/" class="border-b-2 text-primary-base hover:border-primary-base {{ request()->is('/') || request()->is('search/*') || request()->is('order/*') || request()->is('profile')  ? 'border-primary-base' : 'border-transparent' }}" aria-current="page">Home</a>
+        <a href="/transaction" class="border-b-2 text-primary-base hover:border-primary-base {{ request()->is('/transaction') ? 'border-primary-base' : 'border-transparent' }}" aria-current="page">Riwayat Transaksi</a>
+      </div>
+
+      <!-- Settings Dropdown -->
+      <div class="hidden sm:flex sm:items-center sm:ms-6">
+        <x-dropdown align="right" width="48">
+            <x-slot name="trigger">
+                <button @click="isOpen = !isOpen" class="inline-flex items-center gap-2 transition duration-150 ease-in-outborder-transparent ">
+                    <x-carbon-user-avatar-filled class="w-12 h-12 text-primary-200" />
+                    <x-bi-chevron-down x-show="!isOpen" class="w-6 h-6 text-primary-base" />
+                    <x-bi-chevron-up x-show="isOpen" class="w-6 h-6 text-primary-base" />
+                </button>
+            </x-slot> 
+
+            
+            <x-slot name="content">
+                <div class="block w-full px-4 py-2 text-sm leading-5 text-gray-700 border-b border-gray-200 text-start">{{ auth()->user()->nama_pelanggan }}</div>
+
+                <x-dropdown-link :href="route('profile.edit')">
+                    {{ __('Edit Profile') }}
+                </x-dropdown-link>
+
+                <!-- Authentication -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <x-dropdown-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                        {{ __('Log Out') }}
+                    </x-dropdown-link>
+                </form>
+            </x-slot>
+        </x-dropdown>
+      </div>
+
+      <!-- Hamburger -->
+      <div class="flex items-center -me-2 sm:hidden">
+          <button @click="isOpen = ! isOpen" class="inline-flex items-center justify-center p-2 text-gray-200 transition duration-150 ease-in-out rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500">
+              <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                  <path :class="{'hidden': isOpen, 'inline-flex': ! isOpen }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                  <path :class="{'hidden': ! isOpen, 'inline-flex': isOpen }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+          </button>
+      </div> 
+      @endauth
+
+      @guest
       <div class="block">
         <div class="flex items-center ml-4 md:ml-6">
           <div class="block">
@@ -22,32 +75,46 @@
             </div>
         </div>
       </div>
-      {{-- <div class="flex mr-2 md:hidden">
-        <!-- Mobile menu button -->
-        <button @click="isOpen = !isOpen" type="button" class="relative inline-flex items-center justify-center p-2 text-gray-400 bg-gray-800 rounded-md hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800" aria-controls="mobile-menu" aria-expanded="false">
-          <span class="absolute -inset-0.5"></span>
-          <span class="sr-only">Open main menu</span>
-          <!-- Menu open: "hidden", Menu closed: "block" -->
-          <svg :class="{'hidden': isOpen, 'block': !isOpen }" class="block w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-          </svg>
-          <!-- Menu open: "block", Menu closed: "hidden" -->
-          <svg :class="{'hidden': !isOpen, 'block': isOpen }" class="hidden w-6 h-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
-      </div> --}}
+      @endguest
     </div>
   </div>
 
-  <!-- Mobile menu, show/hide based on menu state. -->
-  <div x-show="isOpen"  class="md:hidden" id="mobile-menu">
-    <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-      <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-      <a href="#" class="block px-3 py-2 text-base font-medium rounded-md text-primary hover:bg-primary hover:text-secondary-base" aria-current="page">Login</a>
-      <a href="#" class="block px-3 py-2 text-base font-medium rounded-md bg-primary text-secondary-base hover:text-white">Daftar</a>
+  <!-- Responsive Navigation Menu -->
+  @auth
+  <div :class="{'block': isOpen, 'hidden': ! isOpen}" class="hidden sm:hidden bg-grey-100">
+    <div class="px-4 py-4 space-y-1">
+        <div class="text-base font-semibold text-gray-800">Halo, {{ Auth::user()->nama_pelanggan }}</div>
     </div>
-  </div>
+    
+    <div class="pt-2 pb-3 space-y-1 border-t border-gray-600">
+      <x-responsive-nav-link href="/" :active="request()->is('/')">
+        {{ __('Home') }}
+      </x-responsive-nav-link>
+      
+      <x-responsive-nav-link href="/">
+        {{ __('Riwayat Transaksi') }}
+      </x-responsive-nav-link>
+    </div>
+
+    <!-- Responsive Settings Options -->
+    <div class="pt-2 pb-3 space-y-1 border-t border-gray-600">
+        <x-responsive-nav-link :href="route('profile.edit')">
+            {{ __('Profile') }}
+        </x-responsive-nav-link>
+
+        <!-- Authentication -->
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+
+            <x-responsive-nav-link :href="route('logout')"
+                    onclick="event.preventDefault();
+                                this.closest('form').submit();">
+                {{ __('Log Out') }}
+            </x-responsive-nav-link>
+        </form>
+    </div>
+  </div> 
+  @endauth
 </nav>
 
 <script>

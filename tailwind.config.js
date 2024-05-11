@@ -32,6 +32,7 @@ export default {
                 "primary-200": "#FFAAD5",
                 "secondary-base": "#3C486B",
                 "secondary-100": "#D9DDEC",
+                "secondary-200": "#ACB5D6",
                 "grey-100": "#EDEBEC",
                 "grey-200": "#C8C2C5",
             },
