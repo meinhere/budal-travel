@@ -19,6 +19,8 @@ class AuthenticatedSessionController extends Controller
         $data = [
             'title' => "Halaman Login",
             'background' => '/img/bg/background-landing.jpg',
+            'background_caption' => '/img/bg/image-login-page.jpg',
+
         ];
         return view('auth.login', $data);
     }

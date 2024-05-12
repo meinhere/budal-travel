@@ -29,14 +29,14 @@
 
 <body class="h-full">
   <div class="bg-center bg-cover hero" style="background-image: url({{ $background }});">
-    <div class="min-h-screen relative flex flex-col justify-center items-center p-5">
-      <main class="w-full flex sm:max-w-4xl bg-secondary-base shadow-md rounded-lg">
+    <div class="relative flex flex-col items-center justify-center min-h-screen p-5">
+      <main class="flex w-full rounded-lg shadow-md sm:max-w-4xl bg-secondary-base">
         <!-- Your content -->
-        <div class="auth-form-input px-16 pt-4 pb-10 basis-full sm:basis-1/2">
+        <div class="px-16 pt-4 pb-10 auth-form-input basis-full sm:basis-1/2">
           {{ $slot }}
         </div> 
-        <div class="auth-image p-3 hidden sm:block sm:basis-1/2">
-          <div class="bg-cover bg-center w-full h-full rounded-lg" style="background-image: url({{ $background }});"></div>
+        <div class="hidden p-3 auth-image sm:block sm:basis-1/2">
+          <div class="w-full h-full bg-center bg-cover rounded-lg" style="background-image: url({{ $background_caption }});"></div>
         </div>
       </main>
     </div>
