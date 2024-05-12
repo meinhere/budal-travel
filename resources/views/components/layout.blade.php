@@ -37,7 +37,7 @@
   <div class="min-h-full bg-center bg-cover hero" style="background-image: url({{ $background }});">
     <div class="relative">
       <x-navbar></x-navbar>
-      <main class="max-w-6xl min-h-screen px-4 pt-32 pb-20 mx-auto md:pb-10 md:pt-32 sm:px-6 lg:px-8">
+      <main class="min-h-screen px-4 pt-32 pb-20 mx-auto max-w-7xl md:pb-10 md:pt-32 sm:px-6 lg:px-8">
           <!-- Your content -->
           {{ $slot }}
       </main>

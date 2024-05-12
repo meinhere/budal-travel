@@ -14,10 +14,9 @@
 
       @auth
       {{-- Nav Links --}}
-      <div class="flex items-baseline ml-10 space-x-4">
-        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+      <div class="items-baseline hidden ml-10 space-x-4 sm:flex">
         <a href="/" class="border-b-2 text-primary-base hover:border-primary-base {{ request()->is('/') || request()->is('search/*') || request()->is('order/*') || request()->is('profile')  ? 'border-primary-base' : 'border-transparent' }}" aria-current="page">Home</a>
-        <a href="/transaction" class="border-b-2 text-primary-base hover:border-primary-base {{ request()->is('/transaction') ? 'border-primary-base' : 'border-transparent' }}" aria-current="page">Riwayat Transaksi</a>
+        <a href="/transaction" class="border-b-2 text-primary-base hover:border-primary-base {{ request()->is('transaction*') ? 'border-primary-base' : 'border-transparent' }}" aria-current="page">Riwayat Transaksi</a>
       </div>
 
       <!-- Settings Dropdown -->
@@ -31,7 +30,6 @@
                 </button>
             </x-slot> 
 
-            
             <x-slot name="content">
                 <div class="block w-full px-4 py-2 text-sm leading-5 text-gray-700 border-b border-gray-200 text-start">{{ auth()->user()->nama_pelanggan }}</div>
 
@@ -87,18 +85,18 @@
     </div>
     
     <div class="pt-2 pb-3 space-y-1 border-t border-gray-600">
-      <x-responsive-nav-link href="/" :active="request()->is('/')">
+      <x-responsive-nav-link href="/" :active="request()->is('/') || request()->is('search/*') || request()->is('order/*')">
         {{ __('Home') }}
       </x-responsive-nav-link>
       
-      <x-responsive-nav-link href="/">
+      <x-responsive-nav-link href="/" :active="request()->is('transaction*')">
         {{ __('Riwayat Transaksi') }}
       </x-responsive-nav-link>
     </div>
 
     <!-- Responsive Settings Options -->
     <div class="pt-2 pb-3 space-y-1 border-t border-gray-600">
-        <x-responsive-nav-link :href="route('profile.edit')">
+        <x-responsive-nav-link :href="route('profile.edit')" :active="request()->is('profile')">
             {{ __('Profile') }}
         </x-responsive-nav-link>
 

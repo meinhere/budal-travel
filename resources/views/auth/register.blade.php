@@ -1,6 +1,7 @@
 <x-guest-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
     <x-slot:background>{{ $background }}</x-slot:background>
+    <x-slot:background_caption>{{ $background_caption }}</x-slot:background_caption>
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
     

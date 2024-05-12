@@ -22,6 +22,7 @@ class RegisteredUserController extends Controller
         $data = [
             'title' => "Halaman Login",
             'background' => '/img/bg/background-landing.jpg',
+            'background_caption' => '/img/bg/image-signup-page.jpg',
         ];
         return view('auth.register', $data);
     }
