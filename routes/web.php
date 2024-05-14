@@ -9,9 +9,17 @@ Route::get('/', [ReservasiController::class, 'index'])->name('home');
 Route::get('/search/{kota}', [ReservasiController::class, 'search'])->name('search');
 Route::get('/order/{kota}', [ReservasiController::class, 'order'])->name('order');
 
+// Route::get('/dashboard', function () {
+//     return view('layouts.dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::get('/dashboard', function () {
-    return view('layouts.dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    return view('dashboard.index');
+})->name('dashboard');
+
+Route::get('/dashboard/transaction', function () {
+    return view('dashboard.transaction');
+})->name('dashboard.transaction');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

@@ -39,10 +39,10 @@
         </div>
 
         {{-- Jenis Kelamin --}}
-        <div class="flex flex-col gap-2 mb-4">
+        <div class="flex flex-col gap-2 mb-6">
           <div class="relative h-11">
             <p class="pl-2 tracking-wide text-primary-base font-extralight">Jenis Kelamin</p>
-            <div class="flex justify-center gap-5 pt-1 text-sm tracking-wide text-primary-base font-extralight">
+            <div class="flex gap-5 pt-1 pl-2 text-sm tracking-wide text-primary-base font-extralight">
               <div>
                 <input type="radio" name="jenis_kelamin_id" id="laki_laki" value="1" checked>
                 <label for="laki_laki">Laki-Laki</label>
@@ -53,7 +53,7 @@
               </div>
             </div>
           </div>
-          <x-input-error :messages="$errors->get('username')" class="mb-3"></x-input-error>
+          <x-input-error :messages="$errors->get('jenis_kelamin_id')" class="mb-3"></x-input-error>
         </div>
         
         {{-- Alamat --}}

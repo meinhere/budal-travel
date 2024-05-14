@@ -1,1 +1,1 @@
-<img {{ $attributes }}  src="{{ url('/img/logo.svg') }}" alt="Logo Budal Travel">
+<img {{ $attributes }}  src="{{ asset('storage/img/logo.svg') }}" alt="Logo Budal Travel">

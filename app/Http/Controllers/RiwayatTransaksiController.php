@@ -13,8 +13,8 @@ class RiwayatTransaksiController extends Controller
     {
         $data = [
             'title' => "Riwayat Transaksi",
-            'background' => '/img/bg/background-landing.jpg',
-            'card_background' => '/img/bg/background-landing2.jpg',
+            'background' => '/storage/img/bg/background-landing.jpg',
+            'card_background' => '/storage/img/bg/background-landing2.jpg',
         ];
 
         return view('transaction.index', $data);
@@ -27,7 +27,7 @@ class RiwayatTransaksiController extends Controller
     {
         $data = [
             'title' => "Detail Riwayat - $id",
-            'background' => '/img/bg/background-landing.jpg',
+            'background' => '/storage/img/bg/background-landing.jpg',
         ];
 
         return view('transaction.detail', $data);
