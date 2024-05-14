@@ -20,9 +20,9 @@ class RegisteredUserController extends Controller
     public function create(): View
     {
         $data = [
-            'title' => "Halaman Login",
-            'background' => '/img/bg/background-landing.jpg',
-            'background_caption' => '/img/bg/image-signup-page.jpg',
+            'title' => "Halaman Register",
+            'background' => '/storage/img/bg/background-landing.jpg',
+            'background_caption' => '/storage/img/bg/image-signup-page.jpg',
         ];
         return view('auth.register', $data);
     }
@@ -35,7 +35,6 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'jenis_kelamin_id' => 'required|exists:jenis_kelamin,id',
             'nama_pelanggan' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:pelanggan'],
             'no_hp' => ['required', 'phone:ID,BE'],

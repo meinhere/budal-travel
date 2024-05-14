@@ -10,7 +10,7 @@ class ReservasiController extends Controller
     public function index() {
         $data = [
             'title' => "Halaman Home",
-            'background' => '/img/bg/background-landing.jpg',
+            'background' => '/storage/img/bg/background-landing.jpg',
         ];
         return view('home', $data);
     }
@@ -18,7 +18,7 @@ class ReservasiController extends Controller
     public function search(Request $request) {
         $data = [
             'title' => "Halaman Search",
-            'background' => '/img/bg/background-landing2.jpg',
+            'background' => '/storage/img/bg/background-landing2.jpg',
         ];
         return view('search', $data);
     }
@@ -26,7 +26,7 @@ class ReservasiController extends Controller
     public function order(Request $request) {
         $data = [
             'title' => "Halaman Order",
-            'background' => '/img/bg/background-detail.jpg',
+            'background' => '/storage/img/bg/background-detail.jpg',
         ];
         return view('order', $data);
     }
