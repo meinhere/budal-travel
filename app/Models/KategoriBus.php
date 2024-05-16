@@ -10,6 +10,7 @@ class KategoriBus extends Model
     use HasFactory;
     
     protected $table = 'kategori_bus';
+    protected $primaryKey = 'kode_kategori';
     protected $guarded = ['kode_kategori'];
 
     public static function boot()

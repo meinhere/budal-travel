@@ -10,6 +10,7 @@ class Wisata extends Model
     use HasFactory;
     
     protected $table = 'wisata';
+    protected $primaryKey = 'kode_wisata';
     protected $guarded = ['kode_wisata'];
 
     public static function boot()

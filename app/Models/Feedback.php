@@ -10,6 +10,7 @@ class Feedback extends Model
     use HasFactory;
 
     protected $table = 'feedback';
+    protected $primaryKey = 'kode_feedback';
     protected $guarded = ['kode_feedback'];
 
     public static function boot()

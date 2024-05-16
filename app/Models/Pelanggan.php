@@ -2,22 +2,15 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Pelanggan extends Authenticatable
+class Pelanggan extends Model
 {
-    use HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    use HasFactory;
 
     protected $table = 'pelanggan';
+    protected $primaryKey = 'id_pelanggan';
     protected $guarded = ['kode_pelanggan'];
 
     public static function boot()

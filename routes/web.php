@@ -2,32 +2,46 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ReservasiController;
+use App\Http\Controllers\DashboardBusController;
+use App\Http\Controllers\DashboardUserController;
+use App\Http\Controllers\DashboardWisataController;
 use App\Http\Controllers\RiwayatTransaksiController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
+// ----- HOME ROUTE -----
 Route::get('/', [ReservasiController::class, 'index'])->name('home');
-Route::get('/search/{kota}', [ReservasiController::class, 'search'])->name('search');
-Route::get('/order/{kota}', [ReservasiController::class, 'order'])->name('order');
+Route::post('/search', [ReservasiController::class, 'search'])->name('search');
+Route::get('/search/{kota}', [ReservasiController::class, 'show'])->name('show');
 
-// Route::get('/dashboard', function () {
-//     return view('layouts.dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+// ----- DASHBOARD ROUTE -----
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard/transaction', [DashboardController::class, 'transaction'])->name('dashboard.transaction');
+Route::get('/dashboard/transaction/{id}', [DashboardController::class, 'show'])->name('dashboard.show');
 
-Route::get('/dashboard', function () {
-    return view('dashboard.index');
-})->name('dashboard');
+Route::resource('dashboard/bus', DashboardBusController::class);
+Route::resource('dashboard/wisata', DashboardWisataController::class);
+Route::resource('dashboard/user', DashboardUserController::class);
 
-Route::get('/dashboard/transaction', function () {
-    return view('dashboard.transaction');
-})->name('dashboard.transaction');
-
+// ----- AUTH ROUTE -----
 Route::middleware('auth')->group(function () {
+    // RESERVASI
+    Route::get('/order/{kota}', [ReservasiController::class, 'order'])->name('order');
+    Route::post('/order', [ReservasiController::class, 'store'])->name('store');
+
+    // PROFILE
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/transaction', [RiwayatTransaksiController::class, 'index'])->name('riwayat.index');
+    // RIWAYAT TRANSAKSI
+    Route::get('/transaction', [RiwayatTransaksiController::class, 'index'])->name('riwayat');
     Route::get('/transaction/{id}', [RiwayatTransaksiController::class, 'show'])->name('riwayat.show');
+    
+    // FEEDBACK
+    Route::get('/feedback/{id}', [FeedbackController::class, 'create'])->name('feedback.create');
+    Route::post('/feedback', [FeedbackController::class, 'store'])->name('feedback.store');
 });
 
 require __DIR__.'/auth.php';
