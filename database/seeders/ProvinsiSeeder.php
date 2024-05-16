@@ -22,5 +22,10 @@ class ProvinsiSeeder extends Seeder
             'kode_provinsi' => '35',
             'nama_provinsi' => 'Jawa Timur',
         ]);
+
+        Provinsi::create([
+            'kode_provinsi' => '34',
+            'nama_provinsi' => 'DI Yogyakarta',
+        ]);
     }
 }

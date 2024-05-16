@@ -17,5 +17,15 @@ class LoginSeeder extends Seeder
             'username' => 'ronggo',
             'password' => bcrypt('12345')
         ]);
+
+        Login::create([
+            'username' => 'akhyar',
+            'password' => bcrypt('12345')
+        ]);
+
+        Login::create([
+            'username' => 'huda',
+            'password' => bcrypt('12345')
+        ]);
     }
 }
