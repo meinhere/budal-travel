@@ -10,7 +10,7 @@ class Kota extends Model
     use HasFactory;
 
     protected $table = 'kota';
-    protected $guarded = ['id'];
+    protected $fillable = ['kode_kota', 'provinsi_kode', 'nama_kota'];
 
     public function provinsi() {
         return $this->belongsTo(Provinsi::class);

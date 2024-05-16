@@ -16,35 +16,22 @@ class Pelanggan extends Authenticatable
      *
      * @var array<int, string>
      */
-    // protected $fillable = [
-    //     'name',
-    //     'email',
-    //     'password',
-    // ];
 
     protected $table = 'pelanggan';
-    protected $guarded = ['id'];
+    protected $guarded = ['kode_pelanggan'];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password_pelanggan',
-        'remember_token',
-    ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    public static function boot()
     {
-        return [
-            'password' => 'hashed',
-        ];
+        parent::boot();
+
+        self::creating(function($model){
+            $id = (string) Pelanggan::count('id_pelanggan') + 1;
+            $model->id_pelanggan = "P" . str_pad($id, 3, '0', STR_PAD_LEFT);
+        });
+    }
+
+    public function login() {
+        return $this->belongsTo(Login::class);
     }
 
     public function jenis_kelamin() {

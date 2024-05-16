@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('status_reservasi', function (Blueprint $table) {
-            $table->id();
-            $table->string('deskripsi', length: 20);
+        Schema::create('kategori_feedback', function (Blueprint $table) {
+            $table->char('kode_kategori', 1)->primary();
+            $table->enum('tanggapan', ['Senang', 'Biasa', 'Tidak Senang']);
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('status_reservasi');
+        Schema::dropIfExists('kategori_feedback');
     }
 };

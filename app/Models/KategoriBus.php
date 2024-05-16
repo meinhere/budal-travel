@@ -5,19 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StatusBus extends Model
+class KategoriBus extends Model
 {
     use HasFactory;
-
-    protected $table = 'status_bus';
-    protected $guarded = ['kode_status'];
+    
+    protected $table = 'kategori_bus';
+    protected $guarded = ['kode_kategori'];
 
     public static function boot()
     {
         parent::boot();
 
         self::creating(function($model){
-            $model->kode_status = (string) StatusBus::count('kode_status') + 1;
+            $id = (string) KategoriBus::count('kode_kategori') + 1;
+            $model->kode_kategori = "KB" . str_pad($id, 3, '0', STR_PAD_LEFT);
         });
     }
 

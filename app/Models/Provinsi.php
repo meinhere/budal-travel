@@ -10,7 +10,7 @@ class Provinsi extends Model
     use HasFactory;
 
     protected $table = 'provinsi';
-    protected $guarded = ['id'];
+    protected $fillable = ['kode_provinsi', 'nama_provinsi'];
 
     public function kota() {
         return $this->hasMany(Kota::class);

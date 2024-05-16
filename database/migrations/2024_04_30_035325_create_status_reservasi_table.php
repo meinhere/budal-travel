@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('status_bus', function (Blueprint $table) {
-            $table->id();
-            $table->string('deskripsi', length: 20);
-            $table->timestamps();
+        Schema::create('status_reservasi', function (Blueprint $table) {
+            $table->char('kode_status', 1)->primary();
+            $table->string('deskripsi', 20);
         });
     }
 
@@ -23,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('status_bus');
+        Schema::dropIfExists('status_reservasi');
     }
 };
