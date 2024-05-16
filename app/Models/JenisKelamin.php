@@ -10,6 +10,7 @@ class JenisKelamin extends Model
     use HasFactory;
 
     protected $table = 'jenis_kelamin'; 
+    protected $primaryKey = 'kode_jenis_kelamin';
     protected $guarded = ['kode_jenis_kelamin'];
 
     public static function boot() {

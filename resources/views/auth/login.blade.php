@@ -33,7 +33,7 @@
         <div class="flex flex-col gap-2 mb-4" x-data="{ show: false, val: '' }">
           <div class="relative h-11">
             <x-input-auth x-show="!show" type="password" id="password" name="password" x-model="val" />
-            <x-input-auth x-show="show" type="text" id="password" name="password" x-model="val" value="{{ old('password') }}" />
+            <x-input-auth x-show="show" type="text" id="password" name="password" x-model="val" />
             <x-label-auth for="password">Password</x-label-auth> 
 
             <button type="button" @click="show = !show">

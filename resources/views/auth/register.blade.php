@@ -44,16 +44,16 @@
             <p class="pl-2 tracking-wide text-primary-base font-extralight">Jenis Kelamin</p>
             <div class="flex gap-5 pt-1 pl-2 text-sm tracking-wide text-primary-base font-extralight">
               <div>
-                <input type="radio" name="jenis_kelamin_id" id="laki_laki" value="1" checked>
+                <input type="radio" name="jenis_kelamin_kode" id="laki_laki" value="1" checked>
                 <label for="laki_laki">Laki-Laki</label>
               </div>
               <div>
-                <input type="radio" name="jenis_kelamin_id" id="perempuan" value="2">
+                <input type="radio" name="jenis_kelamin_kode" id="perempuan" value="2">
                 <label for="perempuan">Perempuan</label>
               </div>
             </div>
           </div>
-          <x-input-error :messages="$errors->get('jenis_kelamin_id')" class="mb-3"></x-input-error>
+          <x-input-error :messages="$errors->get('jenis_kelamin_kode')" class="mb-3"></x-input-error>
         </div>
         
         {{-- Alamat --}}
@@ -68,10 +68,10 @@
         {{-- No HP --}}
         <div class="flex flex-col gap-2 mb-4">
           <div class="relative h-11">
-            <x-input-auth type="text" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" />
-            <x-label-auth for="no_hp">No HP</x-label-auth>
+            <x-input-auth type="text" id="no_telepon" name="no_telepon" value="{{ old('no_telepon') }}" />
+            <x-label-auth for="no_telepon">No HP</x-label-auth>
           </div>
-          <x-input-error :messages="$errors->get('no_hp')" class="mb-3"></x-input-error>
+          <x-input-error :messages="$errors->get('no_telepon')" class="mb-3"></x-input-error>
         </div>
         
         {{-- Password --}}

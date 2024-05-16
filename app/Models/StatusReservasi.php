@@ -10,6 +10,7 @@ class StatusReservasi extends Model
     use HasFactory;
 
     protected $table = 'status_reservasi';
+    protected $primaryKey = 'kode_status';
     protected $guarded = ['kode_status'];
 
     public static function boot()

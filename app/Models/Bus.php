@@ -10,6 +10,7 @@ class Bus extends Model
     use HasFactory;
     
     protected $table = 'bus';
+    protected $primaryKey = 'kode_bus';
     protected $guarded = ['kode_bus'];
 
     public static function boot()
