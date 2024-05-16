@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'nama_pelanggan' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:pelanggan'],
-            'no_hp' => ['required', 'phone:ID,BE'],
+            'no_telepon' => ['required', 'phone:ID,BE'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'alamat' => 'required',
         ]);
@@ -46,7 +46,7 @@ class RegisteredUserController extends Controller
             'jenis_kelamin_id' => $request->jenis_kelamin_id,
             'nama_pelanggan' => $request->nama_pelanggan,
             'username' => $request->username,
-            'no_hp' => $request->no_hp,
+            'no_telepon' => $request->no_telepon,
             'password' => Hash::make($request->password),
             'alamat' => $request->alamat,
         ]);

@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('kota', function (Blueprint $table) {
-            $table->id()->length(4);
-            $table->foreignId('provinsi_id');
+            $table->char('kode_kota', 4)->primary();
+            $table->char('provinsi_kode', 2);
+            $table->foreign('provinsi_kode')->references('kode_provinsi')->on('provinsi');
             $table->string('nama_kota', length: 40);
-            $table->timestamps();
         });
     }
 

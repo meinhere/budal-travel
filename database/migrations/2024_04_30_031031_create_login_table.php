@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pelanggan', function (Blueprint $table) {
-            $table->id()->length(4);
-            $table->foreignId('jenis_kelamin_id');
-            $table->string('nama_pelanggan', length: 50);
-            $table->string('username', length: 50)->unique();
-            $table->string('password');
-            $table->text('alamat');
+        Schema::create('login', function (Blueprint $table) {
+            $table->char('id_login', 4)->primary();
+            $table->string('username', 50)->unique();
+            $table->string('password', 250);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -43,7 +40,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pelanggan');
+        Schema::dropIfExists('login');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
