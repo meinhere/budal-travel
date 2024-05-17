@@ -12,17 +12,16 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('wisata', function (Blueprint $table) {
-            $table->id()->length(4);
-            $table->foreignId('kota_id');
-            $table->string('nama_wisata', length: 50);
+            $table->char('kode_wisata', 8)->primary();
+            $table->char('kota_kode', 4);
+            $table->foreign('kota_kode')->references('kode_kota')->on('kota');
+            $table->string('nama_wisata', 50);
             $table->text('alamat_wisata');
             $table->time('jam_buka');
             $table->time('jam_tutup');
             $table->integer('tarif_masuk_wisata');
             $table->integer('tarif_parkir');
-            $table->char('longitude', length: 15);
-            $table->char('latitude', length: 15);
-            $table->timestamps();
+            $table->string('titik_lokasi', 30);
         });
     }
 

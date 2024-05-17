@@ -2,10 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\JenisKelamin;
-use App\Models\Pelanggan;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Bus;
+use App\Models\Kota;
+use App\Models\Wisata;
+use App\Models\Karyawan;
+use App\Models\StatusBus;
 use Illuminate\Database\Seeder;
+use App\Models\KategoriFeedback;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,20 +21,19 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        JenisKelamin::create([
-            'keterangan' => "Laki-Laki",
-        ]);
-
-        JenisKelamin::create([
-            'keterangan' => "Perempuan",
-        ]);
-
-        Pelanggan::create([
-            'jenis_kelamin_id' => 1,
-            'nama_pelanggan' => 'Ronggo Widjoyo',
-            'username' => 'ronggo',
-            'password' => bcrypt('12345'),
-            'alamat' => 'Brondong, Lamongan'
+        $this->call([
+            JenisKelaminSeeder::class,
+            LoginSeeder::class,
+            PelangganSeeder::class,
+            ProvinsiSeeder::class,
+            RoleSeeder::class,
+            Karyawan::class,
+            KategoriBusSeeder::class,
+            StatusBus::class,
+            Bus::class,
+            KategoriFeedback::class,
+            Kota::class,
+            Wisata::class,
         ]);
     }
 }

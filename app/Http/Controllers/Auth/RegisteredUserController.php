@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Models\Login;
 use App\Models\Pelanggan;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
-use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Auth\Events\Registered;
 
 class RegisteredUserController extends Controller
 {
@@ -34,27 +35,29 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // dd($request->all());
         $request->validate([
             'nama_pelanggan' => ['required', 'string', 'max:255'],
-            'username' => ['required', 'string', 'max:255', 'unique:pelanggan'],
-            'no_hp' => ['required', 'phone:ID,BE'],
+            'username' => ['required', 'string', 'max:255', 'unique:login'],
+            'no_telepon' => ['required', 'phone:ID,BE'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'alamat' => 'required',
+            'alamat' => ['required', 'string'],
         ]);
 
-        $user = Pelanggan::create([
+        Login::create([
+            'username' => $request->username,
+            'password' => Hash::make($request->password),
+        ]);
+
+        Pelanggan::create([
+            'login_id' => Login::max('id_login'),
             'jenis_kelamin_id' => $request->jenis_kelamin_id,
             'nama_pelanggan' => $request->nama_pelanggan,
-            'username' => $request->username,
-            'no_hp' => $request->no_hp,
-            'password' => Hash::make($request->password),
+            'no_telepon' => $request->no_telepon,
+            'jenis_kelamin_kode' => $request->jenis_kelamin_kode,
             'alamat' => $request->alamat,
         ]);
 
-        event(new Registered($user));
-
-        Auth::login($user);
-
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('login'))->with('success', 'Akun berhasil dibuat');
     }
 }

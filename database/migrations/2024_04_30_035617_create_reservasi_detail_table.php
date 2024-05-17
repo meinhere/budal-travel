@@ -12,9 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reservasi_detail', function (Blueprint $table) {
-            $table->id()->length(4);
-            $table->foreignId('wisata_id');
-            $table->foreignId('reservasi_id');
+            $table->char('kode_reservasi_detail', 8)->primary();
+            $table->char('wisata_kode', 8);
+            $table->char('reservasi_kode', 8);
+            $table->foreign('wisata_kode')->references('kode_wisata')->on('wisata');
+            $table->foreign('reservasi_kode')->references('kode_reservasi')->on('reservasi');
             $table->time('waktu_wisata');
             $table->timestamps();
         });

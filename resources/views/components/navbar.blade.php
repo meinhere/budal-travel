@@ -31,7 +31,7 @@
             </x-slot> 
 
             <x-slot name="content">
-                <div class="block w-full px-4 py-2 text-sm leading-5 text-gray-700 border-b border-gray-200 text-start">{{ auth()->user()->nama_pelanggan }}</div>
+                <div class="block w-full px-4 py-2 text-sm leading-5 text-gray-700 border-b border-gray-200 text-start">{{ session()->get('user')->nama_pelanggan }}</div>
 
                 <x-dropdown-link :href="route('profile.edit')">
                     {{ __('Edit Profile') }}

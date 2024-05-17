@@ -10,6 +10,7 @@
         "codeat3/blade-carbon-icons": "^2.23",
         "codeat3/blade-iconpark": "^1.6",
         "davidhsianturi/blade-bootstrap-icons": "^1.5",
+        "itsgoingd/clockwork": "^5.2",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9",
         "propaganistas/laravel-phone": "^5.3"

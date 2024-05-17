@@ -12,14 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('bus', function (Blueprint $table) {
-            $table->id()->length(4);
-            $table->foreignId('kategori_id');
-            $table->foreignId('status_bus_id');
-            $table->string('nama_bus', length: 50);
+            $table->char('kode_bus', 4)->primary();
+            $table->char('kategori_kode', 4);
+            $table->char('status_bus_kode', 1);
+            $table->foreign('kategori_kode')->references('kode_kategori')->on('kategori_bus');
+            $table->foreign('status_bus_kode')->references('kode_status')->on('status_bus');
+            $table->string('nama_bus', 50);
             $table->float('kapasitas_solar');
             $table->integer('jumlah_kursi');
             $table->integer('harga_sewa');
-            $table->timestamps();
         });
     }
 
