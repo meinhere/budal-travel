@@ -29,6 +29,79 @@ class KotaSeeder extends Seeder
 
         Kota::create([
             'provinsi_kode' => '35', 
+            'kode_kota' => '3507',
+            'nama_kota' => 'Malang',
+        ]);
+
+        Kota::create([
+            'provinsi_kode' => '35',
+            'kode_kota' => '3526',
+            'nama_kota' => 'Bangkalan',
+        ]);
+        
+        Kota::create([
+            'provinsi_kode' => '35',
+            'kode_kota' => '3527',
+            'nama_kota' => 'Sampang',
+        ]);
+        
+        Kota::create([
+            'provinsi_kode' => '35',
+            'kode_kota' => '3529',
+            'nama_kota' => 'Sumenep',
+        ]);
+
+        Kota::create([
+            'provinsi_kode' => '35',
+            'kode_kota' => '3503',
+            'nama_kota' => 'Trenggalek'
+        ]);
+
+        Kota::create([
+            'provinsi_kota' => '35',
+            'kode_kota' => '3514',
+            'nama_kota' => 'Pasuruan',
+        ]);
+
+        Kota::create([
+            'provinsi_kota' => '35',
+            'kode_kota' => '3508',
+            'nama_kota' => 'Lumajang',
+        ]);
+
+        Kota::create([
+            'provinsi_kota' => '35',
+            'kode_kota' => '3519',
+            'nama_kota' => 'Madiun',
+        ]);
+
+        Kota::create([
+            'provinsi_kota' => '35',
+            'kode_kota' => '3515',
+            'nama_kota' => 'Sidoarjo',
+        ]);
+
+        Kota::create([
+            'provinsi_kota' => '35',
+            'kode_kota' => '3528',
+            'nama_kota' => 'Pamekasan',
+        ]);
+
+        Kota::create([
+            'provinsi_kota' => '35',
+            'kode_kota' => '3523',
+            'nama_kota' => 'Tuban', 
+        ]);
+        
+        Kota::create([
+            'provinsi_kota' => '35',
+            'kode_kota' => '3524',
+            'nama_kota' => 'Lamongan', 
+        ]);
+        
+        
+        Kota::create([
+            'provinsi_kode' => '35', 
             'kode_kota' => '3501',
             'nama_kota' => 'Pacitan',
         ]);
