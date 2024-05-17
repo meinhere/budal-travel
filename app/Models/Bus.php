@@ -12,6 +12,7 @@ class Bus extends Model
     protected $table = 'bus';
     protected $primaryKey = 'kode_bus';
     protected $guarded = ['kode_bus'];
+    public $timestamps = false;
 
     public static function boot()
     {
@@ -19,7 +20,7 @@ class Bus extends Model
 
         self::creating(function($model){
             $id = (string) Bus::count('kode_bus') + 1;
-            $model->id_bus = "B" . str_pad($id, 3, '0', STR_PAD_LEFT);
+            $model->kode_bus = "B" . str_pad($id, 3, '0', STR_PAD_LEFT);
         });
     }
 

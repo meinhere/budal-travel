@@ -15,7 +15,7 @@ class WisataSeeder extends Seeder
     {
         // wisata di jawa timur
         Wisata::create([
-            'kota_kode' => '3578',
+            'kode_kota' => '3578',
             'nama_wisata' => 'Kenjeran Park Surabaya',
             'alamat_wisata' => 'Sukolilo Baru, Bulak, Surabaya, East Java 60122',
             'jam_buka' => '08:00',
@@ -40,7 +40,7 @@ class WisataSeeder extends Seeder
 
         // wisata di jawa tengah
         Wisata::create([
-            'kota_kode' => '3374',
+            'kode_kota' => '3374',
             'nama_wisata' => 'Taman Bunga Celosia Semarang',
             'alamat_wisata' => 'Banyukuning, Bandungan, Semarang Regency, Central Java 50614',
             'jam_buka' => '08:00',
@@ -51,7 +51,7 @@ class WisataSeeder extends Seeder
         ]);
 
         Wisata::create([
-            'kota_kode' => '3374',
+            'kode_kota' => '3374',
             'nama_wisata' => 'Museum Lawang Sewu Semarang',
             'alamat_wisata' => 'Jl. Pemuda No.160, Sekayu, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50132',
             'jam_buka' => '08:00',
@@ -63,9 +63,9 @@ class WisataSeeder extends Seeder
 
         // wisata di DI Yogyakarta
         Wisata::create([
-            'kota_kode' => '3471',
+            'kode_kota' => '3471',
             'nama_wisata' => 'Candi Prambanan',
-            'alamat_wisata' => 'JJl. Raya Solo - Yogyakarta No.16, Kranggan, Bokoharjo, Kec. Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55571',
+            'alamat_wisata' => 'Jl. Raya Solo - Yogyakarta No.16, Kranggan, Bokoharjo, Kec. Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55571',
             'jam_buka' => '06:00',
             'jam_tutup' => '17:00',
             'tarif_masuk_wisata' => 50000,
