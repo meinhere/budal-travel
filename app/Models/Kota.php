@@ -11,6 +11,7 @@ class Kota extends Model
 
     protected $table = 'kota';
     protected $fillable = ['kode_kota', 'provinsi_kode', 'nama_kota'];
+    public $timestamps = false;
 
     public function provinsi() {
         return $this->belongsTo(Provinsi::class);

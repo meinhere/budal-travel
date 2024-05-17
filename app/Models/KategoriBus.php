@@ -18,7 +18,7 @@ class KategoriBus extends Model
 
         self::creating(function($model){
             $id = (string) KategoriBus::count('kode_kategori') + 1;
-            $model->kode_kategori = "KB" . str_pad($id, 3, '0', STR_PAD_LEFT);
+            $model->kode_kategori = "KB" . str_pad($id, 2, '0', STR_PAD_LEFT);
         });
     }
 

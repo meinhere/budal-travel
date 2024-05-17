@@ -11,6 +11,7 @@ class StatusBus extends Model
 
     protected $table = 'status_bus';
     protected $guarded = ['kode_status'];
+    public $timestamps = false;
 
     public static function boot()
     {
