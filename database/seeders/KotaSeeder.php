@@ -133,7 +133,7 @@ class KotaSeeder extends Seeder
 
         Kota::create([
             'provinsi_kode' => '33', 
-            'kode_kota' => '3372',
+            'kode_kota' => '3308',
             'nama_kota' => 'Magelang',
         ]);
     
@@ -205,11 +205,11 @@ class KotaSeeder extends Seeder
         ]);
 
 
-        Kota::create([
-            'provinsi_kode' => '33', 
-            'kode_kota' => '3308',
-            'nama_kota' => 'Magelang',
-        ]);
+        // Kota::create([
+        //     'provinsi_kode' => '33', 
+        //     'kode_kota' => '3308',
+        //     'nama_kota' => 'Magelang',
+        // ]);
 
 
         Kota::create([
