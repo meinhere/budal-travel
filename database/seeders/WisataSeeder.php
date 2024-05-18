@@ -596,106 +596,7 @@ class WisataSeeder extends Seeder
             'tarif_masuk_wisata' => 5000,
             'tarif_parkir' => 20000,
             'titik_lokasi' => '-7.204519473425441, 114.04486203355103'
-
         ]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // wisata di jawa tengah
         Wisata::create([
@@ -720,16 +621,369 @@ class WisataSeeder extends Seeder
             'titik_lokasi' => '-6.9839838,110.4095893'
         ]);
 
-        // wisata di DI Yogyakarta
         Wisata::create([
-            'kota_kode' => '3471',
-            'nama_wisata' => 'Candi Prambanan',
-            'alamat_wisata' => 'JJl. Raya Solo - Yogyakarta No.16, Kranggan, Bokoharjo, Kec. Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55571',
-            'jam_buka' => '06:00',
+            'kota_kode' => '3313',
+            'nama_wisata' => 'Candi Cetho',
+            'alamat_wisata' => 'C534+J55, Ceto, RT.01/RW.03, Cetho, Gumeng, Kec. Jenawi, Kabupaten Karanganyar, Jawa Tengah 57792',
+            'jam_buka' => '07:30',
+            'jam_tutup' => '16:30',
+            'tarif_masuk_wisata' => 30000,
+            'tarif_parkir' => 10000,
+            'titik_lokasi' => '-7.594858366063266, 111.15662388426261'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3313',
+            'nama_wisata' => 'Air Terjun Jumog REALL',
+            'alamat_wisata' => '949G+M6W, Jl. Jumog Taman batu tiban, Gandu, Berjo, Kec. Ngargoyoso, Kabupaten Karanganyar, Jawa Tengah 57793',
+            'jam_buka' => '08:00',
+            'jam_tutup' => '17:00',
+            'tarif_masuk_wisata' => 5000,
+            'tarif_parkir' => 0,
+            'titik_lokasi' => '-7.631048815922838, 111.12453117444159'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3313',
+            'nama_wisata' => 'Air Terjun Grojogan Sewu',
+            'alamat_wisata' => 'Jl. Raya Tawangmangu, Beji, Kec. Tawangmangu, Kabupaten Karanganyar, Jawa Tengah 57792',
+            'jam_buka' => '08:00',
+            'jam_tutup' => '16:00',
+            'tarif_masuk_wisata' => 25000,
+            'tarif_parkir' => 5000,
+            'titik_lokasi' => '-7.660829114431348, 111.1307887986649'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3314',
+            'nama_wisata' => 'Museum Manusia Purba Klaster Ngebung',
+            'alamat_wisata' => "Kebayanan I, Ngebung, Kec. Kalijambe, Kabupaten Sragen, Jawa Tengah 57275",
+            'jam_buka' => '08:00',
+            'jam_tutup' => '16:00',
+            'tarif_masuk_wisata' => 5000,
+            'tarif_parkir' => 0,
+            'titik_lokasi' => '-7.44102908508913, 110.83993981418969'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3313',
+            'nama_wisata' => 'The Lawu Park View',
+            'alamat_wisata' => 'Bulakrejo, Gondosuli Kidul, Gondosuli, Kec. Tawangmangu, Kabupaten Karanganyar, Jawa Tengah 57792',
+            'jam_buka' => '08:00',
+            'jam_tutup' => '17:00',
+            'tarif_masuk_wisata' => 20000,
+            'tarif_parkir' => 5000,
+            'titik_lokasi' => '-7.663731599758191, 111.17638065165701'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3304',
+            'nama_wisata' => 'Dataran Tinggi Dieng',
+            'alamat_wisata' => 'Bakal Buntu, Bakal, Kec. Batur, Kab. Banjarnegara, Jawa Tengah',
+            'jam_buka' => '00:00',
+            'jam_tutup' => '23:59',
+            'tarif_masuk_wisata' => 15000,
+            'tarif_parkir' => 0,
+            'titik_lokasi' => '-7.214659950257398, 109.89933996355725'  
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3322',
+            'nama_wisata' => 'Kota Lama Semarang',
+            'alamat_wisata' => '2CJH+M9F, Tj. Mas, Kec. Semarang Utara, Kota Semarang, Jawa Tengah 50174',
+            'jam_buka' => '00:00',
+            'jam_tutup' => '23:59',
+            'tarif_masuk_wisata' => 0,
+            'tarif_parkir' => 15000,
+            'titik_lokasi' => '-6.968301193003206, 110.42837232175312'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3321',
+            'nama_wisata' => 'Masjid Agung Demak',
+            'alamat_wisata' => '4J4P+4WV, Kauman, Bintoro, Kec. Demak, Kabupaten Demak, Jawa Tengah 59511',
+            'jam_buka' => '00:00',
+            'jam_tutup' => '23:59',
+            'tarif_masuk_wisata' => 0,
+            'tarif_parkir' => 10000,
+            'titik_lokasi' => '-6.894639241824736, 110.63728899476764'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3322',
+            'nama_wisata' => 'Museum Kereta Api Ambarawa',
+            'alamat_wisata' => 'Jl. Stasiun No.1, Panjang Kidul, Panjang, Kec. Ambarawa, Kabupaten Semarang, Jawa Tengah 50614',
+            'jam_buka' => '08:00',
+            'jam_tutup' => '17:00',
+            'tarif_masuk_wisata' => 20000,
+            'tarif_parkir' => 10000,
+            'titik_lokasi' => '-7.264362679722641, 110.4046096685394'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3328',
+            'nama_wisata' => 'Pemandian Air Panas Guci',
+            'alamat_wisata' => 'R527+XM9, Ladang,Hutan, Guci, Kecamatan Bumijawa, Kabupaten Tegal, Jawa Tengah 52466',
+            'jam_buka' => '07:00',
+            'jam_tutup' => '20:00',
+            'tarif_masuk_wisata' => 20000,
+            'tarif_parkir' => 5000,
+            'titik_lokasi' => '-7.197322036905191, 109.16400146530843'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3322',
+            'nama_wisata' => 'Brown Canyon',
+            'alamat_wisata' => 'Rowosari, Kec. Tembalang, Kota Semarang, Jawa Tengah',
+            'jam_buka' => '00:00',
+            'jam_tutup' => '23:59',
+            'tarif_masuk_wisata' => 0,
+            'tarif_parkir' => 15000,
+            'titik_lokasi' => '-7.056409917205947, 110.48632819662053'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3322',
+            'nama_wisata' => 'Air Terjun Curug Lawe Benowo Kalisidi',
+            'alamat_wisata' => 'RT.01/RW.06, Hutan, Kalisidi, Kec. Ungaran Bar., Kabupaten Semarang, Jawa Tengah 50519',
+            'jam_buka' => '08:00',
+            'jam_tutup' => '14:00',
+            'tarif_masuk_wisata' => 5000,
+            'tarif_parkir' => 5000,
+            'titik_lokasi' => '-7.157438861436413, 110.3567253324604'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3322',
+            'nama_wisata' => 'Candi Gedhong Songo',
+            'alamat_wisata' => 'Jalan Ke Candi Gedong Songo, Candi, Krajan, Banyukuning, Bandungan, Kabupaten Semarang, Jawa Tengah 50614',
+            'jam_buka' => '08:00',
+            'jam_tutup' => '17:00',
+            'tarif_masuk_wisata' => 10000,
+            'tarif_parkir' => 5000,
+            'titik_lokasi' => '-7.210013220778633, 110.34191500641236'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3322',
+            'nama_wisata' => 'Eling Bening',
+            'alamat_wisata' => 'Jl. Sarjono, Bawen, Kec. Bawen, Kabupaten Semarang, Jawa Tengah 50661',
+            'jam_buka' => '07:00',
+            'jam_tutup' => '18:30',
+            'tarif_masuk_wisata' => 35000,
+            'tarif_parkir' => 5000,
+            'titik_lokasi' => '-7.25230135621333, 110.42489764629794'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3306',
+            'nama_wisata' => 'Masjid Agung Purworejo',
+            'alamat_wisata' => '72Q5+367, Jl. Mayjen Sutoyo, Rw. V, Sindurjan, Kec. Purworejo, Kabupaten Purworejo, Jawa Tengah 54113',
+            'jam_buka' => '00:00',
+            'jam_tutup' => '23:59',
+            'tarif_masuk_wisata' => 0,
+            'tarif_parkir' => 15000,
+            'titik_lokasi' => '-7.712188147238898, 110.0080170794336'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3320',
+            'nama_wisata' => 'Taman Nasional Karimun Jawa',
+            'alamat_wisata' => '5C2Q+CRQ, Karimunjawa, Kabupaten Jepara, Jawa Tengah',
+            'jam_buka' => '08:00',
+            'jam_tutup' => '16:00',
+            'tarif_masuk_wisata' => 10000,
+            'tarif_parkir' => 0,
+            'titik_lokasi' => '-5.848677488448955, 110.43960986592113'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3372',
+            'nama_wisata' => 'Keraton Kasunanan Surakarta',
+            'alamat_wisata' => 'Jl. Kamandungan, Baluwarti, Kec. Ps. Kliwon, Kota Surakarta, Jawa Tengah 57144',
+            'jam_buka' => '09:00',
+            'jam_tutup' => '15:00',
+            'tarif_masuk_wisata' => 60000,
+            'tarif_parkir' => 0,
+            'titik_lokasi' => '-7.577560289582743, 110.82782872176018'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3307',
+            'nama_wisata' => 'Kebun Teh Tambi',
+            'alamat_wisata' => 'PXM6+423, Unnamed Road, Sawah, Tlogomulyo, Kec. Kertek, Kabupaten Wonosobo, Jawa Tengah 56371',
+            'jam_buka' => '00:00',
+            'jam_tutup' => '23:59',
+            'tarif_masuk_wisata' => 10000,
+            'tarif_parkir' => 10000,
+            'titik_lokasi' => '-7.267075368165608, 109.96011580684164' 
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3313',
+            'nama_wisata' => 'Museum De Tjolomadoe',
+            'alamat_wisata' => 'Jl. Adisucipto No.1, Paulan Wetan, Malangjiwan, Kec. Colomadu, Kabupaten Karanganyar, Jawa Tengah 57177',
+            'jam_buka' => '09:00',
+            'jam_tutup' => '17:00',
+            'tarif_masuk_wisata' => 40000,
+            'tarif_parkir' => 10000,
+            'titik_lokasi' => '-7.533943840572011, 110.74995208128257' 
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3308',
+            'nama_wisata' => 'Candi Borobudur',
+            'alamat_wisata' => 'Jl. Badrawati, Kw. Candi Borobudur, Borobudur, Kec. Borobudur, Kabupaten Magelang, Jawa Tengah',
+            'jam_buka' => '06:30',
+            'jam_tutup' => '16:30',
+            'tarif_masuk_wisata' => 75000,
+            'tarif_parkir' => 10000,
+            'titik_lokasi' => '-7.607813621904761, 110.20374336124162'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3305',
+            'nama_wisata' => 'Pantai Menganti Kebumen',
+            'alamat_wisata' => 'Tj. Karangboto, Karangduwur, Kec. Ayah, Kabupaten Kebumen, Jawa Tengah 54473',
+            'jam_buka' => '00:00',
+            'jam_tutup' => '23:59',
+            'tarif_masuk_wisata' => 5000,
+            'tarif_parkir' => 0,
+            'titik_lokasi' => '-7.7725295117605615, 109.41268256742842'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3312',
+            'nama_wisata' => 'Pantai Nampu',
+            'alamat_wisata' => 'Gunturharjo, Kec. Paranggupito, Kabupaten Wonogiri, Jawa Tengah 57678',
+            'jam_buka' => '00:00',
+            'jam_tutup' => '23:59',
+            'tarif_masuk_wisata' => 5000,
+            'tarif_parkir' => 0,
+            'titik_lokasi' => '-8.210427778584565, 110.90345430827571'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3308',
+            'nama_wisata' => 'Punthuk Setumbu',
+            'alamat_wisata' => 'Kurahan, Karangrejo, Kec. Borobudur, Kabupaten Magelang, Jawa Tengah 56553',
+            'jam_buka' => '04:00',
             'jam_tutup' => '17:00',
             'tarif_masuk_wisata' => 50000,
-            'tarif_parkir' => 15000,
-            'titik_lokasi' => '-7.751976,110.4905482'
+            'tarif_parkir' => 0,
+            'titik_lokasi' => '-7.6091657082633875, 110.17769919292468'
         ]);
+
+        Wisata::create([
+            'kota_kode' => '3313',
+            'nama_wisata' => 'Kebun Teh Kemuning',
+            'alamat_wisata' => 'C43M+Q8X, Jalan, Sumbersari, Kemuning, Ngargoyoso, Karanganyar Regency, Central Java 57794',
+            'jam_buka' => '08:00',
+            'jam_tutup' => '16:30',
+            'tarif_masuk_wisata' => 200000,
+            'tarif_parkir' => 10000,
+            'titik_lokasi' => '-7.59527879422588, 111.13334513710384'
+        ]);
+
+        // Wisata::create([
+        //     'kota_kode' => 'sleman',
+        //     'nama_wisata' => 'Candi Prambanan',
+        //     'alamat_wisata' => 'Jl. Raya Solo - Yogyakarta No.16, Kranggan, Bokoharjo, Kec. Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55571',
+        //     'jam_buka' => '06:30',
+        //     'jam_tutup' => '17:00',
+        //     'tarif_masuk_wisata' => 50000,
+        //     'tarif_parkir' => 0,
+        //     'titik_lokasi' => '-7.751871761196816, 110.4914244794342'
+        // ]);
+
+        Wisata::create([
+            'kota_kode' => '3313',
+            'nama_wisata' => 'TAWANGMANGU WONDER PARK',
+            'alamat_wisata' => 'Jalan, Ombang- Ombang, Blumbang, Kec. Tawangmangu, Kabupaten Karanganyar, Jawa Tengah 57792',
+            'jam_buka' => '08:00',
+            'jam_tutup' => '17:00',
+            'tarif_masuk_wisata' => 25000,
+            'tarif_parkir' => 0,
+            'titik_lokasi' => '-7.6592438785744825, 111.14504446901431'
+        ]); 
+
+        Wisata::create([
+            'kota_kode' => '3307',
+            'nama_wisata' => 'Gunung Sikunir',
+            'alamat_wisata' => 'Tieng Krajan, Tieng, Kec. Kejajar, Kabupaten Wonosobo, Jawa Tengah',
+            'jam_buka' => '00:00',
+            'jam_tutup' => '23:59',
+            'tarif_masuk_wisata' => 15000,
+            'tarif_parkir' => 10000,
+            'titik_lokasi' => '-7.237077843465941, 109.92929271397946'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3322',
+            'nama_wisata' => 'Gua Maria Kerep Ambarawa',
+            'alamat_wisata' => 'Jl. Gua Maria Kerep, Kerep, Panjang, Kec. Ambarawa, Kabupaten Semarang, Jawa Tengah 50614',
+            'jam_buka' => '00:00',
+            'jam_tutup' => '23:59',
+            'tarif_masuk_wisata' => 20000,
+            'tarif_parkir' => 5000,
+            'titik_lokasi' => '-7.253978563092638, 110.39921276223345'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3302',
+            'nama_wisata' => 'Lokawisata Baturraden',
+            'alamat_wisata' => 'Jl. Raya Baturaden No.174, Dusun I Karangmangu, Karangmangu, Kec. Baturaden, Kabupaten Banyumas, Jawa Tengah 53151',
+            'jam_buka' => '07:00',
+            'jam_tutup' => '17:00',
+            'tarif_masuk_wisata' => 25000,
+            'tarif_parkir' => 25000,
+            'titik_lokasi' => '-7.313245533897804, 109.22906199438982'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3309',
+            'nama_wisata' => 'Gunung Merbabu',
+            'alamat_wisata' => 'Suroteleng, Kec. Selo, Kabupaten Boyolali, Jawa Tengah',
+            'jam_buka' => '00:00',
+            'jam_tutup' => '23:59',
+            'tarif_masuk_wisata' => 50000,
+            'tarif_parkir' => 0, 
+            'titik_lokasi' => '-7.454488740307554, 110.43957051414229'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3305',
+            'nama_wisata' => 'Pantai Menganti',
+            'alamat_wisata' => 'Desa Karangduwur, Ayah, Kebumen, Jawa Tengah, Indonesia, 54473',
+            'jam_buka' => '07:00',
+            'jam_tutup' => '17:00',
+            'tarif_masuk_wisata' => 10000,
+            'tarif_parkir' => 0,
+            'titik_lokasi' => '-7.770161316614384, 109.41298340240887'
+        ]);
+
+        Wisata::create([
+            'kode_kota' => '3313',
+            'nama_wisata' => 'Sukuh Temple',
+            'alamat_wisata' => '94CJ+WH7, Tambak, Berjo, Kec. Ngargoyoso, Kabupaten Karanganyar, Jawa Tengah 57793',
+            'jam_buka' => '07:00',
+            'jam_tutup' => '15:00',
+            'tarif_masuk_wisata' => 10000,
+            'tarif_parkir' => 0,
+            'titik_lokasi' => '-7.6275077143135865, 111.13134629456283'
+        ]);
+
+
+        Wisata::create([
+            'kota_kode' => '3313',
+            'nama_wisata' => 'Candi Cetho',
+            'alamat_wisata'=> 'C534+J55, Ceto, RT.01/RW.03, Cetho, Gumeng, Kec. Jenawi, Kabupaten Karanganyar, Jawa Tengah 57792',
+            'jam_buka' => '07:30',
+            'jam_tutup' => '16:30',
+            'tarif_masuk_wisata' => 30000,
+            'tarif_parkir' => 0,
+            'titik_lokasi' => '-7.595530588321951, 111.1574540829253'
+        ]);
+        
     }
 }
