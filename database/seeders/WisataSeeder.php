@@ -15,7 +15,7 @@ class WisataSeeder extends Seeder
     {
         // wisata di jawa timur
         Wisata::create([
-            'kode_kota' => '3578',
+            'kota_kode' => '3578',
             'nama_wisata' => 'Kenjeran Park Surabaya',
             'alamat_wisata' => 'Sukolilo Baru, Bulak, Surabaya, East Java 60122',
             'jam_buka' => '08:00',
@@ -26,7 +26,7 @@ class WisataSeeder extends Seeder
         ]);
 
         Wisata::create([
-            'kode_kota' => '3578',
+            'kota_kode' => '3578',
             'nama_wisata' => 'Masjid Nasional Al Akbar Surabaya',
             'alamat_wisata' => 'Jl. Masjid Al-AkbarTimur No.1, Pagesangan, Kec. Jambangan, Surabaya, Jawa Timur 60274',
             'jam_buka' => '00:00',
@@ -533,14 +533,14 @@ class WisataSeeder extends Seeder
             'alamat_wisata' => 'Tulungrejo, Sumber Brantas, Kec. Bumiaji, Kota Batu, Jawa Timur 65336',
             'jam_buka' => '08:00',
             'jam_tutup' => '15:00',
-            'tarif_masuk_wisatar' => 15000,
+            'tarif_masuk_wisata' => 15000,
             'tarif_parkir' => 10000,
             'titik_lokasi' => '-7.742306712990577, 112.53287642179595'
         ]);
 
 
         Wisata::create([
-            'kode_kota' => '3529',
+            'kota_kode' => '3529',
             'nama_wisata' => 'Museum Kraton Sumenep',
             'alamat_wisata' => 'XVR8+32M, Jl. Dr. Sutomo No.6, Lingkungan Delama, Pajagalan, Kec. Kota Sumenep, Kabupaten Sumenep, Jawa Timur 69416',
             'jam_buka' => '07:00',
@@ -552,7 +552,7 @@ class WisataSeeder extends Seeder
 
 
         Wisata::create([
-            'kode_kota' => '3529',
+            'kota_kode' => '3529',
             'nama_wisata' => 'Taman Adipura Sumenep',
             'alamat_wisata' => 'XVR6+M3X, Jl. Veteran, Lingkungan Delama, Pajagalan, Kec. Kota Sumenep, Kabupaten Sumenep, Jawa Timur 69416',
             'jam_buka' => '00:00',
@@ -568,7 +568,7 @@ class WisataSeeder extends Seeder
             'nama_wisata' => 'Pantai Matahari Lobuk',
             'alamat_wisata' => 'VR97+7M, Tarogan, Lobuk, Kec. Bluto, Kabupaten Sumenep, Jawa Timur',
             'jam_buka' =>  '00:00',
-            'jam_tutup' => '23;59',
+            'jam_tutup' => '23:59',
             'tarif_masuk_wisata' => 0,
             'tarif_parkir' => 0,
             'titik_lokasi' => '-7.131173805332789, 113.81411930829462'
