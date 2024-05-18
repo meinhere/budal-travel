@@ -58,43 +58,43 @@ class KotaSeeder extends Seeder
         ]);
 
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3514',
             'nama_kota' => 'Pasuruan',
         ]);
 
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3508',
             'nama_kota' => 'Lumajang',
         ]);
 
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3519',
             'nama_kota' => 'Madiun',
         ]);
 
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3515',
             'nama_kota' => 'Sidoarjo',
         ]);
 
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3528',
             'nama_kota' => 'Pamekasan',
         ]);
 
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3523',
             'nama_kota' => 'Tuban', 
         ]);
         
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3524',
             'nama_kota' => 'Lamongan', 
         ]);
