@@ -12,6 +12,7 @@ class Wisata extends Model
     protected $table = 'wisata';
     protected $primaryKey = 'kode_wisata';
     protected $guarded = ['kode_wisata'];
+    public $timestamps = false;
 
     public static function boot()
     {

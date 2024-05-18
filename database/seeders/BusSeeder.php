@@ -19,7 +19,7 @@ class BusSeeder extends Seeder
         */
 
         Bus::create([
-            'kategori_kode' => '1',
+            'kategori_kode' => 'KB01',
             'status_bus_kode' => '1',
             'nama_bus' => 'Jetbus 3+ Voyager',
             'kapasitas_solar' => '270',
@@ -28,7 +28,7 @@ class BusSeeder extends Seeder
         ]);
         
         Bus::create([
-            'kategori_kode' => '1',
+            'kategori_kode' => 'KB01',
             'status_bus_kode' => '1',
             'nama_bus' => 'Jetbus 3+ Voyager',
             'kapasitas_solar' => '270',
@@ -37,7 +37,7 @@ class BusSeeder extends Seeder
         ]);
 
         Bus::create([
-            'kategori_kode' => '1',
+            'kategori_kode' => 'KB01',
             'status_bus_kode' => '1',
             'nama_bus' => 'Jetbus 3+ Voyager',
             'kapasitas_solar' => '270',
@@ -46,7 +46,7 @@ class BusSeeder extends Seeder
         ]);
 
         Bus::create([
-            'kategori_kode' => '1',
+            'kategori_kode' => 'KB01',
             'status_bus_kode' => '1',
             'nama_bus' => 'Jetbus 3+ Voyager',
             'kapasitas_solar' => '270',
@@ -55,7 +55,7 @@ class BusSeeder extends Seeder
         ]);
 
         Bus::create([
-            'kategori_kode' => '1',
+            'kategori_kode' => 'KB01',
             'status_bus_kode' => '1',
             'nama_bus' => 'Jetbus 3+ Voyager',
             'kapasitas_solar' => '270',
@@ -68,7 +68,7 @@ class BusSeeder extends Seeder
         */
 
         Bus::create([
-            'kategori_kode' => '2',
+            'kategori_kode' => 'KB02',
             'status_bus_kode' => '1',
             'nama_bus' => 'Jetbus 5',
             'kapasitas_solar' => '350',
@@ -77,7 +77,7 @@ class BusSeeder extends Seeder
         ]);
 
         Bus::create([
-            'kategori_kode' => '2',
+            'kategori_kode' => 'KB02',
             'status_bus_kode' => '1',
             'nama_bus' => 'Jetbus 5',
             'kapasitas_solar' => '350',
@@ -86,7 +86,7 @@ class BusSeeder extends Seeder
         ]);
 
         Bus::create([
-            'kategori_kode' => '2',
+            'kategori_kode' => 'KB02',
             'status_bus_kode' => '1',
             'nama_bus' => 'Jetbus 5',
             'kapasitas_solar' => '350',

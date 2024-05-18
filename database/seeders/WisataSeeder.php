@@ -15,7 +15,7 @@ class WisataSeeder extends Seeder
     {
         // wisata di jawa timur
         Wisata::create([
-            'kota_kode' => '3578',
+            'kode_kota' => '3578',
             'nama_wisata' => 'Kenjeran Park Surabaya',
             'alamat_wisata' => 'Sukolilo Baru, Bulak, Surabaya, East Java 60122',
             'jam_buka' => '08:00',
@@ -952,37 +952,37 @@ class WisataSeeder extends Seeder
         ]);
 
         Wisata::create([
-            'kota_kode' => '3305',
-            'nama_wisata' => 'Pantai Menganti',
-            'alamat_wisata' => 'Desa Karangduwur, Ayah, Kebumen, Jawa Tengah, Indonesia, 54473',
-            'jam_buka' => '07:00',
+            'kota_kode' => '3374',
+            'nama_wisata' => 'Taman Bunga Celosia Semarang',
+            'alamat_wisata' => 'Banyukuning, Bandungan, Semarang Regency, Central Java 50614',
+            'jam_buka' => '08:00',
+            'jam_tutup' => '16:00',
+            'tarif_masuk_wisata' => 20000,
+            'tarif_parkir' => 15000,
+            'titik_lokasi' => '-7.225358,110.3417579'
+        ]);
+
+        Wisata::create([
+            'kota_kode' => '3374',
+            'nama_wisata' => 'Museum Lawang Sewu Semarang',
+            'alamat_wisata' => 'Jl. Pemuda No.160, Sekayu, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50132',
+            'jam_buka' => '08:00',
+            'jam_tutup' => '20:00',
+            'tarif_masuk_wisata' => 20000,
+            'tarif_parkir' => 10000,
+            'titik_lokasi' => '-6.9839838,110.4095893'
+        ]);
+
+
+        Wisata::create([
+            'kota_kode' => '3471',
+            'nama_wisata' => 'Candi Prambanan',
+            'alamat_wisata' => 'JJl. Raya Solo - Yogyakarta No.16, Kranggan, Bokoharjo, Kec. Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55571',
+            'jam_buka' => '06:00',
             'jam_tutup' => '17:00',
-            'tarif_masuk_wisata' => 10000,
-            'tarif_parkir' => 0,
-            'titik_lokasi' => '-7.770161316614384, 109.41298340240887'
-        ]);
-
-        Wisata::create([
-            'kode_kota' => '3313',
-            'nama_wisata' => 'Sukuh Temple',
-            'alamat_wisata' => '94CJ+WH7, Tambak, Berjo, Kec. Ngargoyoso, Kabupaten Karanganyar, Jawa Tengah 57793',
-            'jam_buka' => '07:00',
-            'jam_tutup' => '15:00',
-            'tarif_masuk_wisata' => 10000,
-            'tarif_parkir' => 0,
-            'titik_lokasi' => '-7.6275077143135865, 111.13134629456283'
-        ]);
-
-
-        Wisata::create([
-            'kota_kode' => '3313',
-            'nama_wisata' => 'Candi Cetho',
-            'alamat_wisata'=> 'C534+J55, Ceto, RT.01/RW.03, Cetho, Gumeng, Kec. Jenawi, Kabupaten Karanganyar, Jawa Tengah 57792',
-            'jam_buka' => '07:30',
-            'jam_tutup' => '16:30',
-            'tarif_masuk_wisata' => 30000,
-            'tarif_parkir' => 0,
-            'titik_lokasi' => '-7.595530588321951, 111.1574540829253'
+            'tarif_masuk_wisata' => 50000,
+            'tarif_parkir' => 15000,
+            'titik_lokasi' => '-7.751976,110.4905482'
         ]);
         
     }

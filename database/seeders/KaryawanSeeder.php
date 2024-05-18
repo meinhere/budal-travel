@@ -16,7 +16,7 @@ class KaryawanSeeder extends Seeder
         Karyawan::create([
             'role_id' => '1',
             'login_id' => '3',
-            'jenis_kelamin_id' => '1',
+            'jenis_kelamin_kode' => '1',
             'nama_karyawan' => 'Saiful Huda',
             'no_telepon' => '082146153816'
         ]);
@@ -24,7 +24,7 @@ class KaryawanSeeder extends Seeder
         Karyawan::create([
             'role_id' => '2',
             'login_id' => '2',
-            'jenis_kelamin_id' => '1',
+            'jenis_kelamin_kode' => '1',
             'nama_karyawan' => 'Habibul Akhyar',
             'no_telepon' => '087865306707'
         ]);

@@ -12,6 +12,7 @@ class Karyawan extends Model
     protected $table = 'karyawan';
     protected $primaryKey = 'id_karyawan';
     protected $guarded = ['id_karyawan'];
+    public $timestamps = false;
 
     public static function boot()
     {
