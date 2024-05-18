@@ -58,43 +58,43 @@ class KotaSeeder extends Seeder
         ]);
 
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3514',
             'nama_kota' => 'Pasuruan',
         ]);
 
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3508',
             'nama_kota' => 'Lumajang',
         ]);
 
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3519',
             'nama_kota' => 'Madiun',
         ]);
 
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3515',
             'nama_kota' => 'Sidoarjo',
         ]);
 
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3528',
             'nama_kota' => 'Pamekasan',
         ]);
 
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3523',
             'nama_kota' => 'Tuban', 
         ]);
         
         Kota::create([
-            'provinsi_kota' => '35',
+            'provinsi_kode' => '35',
             'kode_kota' => '3524',
             'nama_kota' => 'Lamongan', 
         ]);
@@ -124,8 +124,6 @@ class KotaSeeder extends Seeder
             'nama_kota' => 'Mojokerto',
         ]);
 
-
-
         // daftar kota di jawa tengah
         Kota::create([
             'provinsi_kode' => '33', 
@@ -135,10 +133,109 @@ class KotaSeeder extends Seeder
 
         Kota::create([
             'provinsi_kode' => '33', 
-            'kode_kota' => '3372',
+            'kode_kota' => '3308',
             'nama_kota' => 'Magelang',
         ]);
+    
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3313',
+            'nama_kota' => 'Karanganyar',
+        ]);
 
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3314',
+            'nama_kota' => 'Sragen',
+        ]);
+
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3304',
+            'nama_kota' => 'Banjarnegara',
+        ]);
+
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3322',
+            'nama_kota' => 'Semarang',
+        ]);
+
+
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3321',
+            'nama_kota' => 'Demak',
+        ]);
+
+
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3328',
+            'nama_kota' => 'Tegal',
+        ]);
+
+
+
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3306',
+            'nama_kota' => 'Purworejo',
+        ]);
+
+
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3320',
+            'nama_kota' => 'Jepara',
+        ]);
+
+
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3372',
+            'nama_kota' => 'Surakarta',
+        ]);
+
+
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3307',
+            'nama_kota' => 'Wonosobo',
+        ]);
+
+
+        // Kota::create([
+        //     'provinsi_kode' => '33', 
+        //     'kode_kota' => '3308',
+        //     'nama_kota' => 'Magelang',
+        // ]);
+
+
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3305',
+            'nama_kota' => 'Kebumen',
+        ]);
+
+
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3312',
+            'nama_kota' => 'Wonogiri',
+        ]);
+
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3302',
+            'nama_kota' => 'Banyumas',
+        ]);
+
+        Kota::create([
+            'provinsi_kode' => '33', 
+            'kode_kota' => '3309',
+            'nama_kota' => 'Boyolali',
+        ]);
 
         // daftar kota di Yogyakarta
         Kota::create([
