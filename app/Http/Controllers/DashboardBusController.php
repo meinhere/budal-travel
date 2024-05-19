@@ -12,7 +12,14 @@ class DashboardBusController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'title' => "Kelola Bus - Dashboard",
+            'background' => '/storage/img/bg/image-login-page.jpg',
+            'bus' => Bus::with(['kategori_bus', 'status_bus'])->paginate(10),
+            'count' => Bus::count()
+        ];
+        
+        return view('dashboard.bus.index', $data);
     }
 
     /**

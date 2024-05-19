@@ -13,12 +13,13 @@ class Kota extends Model
     protected $primaryKey = 'kode_kota';
     protected $fillable = ['kode_kota', 'provinsi_kode', 'nama_kota'];
     public $timestamps = false;
+    public $incrementing = false;
 
     public function provinsi() {
-        return $this->belongsTo(Provinsi::class);
+        return $this->belongsTo(Provinsi::class, 'provinsi_kode', 'kode_provinsi');
     }
 
     public function wisata() {
-        return $this->hasMany(Wisata::class);
+        return $this->hasMany(Wisata::class, 'kota_kode', 'kode_kota');
     }
 }

@@ -13,6 +13,7 @@ class Role extends Model
     protected $primaryKey = 'id_role';
     protected $guarded = ['id_role'];
     public $timestamps = false;
+    public $incrementing = false;
 
     public static function boot()
     {
@@ -24,6 +25,7 @@ class Role extends Model
     }
 
     public function karyawan() {
-        return $this->hasMany(Karyawan::class);
+        return $this->hasMany(Karyawan::class, 'role_id', 'id_role');
     }
+
 }

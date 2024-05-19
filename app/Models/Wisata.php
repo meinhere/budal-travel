@@ -13,6 +13,7 @@ class Wisata extends Model
     protected $primaryKey = 'kode_wisata';
     protected $guarded = ['kode_wisata'];
     public $timestamps = false;
+    public $incrementing = false;
 
     public static function boot()
     {
@@ -25,10 +26,10 @@ class Wisata extends Model
     }
 
     public function kota() {
-        return $this->belongsTo(Kota::class);
+        return $this->belongsTo(Kota::class, 'kota_kode', 'kode_kota');
     }
 
     public function reservasi_detail() {
-        return $this->hasMany(ReservasiDetail::class);
+        return $this->hasMany(ReservasiDetail::class, 'kode_wisata', 'kode_wisata');
     }
 }

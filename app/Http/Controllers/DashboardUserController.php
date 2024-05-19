@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Karyawan;
+use App\Models\Login;
 use Illuminate\Http\Request;
 
 class DashboardUserController extends Controller
@@ -11,7 +13,14 @@ class DashboardUserController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'title' => "Kelola Users - Dashboard",
+            'background' => '/storage/img/bg/image-login-page.jpg',
+            'users' => Login::with(['pelanggan', 'karyawan'])->paginate(10),
+            'count' => Login::count(),
+        ];
+        
+        return view('dashboard.user.index', $data);
     }
 
     /**

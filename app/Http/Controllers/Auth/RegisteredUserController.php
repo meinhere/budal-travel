@@ -35,7 +35,6 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // dd($request->all());
         $request->validate([
             'nama_pelanggan' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:login'],

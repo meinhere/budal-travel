@@ -46,10 +46,10 @@ class Login extends Authenticatable
     }
 
     public function pelanggan() {
-        return $this->hasOne(Pelanggan::class);
+        return $this->hasOne(Pelanggan::class, 'login_id', 'id_login');
     }
 
     public function karyawan() {
-        return $this->hasOne(Karyawan::class);
+        return $this->hasOne(Karyawan::class, 'login_id', 'id_login');
     }
 }
