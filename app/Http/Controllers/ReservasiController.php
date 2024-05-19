@@ -3,18 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bus;
+use App\Models\Kota;
+use App\Models\Provinsi;
 use Illuminate\Http\Request;
 
 class ReservasiController extends Controller
 {
     public function index() {
+        $kota = Kota::with('provinsi')->get();
         $data = [
             'title' => "Halaman Home",
             'background' => '/storage/img/bg/background-landing.jpg',
+            'kota' => Kota::with('provinsi')->get(),
         ];
         return view('home', $data);
     }
-    
+
     public function search(Request $request) {
         $data = [
             'bus' => Bus::where('status_bus_kode', '1')->get(),
@@ -26,7 +30,7 @@ class ReservasiController extends Controller
         $data = [
             'title' => "Halaman Show",
             'background' => '/storage/img/bg/background-detail.jpg',
-            'bus' => Bus::where('status_bus_kode', '1')->get(),
+            'kota' => Kota::with('provinsi')->get(),
         ];
         return view('search', $data);
     }
