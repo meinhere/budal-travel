@@ -13,7 +13,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 // ----- HOME ROUTE -----
 Route::get('/', [ReservasiController::class, 'index'])->name('home');
-Route::post('/search', [ReservasiController::class, 'search'])->name('search');
+Route::post('/  ', [ReservasiController::class, 'search'])->name('search');
 Route::get('/search/{kota}', [ReservasiController::class, 'show'])->name('show');
 
 // ----- DASHBOARD ROUTE -----
