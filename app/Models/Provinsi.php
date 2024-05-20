@@ -15,6 +15,6 @@ class Provinsi extends Model
     public $timestamps = false;
 
     public function kota() {
-        return $this->hasMany(Kota::class);
+        return $this->hasMany(Kota::class, 'provinsi_kode', 'kode_provinsi');
     }
 }

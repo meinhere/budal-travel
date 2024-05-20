@@ -1,8 +1,8 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
     <x-slot:background>{{ $background }}</x-slot:background>
-    
-    <x-input-search />
+
+    <x-input-search :kota="$kota" />
 
     <div class="text-base">
       <div class="items-center hidden w-full gap-4 px-3 py-2 mx-auto mt-5 bg-white shadow-lg sm:flex md:w-3/4 md:h-3/5 text-secondary-base rounded-xl md:px-8">
@@ -43,7 +43,7 @@
           </div>
         </div>
         <div class="flex justify-center basis-full sm:basis-1/6">
-          <a href="#" class="px-5 py-3 text-sm font-medium rounded-md bg-primary-200 text-secondary-base">PESAN</a>
+            <a href="/order/1" class="px-5 py-3 text-sm font-medium rounded-md bg-primary-200 text-secondary-base">PESAN</a>
         </div>
       </div>
 
@@ -60,9 +60,8 @@
           </div>
         </div>
         <div class="flex justify-center basis-full sm:basis-1/6">
-          <a class="px-5 py-3 text-sm font-medium rounded-md bg-grey-100 text-secondary-base">PESAN</a>
+            <a href="#" class="px-5 py-3 text-sm font-medium rounded-md bg-primary-200 text-secondary-base">PESAN</a>
         </div>
       </div>
-      
     </div>
 </x-layout>
