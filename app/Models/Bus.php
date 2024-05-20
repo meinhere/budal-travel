@@ -34,6 +34,6 @@ class Bus extends Model
     }
 
     public function reservasi() {
-        return $this->hasMany(Reservasi::class, 'kode_bus', 'kode_bus');
+        return $this->hasMany(Reservasi::class, 'bus_kode', 'kode_bus');
     }
 }

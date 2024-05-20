@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreign('status_bus_kode')->references('kode_status')->on('status_bus');
             $table->string('nama_bus', 50);
             $table->float('kapasitas_solar');
+            $table->char('kecepatan', 3);
             $table->integer('jumlah_kursi');
             $table->integer('harga_sewa');
         });

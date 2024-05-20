@@ -31,6 +31,11 @@ class ReservasiController extends Controller
             'title' => "Halaman Show",
             'background' => '/storage/img/bg/background-detail.jpg',
             'kota' => Kota::with('provinsi')->get(),
+            'bus' => Bus::with([
+                'status_bus',
+                'kategori_bus',
+                'reservasi'
+            ])->get()
         ];
         return view('search', $data);
     }
@@ -39,6 +44,7 @@ class ReservasiController extends Controller
         $data = [
             'title' => "Halaman Order",
             'background' => '/storage/img/bg/background-detail.jpg',
+            // 'kode_kota' => Kota::findwhere
         ];
         return view('order', $data);
     }

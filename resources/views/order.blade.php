@@ -1,6 +1,7 @@
 <x-layout>
   <x-slot:title>{{ $title }}</x-slot:title>
   <x-slot:background>{{ $background }}</x-slot:background>
+
   
   <div class="flex flex-wrap justify-center max-w-5xl gap-12 pt-5 mx-2 md:flex-nowrap md:mx-auto">
     <div class="px-5 py-6 bg-white rounded-lg md:px-10 md:py-8 md:basis-4/5">

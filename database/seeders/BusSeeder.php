@@ -25,15 +25,17 @@ class BusSeeder extends Seeder
             'kapasitas_solar' => '270',
             'jumlah_kursi' => 60,
             'harga_sewa' => 6000000,
+            'kecepatan' => '115'
         ]);
         
         Bus::create([
             'kategori_kode' => 'KB01',
-            'status_bus_kode' => '1',
+            'status_bus_kode' => '2',
             'nama_bus' => 'Jetbus 3+ Voyager',
             'kapasitas_solar' => '270',
             'jumlah_kursi' => 60,
             'harga_sewa' => 6000000,
+            'kecepatan' => '115'
         ]);
 
         Bus::create([
@@ -43,6 +45,7 @@ class BusSeeder extends Seeder
             'kapasitas_solar' => '270',
             'jumlah_kursi' => 60,
             'harga_sewa' => 6000000,
+            'kecepatan' => '115'
         ]);
 
         Bus::create([
@@ -52,6 +55,7 @@ class BusSeeder extends Seeder
             'kapasitas_solar' => '270',
             'jumlah_kursi' => 60,
             'harga_sewa' => 6000000,
+            'kecepatan' => '115'
         ]);
 
         Bus::create([
@@ -61,6 +65,7 @@ class BusSeeder extends Seeder
             'kapasitas_solar' => '270',
             'jumlah_kursi' => 60,
             'harga_sewa' => 6000000,
+            'kecepatan' => '115'
         ]);
 
         /*
@@ -74,6 +79,7 @@ class BusSeeder extends Seeder
             'kapasitas_solar' => '350',
             'jumlah_kursi' => 60,
             'harga_sewa' => '8000000',
+            'kecepatan' => '127'
         ]);
 
         Bus::create([
@@ -83,15 +89,17 @@ class BusSeeder extends Seeder
             'kapasitas_solar' => '350',
             'jumlah_kursi' => 60,
             'harga_sewa' => '8000000',
+            'kecepatan' => '127'
         ]);
 
         Bus::create([
             'kategori_kode' => 'KB02',
-            'status_bus_kode' => '1',
+            'status_bus_kode' => '2',
             'nama_bus' => 'Jetbus 5',
             'kapasitas_solar' => '350',
             'jumlah_kursi' => 60,
             'harga_sewa' => '8000000',
+            'kecepatan' => '127'
         ]);
     }
 }
