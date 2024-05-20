@@ -24,17 +24,17 @@
         <x-dropdown align="right" width="48">
             <x-slot name="trigger">
                 <button @click="isOpen = !isOpen" class="inline-flex items-center gap-2 transition duration-150 ease-in-outborder-transparent ">
-                    <x-carbon-user-avatar-filled class="w-12 h-12 text-primary-200" />
-                    <x-bi-chevron-down x-show="!isOpen" class="w-6 h-6 text-primary-base" />
-                    <x-bi-chevron-up x-show="isOpen" class="w-6 h-6 text-primary-base" />
+                  @svg('carbon-user-avatar-filled', ['class' => 'w-12 h-12 text-primary-200'])
+                  @svg('carbon-chevron-down', ['class' => 'w-6 h-6 text-primary-base', 'x-show' => '!isOpen'])
+                  @svg('carbon-chevron-up', ['class' => 'w-6 h-6 text-primary-base', 'x-show' => 'isOpen'])
                 </button>
             </x-slot> 
 
             <x-slot name="content">
-                <div class="block w-full px-4 py-2 text-sm leading-5 text-gray-700 border-b border-gray-200 text-start">{{ session()->get('user')->nama_pelanggan }}</div>
+                <div class="block w-full px-4 py-2 text-sm leading-5 text-gray-700 border-b border-gray-200 text-start">{{ session()->get('user')->nama_pelanggan ?? session()->get('user')->nama_karyawan }}</div>
 
                 <x-dropdown-link :href="route('profile.edit')">
-                    {{ __('Edit Profile') }}
+                  {{ __('Edit Profile') }}
                 </x-dropdown-link>
 
                 <!-- Authentication -->
@@ -81,7 +81,7 @@
   @auth
   <div :class="{'block': isOpen, 'hidden': ! isOpen}" class="hidden sm:hidden bg-grey-100">
     <div class="px-4 py-4 space-y-1">
-        <div class="text-base font-semibold text-gray-800">Halo, {{ Auth::user()->nama_pelanggan }}</div>
+        <div class="text-base font-semibold text-gray-800">Halo, {{ session()->get('user')->nama_pelanggan ?? session()->get('user')->nama_karyawan }}</div>
     </div>
     
     <div class="pt-2 pb-3 space-y-1 border-t border-gray-600">

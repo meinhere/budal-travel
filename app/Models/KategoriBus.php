@@ -12,6 +12,8 @@ class KategoriBus extends Model
     protected $table = 'kategori_bus';
     protected $primaryKey = 'kode_kategori';
     protected $guarded = ['kode_kategori'];
+    public $timestamps = false;
+    public $incrementing = false;
 
     public static function boot()
     {
@@ -24,6 +26,6 @@ class KategoriBus extends Model
     }
 
     public function bus() {
-        return $this->hasMany(Bus::class);
+        return $this->hasMany(Bus::class, 'kategori_kode', 'kode_kategori');
     }
 }

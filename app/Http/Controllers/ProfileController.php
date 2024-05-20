@@ -18,7 +18,7 @@ class ProfileController extends Controller
     {
         $data = [
             'title' => "Edit Profile",
-            'background' => '/img/bg/background-landing.jpg',
+            'background' => 'storage/img/bg/background-landing.jpg',
             'user' => $request->user(),
         ];
 

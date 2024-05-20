@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\Karyawan;
 use App\Models\Pelanggan;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -21,7 +22,6 @@ class AuthenticatedSessionController extends Controller
             'title' => "Halaman Login",
             'background' => '/storage/img/bg/background-landing.jpg',
             'background_caption' => '/storage/img/bg/image-login-page.jpg',
-
         ];
         return view('auth.login', $data);
     }
@@ -32,12 +32,18 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-        
         $request->session()->regenerate();
-        $user = Pelanggan::where('login_id', auth()->user()->id_login)->first();
-        $request->session()->put('user', $user);
 
-        return redirect()->intended(route('home', absolute: false));
+        $pelanggan = Pelanggan::where('login_id', auth()->user()->id_login)->first();
+        $karyawan = Karyawan::with('role')->where('login_id', auth()->user()->id_login)->first();
+
+        if ($pelanggan) {
+            $request->session()->put('user', $pelanggan);
+            return redirect()->intended(route('home'));
+        } else {
+            $request->session()->put('user', $karyawan);
+            return redirect()->intended(route('dashboard'));
+        }
     }
 
     /**

@@ -12,6 +12,7 @@ class Pelanggan extends Model
     protected $table = 'pelanggan';
     protected $primaryKey = 'id_pelanggan';
     protected $guarded = ['kode_pelanggan'];
+    public $incrementing = false;
 
     public static function boot()
     {
@@ -24,10 +25,10 @@ class Pelanggan extends Model
     }
 
     public function login() {
-        return $this->belongsTo(Login::class);
+        return $this->belongsTo(Login::class, 'login_id', 'id_login');
     }
 
     public function jenis_kelamin() {
-        return $this->belongsTo(JenisKelamin::class);
+        return $this->belongsTo(JenisKelamin::class, 'jenis_kelamin_kode', 'kode_jenis_kelamin');
     }
 }

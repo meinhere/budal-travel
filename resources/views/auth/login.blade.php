@@ -37,22 +37,22 @@
             <x-label-auth for="password">Password</x-label-auth> 
 
             <button type="button" @click="show = !show">
-              <x-bi-eye-fill x-show="show" class="absolute block w-6 h-6 top-3 right-4 text-primary-base hover:cursor-pointer"/>
-              <x-bi-eye-slash-fill x-show="!show" class="absolute block w-6 h-6 top-3 right-4 text-primary-base hover:cursor-pointer"/>
+              @svg('bi-eye-fill', ['class' => 'absolute block w-6 h-6 top-3 right-4 text-primary-base hover:cursor-pointer', 'x-show' => 'show'])
+              @svg('bi-eye-slash-fill', ['class' => 'absolute block w-6 h-6 top-3 right-4 text-primary-base hover:cursor-pointer', 'x-show' => '!show'])
             </button>
           </div>
           <x-input-error :messages="$errors->get('password')" class="mb-3"></x-input-error>
         </div>
 
         {{-- Remember Me --}}
-        <div class="inline-flex items-center">
+        <div class="flex items-center gap-2">
           <input
             type="checkbox"
             class="rounded-md focus:ring-0 focus:ring-transparent"
             id="remember"
             name="remember"
           />
-          <label for="remember" class="pl-2 text-sm font-light tracking-wide text-primary-base">Ingat Saya?</label>
+          <label for="remember" class="text-sm font-light tracking-wide text-primary-base">Ingat Saya?</label>
         </div>
 
         <button

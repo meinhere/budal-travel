@@ -13,12 +13,7 @@
         <div class="order-2 px-1 py-3 md:order-1 md:basis-4/6">
           <div class="form-head">
             <div class="flex w-full pt-4 titik-jemput">
-              <label for="">
-                <svg class="w-8 h-8 text-secondary-base dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.8 13.938h-.011a7 7 0 1 0-11.464.144h-.016l.14.171c.1.127.2.251.3.371L12 21l5.13-6.248c.194-.209.374-.429.54-.659l.13-.155Z"/>
-              </svg>
-              </label>
+              @svg('iconpark-localtwo-o', ['class' => 'w-8 h-8 text-secondary-base'])
               <input type="text" placeholder="Pilih Titik Jemput" class="border-0">
             </div>
             <div class="w-full pt-4 maps">
@@ -27,9 +22,8 @@
             <div class="py-4 input-group">
               <div class="w-full pt-4 wisata">
                 <label class="flex items-center">
-                  <svg class="w-8 h-8 text-secondary-base" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.5 12A2.5 2.5 0 0 1 21 9.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v2.5a2.5 2.5 0 0 1 0 5V17a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-2.5a2.5 2.5 0 0 1-2.5-2.5Z"/>
-                  </svg> <span class="pl-3 text-secondary-base">Tambah Wisata</span>            
+                  @svg('iconpark-ticketone-o', ['class' => 'w-8 h-8 text-secondary-base'])
+                  <span class="pl-3 text-secondary-base">Tambah Wisata</span>            
                 </label>
               </div>
               <div class="w-full pt-4" x-data="{ inputs: [{}] }">
@@ -41,10 +35,8 @@
                         <option x-text="name" :value="id"></option>
                       </template>
                     </select>
-                    <button type="button" class="ml-2 border border-transparent rounded hover:border-gray-400" @click="inputs.push({})">
-                      <svg class="w-6 h-6 text-secondary-base" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
-                      </svg>
+                    <button type="button" class="ml-2 border border-transparent rounded" @click="inputs.push({})">
+                      @svg("iconpark-plus", ['class' => 'w-6 h-6 text-secondary-base hover:text-black'])
                     </button>
                   </div>
                 </template>
@@ -53,9 +45,7 @@
             <div class="py-4 input-group">
               <div class="w-full pt-4 wisata">
                 <label class="flex items-center">
-                  <svg class="w-8 h-8 text-secondary-base" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                  </svg>
+                    @svg('iconpark-peoples-o', ['class' => 'w-8 h-8 text-secondary-base'])
                     <span class="pl-3 text-secondary-base">Jumlah Penumpang</span>            
                 </label>
               </div>
@@ -84,12 +74,10 @@
 
           <button type="submit" class="w-full py-3 font-bold rounded-lg bg-primary-200 text-secondary-base">Pesan</button>
         </div>
-        <div class="order-1 px-1 md:order-2 md:basis-2/6">
+        <div class="order-1 px-1 py-3 md:order-2 md:basis-2/6">
             <div class="flex flex-col w-full pt-4 jam-berangkat">
               <label class="flex items-center">
-                <svg class="w-8 h-8 text-secondary-base" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                </svg>
+                @svg('bi-clock', ['class' => 'w-7 h-7 text-secondary-base'])
                 <span class="pl-3 text-secondary-base">Jam Berangkat</span>            
               </label>
               <div class="w-full px-4 py-2 mt-4 rounded-lg bg-secondary-100 text-secondary-base">
@@ -112,7 +100,7 @@
         </div>
   
         <div class="flex justify-center my-8 detail-icon">
-          <x-iconpark-switch-o class="p-1 rotate-90 rounded-full h-7 w-7 bg-primary-base" />
+          @svg('iconpark-switch-o', ['class' => 'p-1 rotate-90 rounded-full h-7 w-7 bg-primary-base'])
         </div>
   
         <div class="detail-foot">

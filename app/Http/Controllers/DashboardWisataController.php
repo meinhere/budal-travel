@@ -12,7 +12,14 @@ class DashboardWisataController extends Controller
      */
     public function index()
     {
-        //
+        $data = [
+            'title' => "Kelola Wisata - Dashboard",
+            'background' => '/storage/img/bg/image-login-page.jpg',
+            'wisata' => Wisata::with(['kota'])->paginate(10),
+            'count' => Wisata::count()
+        ];
+        
+        return view('dashboard.wisata.index', $data);
     }
 
     /**
