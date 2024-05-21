@@ -1,8 +1,8 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
     <x-slot:background>{{ $background }}</x-slot:background>
-
-    <x-input-search :kota="$kota" :bus='$bus' />
+    
+    <x-input-search :kota="$kota" :kode="$kode_kota" />
 
     <div class="text-base">
       <div class="items-center hidden w-full gap-4 px-3 py-2 mx-auto mt-5 bg-white shadow-lg sm:flex md:w-3/4 md:h-3/5 text-secondary-base rounded-xl md:px-8">
@@ -30,12 +30,11 @@
                 </div>
               </div>
             </div>
-            {{-- @dd(url()->path()) --}}
             <div class="flex justify-center basis-full sm:basis-1/6">
                 @if($b->status_bus_kode == 1)
-                        <a href="{{'/order/'  . Request::route('kota')}}" class="px-5 py-3 text-sm font-medium rounded-md bg-primary-200 text-secondary-base">PESAN</a>
-                    @else
-                        <a href="#" class="px-5 py-3 text-sm font-medium rounded-md bg-primary-200 text-secondary-base">PESAN</a>
+                  <a href="{{ route('order', ['kota' => $kode_kota, 'bus' => $b->kode_bus]) }}" class="px-5 py-3 text-sm font-medium rounded-md bg-primary-200 text-secondary-base">PESAN</a>
+                @else
+                  <a class="px-5 py-3 text-sm font-medium bg-gray-100 rounded-md shadow text-secondary-base">PESAN</a>
                 @endif
             </div>
         </div>

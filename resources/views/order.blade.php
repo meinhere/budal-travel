@@ -1,7 +1,6 @@
 <x-layout>
   <x-slot:title>{{ $title }}</x-slot:title>
   <x-slot:background>{{ $background }}</x-slot:background>
-
   
   <div class="flex flex-wrap justify-center max-w-5xl gap-12 pt-5 mx-2 md:flex-nowrap md:mx-auto">
     <div class="px-5 py-6 bg-white rounded-lg md:px-10 md:py-8 md:basis-4/5">
@@ -27,15 +26,19 @@
                   <span class="pl-3 text-secondary-base">Tambah Wisata</span>            
                 </label>
               </div>
-              <div class="w-full pt-4" x-data="{ inputs: [{}] }">
+              <div class="w-full pt-4" x-data="{ inputs: [{}] }" id="list-wisata">
                 <template x-for="(input, index) in inputs" :key="index">
-                  <div class="flex input-group dropdown">
-                    <select class="mr-2" x-data="{ wisata: { 1: 'Museum Lawang Sewu', 2: 'Oleh-Oleh Khas Semarang', 3: 'Masjid Agung Jawa Tengah' } }">
-                      <option></option>
+                  <div class="flex mt-3 input-group dropdown">
+                    <select class="mr-2" x-data="{ wisata: {{$wisata}} }" name="wisata[]">
                       <template x-for="(name, id) in wisata">
                         <option x-text="name" :value="id"></option>
                       </template>
                     </select>
+                    
+                    <button type="button" class="ml-2 border border-transparent rounded" @click="inputs.pop({})">
+                      @svg("bi-trash", ['class' => 'w-6 h-6 text-secondary-base hover:text-black'])
+                    </button>
+                    
                     <button type="button" class="ml-2 border border-transparent rounded" @click="inputs.push({})">
                       @svg("iconpark-plus", ['class' => 'w-6 h-6 text-secondary-base hover:text-black'])
                     </button>
@@ -95,7 +98,7 @@
           <h1 class="pb-3 text-secondary-base">DAERAH ASAL</h1>
           <h3 class="text-2xl font-bold text-secondary-base">Tuban, Jawa Timur</h3>
           <div class="pt-3 detail-bus">
-            <p class="text-sm text-gray-400">Bus: Jetbus 5 by Adiputro Malang</p>
+            <p class="text-sm text-gray-400">Bus: {{ $bus->nama_bus }}</p>
             <a href="" class="text-blue-500 text-[10px] hover:underline">informasi bus selengkapnya bisa dicek disini</a>
           </div>
         </div>
@@ -106,7 +109,7 @@
   
         <div class="detail-foot">
           <h1 class="pb-3 text-secondary-base">DAERAH TUJUAN</h1>
-          <h3 class="text-2xl font-bold text-secondary-base">Semarang, Jawa Tengah</h3>
+          <h3 class="text-2xl font-bold text-secondary-base">{{ $kota->nama_kota }}, {{ $kota->provinsi->nama_provinsi }}</h3>
   
           <div class="pt-3 text-gray-400 detail-tujuan">
             <div class="detail-wisata">
@@ -140,9 +143,26 @@
 
   <script>
     $(document).ready(function() { 
-      $("#wisata1").select2({
-        placeholder: "Isi destinasi yang diinginkan",
-      }); 
+      $('#list-wisata select').select2();
+      $('#list-wisata button').eq(0).hide();
+      
+      $('#list-wisata').on('click', 'button', function() {
+        const len = $('#list-wisata select').length;
+        toSelect2(len);
+      });
+      
+      function toSelect2(len) {
+        $('#list-wisata select').each((i) => {
+          $('#list-wisata select').eq(i).select2();
+          const tombolHapus = $('#list-wisata button').eq(i * 2);
+          const tombolTambah = $('#list-wisata button').eq(i * 2 + 1);
+          
+          tombolTambah.show();
+          tombolHapus.show();
+          if (i < len - 1 || len == 5) tombolTambah.hide();
+          if (i == len) tombolHapus.hide();
+        });
+      }
     });
   </script>
 </x-layout>
