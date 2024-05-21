@@ -1,5 +1,4 @@
-<div class="{{ request()->is('/') ? 'mt-14 md:mt-20' : 'mx-auto w-full' }} md:w-3/4 md:h-3/5 text-secondary-base"
-    x-data="{ data = '' }">
+<div class="{{ request()->is('/') ? 'mt-14 md:mt-20' : 'mx-auto w-full' }} md:w-3/4 md:h-3/5 text-secondary-base"> 
     <div class="relative flex justify-between bg-white shadow-lg rounded-r-xl rounded-xl">
         <div class="flex flex-col items-start w-full px-5 py-5 md:px-12">
             <label for="kota" class="text-slate-400">DAERAH</label>

@@ -14,7 +14,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 // ----- HOME ROUTE -----
 Route::get('/', [ReservasiController::class, 'index'])->name('home');
 Route::post('/  ', [ReservasiController::class, 'search'])->name('search');
-Route::get('/search/{kota}', [ReservasiController::class, 'show'])->name('show');
+Route::get('/search/{kota:kode_kota}', [ReservasiController::class, 'show'])->name('show');
 
 // ----- DASHBOARD ROUTE -----
 Route::middleware('karyawan')->group(function () {
@@ -30,7 +30,7 @@ Route::middleware('karyawan')->group(function () {
 // ----- AUTH ROUTE -----
 Route::middleware('auth')->group(function () {
     // RESERVASI
-    Route::get('/order/{kota}', [ReservasiController::class, 'order'])->name('order');
+    Route::get('/order/{kota}/bus/{bus}', [ReservasiController::class, 'order'])->name('order');
     Route::post('/order', [ReservasiController::class, 'store'])->name('store');
 
     // PROFILE
