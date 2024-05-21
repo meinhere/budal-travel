@@ -10,8 +10,8 @@
             </button>
         </div>
 
-        <form action="" method="POST">
-            @method('PUT')
+        <form action="{{ route('profile.update') }}" method="POST">
+            @method('PATCH')
             @csrf
 
             {{-- Nama Lengkap --}}
@@ -24,6 +24,21 @@
             <div class="flex flex-col items-start gap-3 py-3 px-14">
                 <label for="no_hp" class="text-sm">No HP</label>
                 <input type="text" name="no_hp" id="no_hp" class="w-full h-12 px-5 text-sm tracking-wide text-white border-0 rounded-lg bg-secondary-200 focus:ring-0 placeholder:text-grey-100" placeholder="isi nomor teleponmu disini">
+            </div>
+            
+            {{-- Jenis Kelamin --}}
+            <div class="flex flex-col items-start gap-3 py-3 px-14">
+                <label class="text-sm">Jenis Kelamin</label>
+                <div class="flex gap-5 pt-1 pl-2 text-sm tracking-wide text-primary-base font-extralight">
+                    <div>
+                      <input type="radio" name="jenis_kelamin_kode" id="laki_laki" value="1" checked>
+                      <label for="laki_laki" class="pl-2 font-semibold text-secondary-200">Laki-Laki</label>
+                    </div>
+                    <div>
+                      <input type="radio" name="jenis_kelamin_kode" id="perempuan" value="2">
+                      <label for="perempuan" class="pl-2 font-semibold text-secondary-200">Perempuan</label>
+                    </div>
+                </div>
             </div>
 
             {{-- Alamat --}}
