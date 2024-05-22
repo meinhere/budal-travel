@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kota;
 use App\Models\Wisata;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,7 @@ class DashboardWisataController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */
+     */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
     public function index()
     {
         $data = [
@@ -27,7 +28,13 @@ class DashboardWisataController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'title' => "Tambah Wisata - Dashboard",
+            'background' => '/storage/img/bg/image-login-page.jpg',
+            'kota' => Kota::all(),
+        ];
+        
+        return view('dashboard.wisata.create', $data);
     }
 
     /**
@@ -39,19 +46,18 @@ class DashboardWisataController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Wisata $wisata)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Wisata $wisata)
     {
-        //
+        $data = [
+            'title' => "Edit Wisata - Dashboard",
+            'background' => '/storage/img/bg/image-login-page.jpg',
+            'kota' => Kota::all(),
+            'wisata' => $wisata
+        ];
+
+        return view('dashboard.wisata.edit', $data);
     }
 
     /**

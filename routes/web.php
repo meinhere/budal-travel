@@ -22,9 +22,9 @@ Route::middleware('karyawan')->group(function () {
     Route::get('/dashboard/transaction', [DashboardController::class, 'transaction'])->name('dashboard.transaction');
     Route::get('/dashboard/transaction/{id}', [DashboardController::class, 'show'])->name('dashboard.show');
 
-    Route::resource('dashboard/bus', DashboardBusController::class)->names(['index' => 'dashboard.bus', 'create' => 'dashboard.bus.create', 'edit' => 'dashboard.bus.edit', 'destroy' => 'dashboard.bus.destroy'])->except(['show']);
-    Route::resource('dashboard/wisata', DashboardWisataController::class)->names(['index' => 'dashboard.wisata', 'create' => 'dashboard.wisata.create', 'edit' => 'dashboard.wisata.edit', 'destroy' => 'dashboard.wisata.destroy'])->except(['show']);
-    Route::resource('dashboard/user', DashboardUserController::class)->names(['index' => 'dashboard.user', 'create' => 'dashboard.user.create', 'edit' => 'dashboard.user.edit', 'destroy' => 'dashboard.user.destroy'])->except(['show']);
+    Route::resource('/dashboard/bus', DashboardBusController::class)->names(['index' => 'dashboard.bus', 'create' => 'dashboard.bus.create', 'edit' => 'dashboard.bus.edit', 'destroy' => 'dashboard.bus.destroy'])->parameters(['bus' => 'bus:kode_bus'])->except(['show']);
+    Route::resource('/dashboard/wisata', DashboardWisataController::class)->names(['index' => 'dashboard.wisata', 'create' => 'dashboard.wisata.create', 'edit' => 'dashboard.wisata.edit', 'destroy' => 'dashboard.wisata.destroy'])->parameters(['wisata' => 'wisata:kode_wisata'])->except(['show']);
+    Route::resource('/dashboard/user', DashboardUserController::class)->names(['index' => 'dashboard.user', 'create' => 'dashboard.user.create', 'edit' => 'dashboard.user.edit', 'destroy' => 'dashboard.user.destroy'])->parameters(['user' => 'user:kode_user'])->except(['show']);
 });
 
 // ----- AUTH ROUTE -----
