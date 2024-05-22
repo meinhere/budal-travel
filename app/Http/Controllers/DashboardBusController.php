@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bus;
+use App\Models\StatusBus;
+use App\Models\KategoriBus;
 use Illuminate\Http\Request;
 
 class DashboardBusController extends Controller
@@ -27,7 +29,14 @@ class DashboardBusController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'title' => "Tambah Bus - Dashboard",
+            'background' => '/storage/img/bg/image-login-page.jpg',
+            'kategori' => KategoriBus::all(),
+            'status_bus' => StatusBus::all()
+        ];
+        
+        return view('dashboard.bus.create', $data);
     }
 
     /**
@@ -39,19 +48,19 @@ class DashboardBusController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Bus $bus)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
     public function edit(Bus $bus)
     {
-        //
+        $data = [
+            'title' => "Edit Bus - Dashboard",
+            'background' => '/storage/img/bg/image-login-page.jpg',
+            'kategori' => KategoriBus::all(),
+            'status_bus' => StatusBus::all(),
+            'bus' => $bus
+        ];
+
+        return view('dashboard.bus.edit', $data);
     }
 
     /**
