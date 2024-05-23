@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Karyawan;
+use App\Models\Role;
 use App\Models\Login;
+use App\Models\Karyawan;
+use App\Models\Pelanggan;
+use App\Models\JenisKelamin;
 use Illuminate\Http\Request;
 
 class DashboardUserController extends Controller
@@ -28,7 +31,14 @@ class DashboardUserController extends Controller
      */
     public function create()
     {
-        //
+        $data = [
+            'title' => "Tambah User - Dashboard",
+            'background' => '/storage/img/bg/image-login-page.jpg',
+            'role' => Role::all()->toJson(),
+            'jenis_kelamin' => JenisKelamin::all()
+        ];
+        
+        return view('dashboard.user.create', $data);
     }
 
     /**
@@ -36,23 +46,26 @@ class DashboardUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        // return $request;
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Login $login)
     {
-        //
+
+        $user = Pelanggan::with('login')->where('login_id', $login->id_login)->first() ?? Karyawan::with('login')->where('login_id', $login->id_login)->first();
+
+        $data = [
+            'title' => "Edit User - Dashboard",
+            'background' => '/storage/img/bg/image-login-page.jpg',
+            'role' => Role::all()->toJson(),
+            'jenis_kelamin' => JenisKelamin::all(),
+            'user' => $user
+        ];
+        
+        return view('dashboard.user.edit', $data);
     }
 
     /**

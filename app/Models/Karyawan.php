@@ -26,7 +26,7 @@ class Karyawan extends Model
     }
 
     public function login() {
-        return $this->belongsTo(Login::class, 'karyawan_id', 'id_karyawan');
+        return $this->belongsTo(Login::class, 'login_id', 'id_login');
     }
     
     public function role() {

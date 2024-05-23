@@ -57,10 +57,10 @@
 									</td>
 									<td class="relative block w-full p-3 text-center text-gray-800 border border-b lg:w-auto lg:table-cell lg:static">
 											<span class="absolute top-0 left-0 px-2 py-1 text-xs font-bold uppercase bg-blue-200 lg:hidden">Aksi</span>
-											<a href="{{ route('dashboard.user.destroy', $user->pelanggan->id_pelanggan ?? $user->karyawan->id_karyawan) }}" class="inline-block hover:text-red-600">
+											<a href="{{ route('dashboard.user.destroy', $user->id_login) }}" class="inline-block hover:text-red-600">
 												@svg('bi-trash', 'w-5 h-5')
 											</a>
-											<a href="{{ route('dashboard.user.edit', $user->pelanggan->id_pelanggan ?? $user->karyawan->id_karyawan) }}" class="inline-block pl-2 hover:text-blue-600">
+											<a href="{{ route('dashboard.user.edit', $user->id_login) }}" class="inline-block pl-2 hover:text-blue-600">
 												@svg('bi-pencil', 'w-5 h-5')
 											</a>
 									</td>
