@@ -31,7 +31,7 @@
 										<th class="hidden p-3 font-bold text-gray-600 border lg:table-cell">Status</th>
 										<th class="hidden p-3 font-bold text-gray-600 border lg:table-cell">Harga Tiket</th>
 										<th class="hidden p-3 font-bold text-gray-600 border lg:table-cell">Jam Buka/Jam Tutup</th>
-										<th class="hidden w-1/3 p-3 font-bold text-gray-600 border lg:table-cell">Alamat</th>
+										<th class="hidden w-1/4 p-3 font-bold text-gray-600 border lg:table-cell">Alamat</th>
 										<th class="hidden p-3 font-bold text-center text-gray-600 border lg:table-cell">Aksi</th>
 								</tr>
 						</thead>

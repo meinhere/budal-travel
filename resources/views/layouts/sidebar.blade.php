@@ -35,8 +35,8 @@
                 </x-side-link-dashboard>
                 
                 @else
-                <x-side-link-dashboard href="{{ route('dashboard.transaction') }}" :active="request()->is('dashboard/transaction/*')">
-                    <x-side-icon-dashboard  icon="bi-currency-dollar" :active="request()->is('dashboard/transaction/*')"></x-side-icon-dashboard>
+                <x-side-link-dashboard href="{{ route('dashboard.transaction') }}" :active="request()->is('dashboard/transaction*')">
+                    <x-side-icon-dashboard  icon="bi-currency-dollar" :active="request()->is('dashboard/transaction*')"></x-side-icon-dashboard>
                     <span class="ml-4">Kelola Transaksi</span>
                 </x-side-link-dashboard>
                 @endcan

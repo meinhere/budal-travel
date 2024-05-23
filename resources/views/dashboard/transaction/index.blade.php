@@ -1,15 +1,15 @@
 <x-app-layout>
   <x-slot:title>{{ $title }}</x-slot:title>
 
-  <div class="min-h-screen px-5 pb-8 mx-auto pt-28 lg:pt-12 max-w-7xl">
+  <div class="min-h-screen mx-auto pt-28 pb-12 lg:pt-12">
       {{-- Content Heading --}}
-      <div class="overflow-hidden shadow-sm sm:rounded-lg">
+      <div class="overflow-hidden px-4 sm:px-12 shadow-sm sm:rounded-lg">
           <h2 class="text-3xl font-semibold text-black">Budal Travel Dashboard</h2>
-          <p class="pt-2 text-gray-400 font-xs">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis repudiandae odio quaerat, quasi voluptatibus sint ullam assumenda</p>
+          <p class="pt-2 text-gray-400 font-xs">Manage your bus travel agency operations efficiently with Budal Travel's comprehensive admin dashboard</p>
       </div>
 
       {{-- Card --}}
-      <div class="flex flex-wrap items-center justify-center gap-6 mb-4 lg:flex-nowrap mt-14 lg:mt-20">
+      <div class="flex px-4 sm:px-12 flex-wrap items-center justify-center gap-6 mb-4 lg:flex-nowrap mt-14 lg:mt-20">
           <div class="p-4 shadow basis-full lg:basis-1/3 rounded-xl">
               <div class="pb-8">
                   <h3 class="text-base font-normal text-gray-500">Total Pendapatan</h3>
@@ -37,7 +37,7 @@
       </div>
 
       {{-- Detail Transaksi --}}
-      <div class="mt-12">
+      <div class="mt-12 px-4 sm:px-6">
         <h2 class="text-lg text-gray-500">Transaksi Terbaru</h2>
         <div class="flex gap-2 mt-4 text-sm">
           <a href="#" class="px-2 pb-1 font-semibold text-gray-800 border-b-2 border-transparent hover:text-primary-300 hover:border-primary-300">All</a>

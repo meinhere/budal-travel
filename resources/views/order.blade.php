@@ -26,7 +26,7 @@
                   <span class="pl-3 text-secondary-base">Tambah Wisata</span>            
                 </label>
               </div>
-              <div class="w-full pt-4" x-data="{ inputs: [{}] }" id="list-wisata">
+              <div class="w-full pt-4" data-kota="{{ $wisata }}" x-data="{ inputs: [{}] }" id="list-wisata">
                 <template x-for="(input, index) in inputs" :key="index">
                   <div class="flex mt-3 input-group dropdown">
                     <select class="mr-2" x-data="{ wisata: {{$wisata}} }" name="wisata[]">
@@ -148,6 +148,7 @@
       
       $('#list-wisata').on('click', 'button', function() {
         const len = $('#list-wisata select').length;
+        console.log(len);
         toSelect2(len);
       });
       

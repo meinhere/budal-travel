@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Bus;
 use App\Models\Kota;
 use App\Models\Wisata;
-use App\Models\Provinsi;
 use Illuminate\Http\Request;
 use stdClass;
 
@@ -46,7 +45,7 @@ class ReservasiController extends Controller
         
         $wisata = new stdClass();
         Wisata::with('kota')->select('kode_wisata', 'nama_wisata')->where('kota_kode', $kota->kode_kota)->get()->map(fn($item) => $wisata->{$item->kode_wisata} = $item->nama_wisata);
-        
+
         $data = [
             'title' => "Halaman Order",
             'background' => '/storage/img/bg/background-detail.jpg',
