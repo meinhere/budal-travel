@@ -42,7 +42,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(route('home'));
         } else {
             $request->session()->put('user', $karyawan);
-            return redirect()->to(route('dashboard'));
+            return redirect(route('dashboard'));
         }
     }
 
