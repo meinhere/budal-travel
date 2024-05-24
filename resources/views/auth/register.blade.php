@@ -82,8 +82,8 @@
             <x-label-auth for="password">Password</x-label-auth> 
 
             <button type="button" @click="show = !show">
-              {{-- <x-bi-eye-fill x-show="show" class="absolute block w-6 h-6 top-3 right-4 text-primary-base hover:cursor-pointer"/>
-              <x-bi-eye-slash-fill x-show="!show" class="absolute block w-6 h-6 top-3 right-4 text-primary-base hover:cursor-pointer"/> --}}
+              @svg('bi-eye-fill', ['class' => 'absolute block w-6 h-6 top-3 right-4 text-primary-base hover:cursor-pointer', 'x-show' => 'show'])
+              @svg('bi-eye-slash-fill', ['class' => 'absolute block w-6 h-6 top-3 right-4 text-primary-base hover:cursor-pointer', 'x-show' => '!show'])
             </button>
           </div>
           <x-input-error :messages="$errors->get('password')" class="mb-3"></x-input-error>
