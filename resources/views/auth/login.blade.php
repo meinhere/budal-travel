@@ -5,10 +5,25 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
     
+    
     {{-- Logo --}}
     <div class="flex justify-center pb-2">
-        <a href="/"><x-application-logo class="w-56" /></a>
+      <a href="/"><x-application-logo class="w-56" /></a>
     </div>
+
+    @if (session()->has('success'))
+    <div id="alert-3" class="flex items-center justify-center p-4 mx-auto mb-4 text-green-800 bg-green-200 rounded-lg dark:bg-gray-800 dark:text-green-400" role="alert">
+        @svg('bi-info-circle', 'w-6 h-6 text-green-500')
+        <span class="sr-only">Info</span>
+        <div class="text-sm font-medium ms-3">
+            {{ session('success') }}
+        </div>
+        <button type="button" class="ms-auto -mx-1.5 -my-1.5 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
+            <span class="sr-only">Close</span>
+            @svg('bi-x-lg', 'w-6 h-6')
+        </button>
+    </div>
+    @endif
 
     {{-- Heading --}}
     <div class="pb-7">

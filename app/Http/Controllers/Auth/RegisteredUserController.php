@@ -8,10 +8,8 @@ use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Auth\Events\Registered;
 
 class RegisteredUserController extends Controller
 {
@@ -36,7 +34,7 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'nama_pelanggan' => ['required', 'string', 'max:255'],
+            'nama_pelanggan' => ['required', 'regex:/^[a-zA-Z ]+$/', 'max:255'],
             'username' => ['required', 'string', 'max:255', 'unique:login'],
             'no_telepon' => ['required', 'phone:ID,BE'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],

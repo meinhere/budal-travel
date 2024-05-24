@@ -48,7 +48,7 @@
                 <label for="laki_laki">Laki-Laki</label>
               </div>
               <div>
-                <input type="radio" name="jenis_kelamin_kode" id="perempuan" value="2">
+                <input type="radio" name="jenis_kelamin_kode" id="perempuan" value="2" {{ old('jenis_kelamin_kode') == 2 ? 'checked' : '' }}>
                 <label for="perempuan">Perempuan</label>
               </div>
             </div>
