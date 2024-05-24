@@ -24,7 +24,7 @@
           <div class="flex gap-4 py-2">
             <h3 class="inline-block text-lg text-secondary-base">Status Pembayaran:</h3>
             <div class="flex items-center gap-1">
-              {{-- <x-bi-circle-fill class="w-3 h-3 text-green-400" /> --}}
+              @svg('bi-circle-fill', ['class' => 'w-3 h-3 text-green-400'])
               <span>Lunas</span>
             </div>
           </div>
@@ -60,7 +60,7 @@
           <div class="flex gap-4 py-2">
             <h3 class="inline-block text-lg text-secondary-base">Status Pembayaran:</h3>
             <div class="flex items-center gap-1">
-              {{-- <x-bi-circle-fill class="w-3 h-3 text-green-400" /> --}}
+              @svg('bi-circle-fill', ['class' => 'w-3 h-3 text-green-400'])
               <span>Lunas</span>
             </div>
           </div>
@@ -96,7 +96,7 @@
           <div class="flex gap-4 py-2">
             <h3 class="inline-block text-lg text-secondary-base">Status Pembayaran:</h3>
             <div class="flex items-center gap-1">
-              {{-- <x-bi-circle-fill class="w-3 h-3 text-green-400" /> --}}
+              @svg('bi-circle-fill', ['class' => 'w-3 h-3 text-green-400'])
               <span>Lunas</span>
             </div>
           </div>

@@ -10,7 +10,7 @@
         <p class="pt-1 text-sm text-gray-500">Jetbus 5 by Adiputro Malang</p>
         
         <button @click="window.location = link" class="absolute right-1 top-2">
-          {{-- <x-bi-x-lg class="w-6 h-6" /> --}}
+          @svg('bi-x-lg', 'w-6 h-6')
         </button>
       </div>
 
@@ -37,7 +37,7 @@
       <div class="flex gap-4 py-2">
         <h3 class="inline-block text-secondary-base">Status Pembayaran:</h3>
         <div class="flex items-center gap-1">
-          {{-- <x-bi-circle-fill class="w-3 h-3 text-green-400" /> --}}
+          @svg('bi-circle-fill', ['class' => 'w-3 h-3 text-green-400'])
           <span>Lunas</span>
         </div>
       </div>

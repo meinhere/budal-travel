@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use stdClass;
 use App\Models\Bus;
 use App\Models\Kota;
 use App\Models\Wisata;
 use Illuminate\Http\Request;
-use stdClass;
 
 class ReservasiController extends Controller
 {
@@ -17,13 +17,6 @@ class ReservasiController extends Controller
             'kota' => Kota::with('provinsi')->get(),
         ];
         return view('home', $data);
-    }
-
-    public function search() {
-        $data = [
-            'bus' => Bus::where('status_bus_kode', '1')->get(),
-        ];
-        return redirect()->route('show', $data);
     }
 
     public function show(Kota $kota) {

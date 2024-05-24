@@ -9,11 +9,9 @@ use App\Http\Controllers\DashboardBusController;
 use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\DashboardWisataController;
 use App\Http\Controllers\RiwayatTransaksiController;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 // ----- HOME ROUTE -----
 Route::get('/', [ReservasiController::class, 'index'])->name('home');
-Route::post('/  ', [ReservasiController::class, 'search'])->name('search');
 Route::get('/search/{kota:kode_kota}', [ReservasiController::class, 'show'])->name('show');
 
 // ----- DASHBOARD ROUTE -----

@@ -8,6 +8,6 @@
         <p class="mt-3 text-base md:text-xl text-primary-base">Pesan Bus Pariwisata untuk Jelajahi Destinasi Impian Anda!
         </p>
 
-        <x-input-search :kota="$kota" />
+        <x-input-search :kota="$kota" link="/" />
     </div>
 </x-layout>
