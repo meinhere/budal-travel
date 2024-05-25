@@ -68,18 +68,19 @@ class DashboardBusController extends Controller
      */
     public function update(Request $request, Bus $bus)
     {
-        $data = [
-            "kategori_kode" => $request->kategori_kode,
-            "kapasitas_solar" => $request->kapasitas_solar,
-            "jumlah_kursi" => $request->jumlah_kursi,
-            "status_bus_kode" => $request->status_bus_kode,
-            "kecepatan" => $request->kecepatan,
-            "harga_sewa" => $request->harga_sewa,
-            "nama_bus" => $request->nama_bus  
-        ];
+            $data = $request->validate([
+                "kategori_kode" => "required",
+                "kapasitas_solar" => ["required", "numeric"],
+                "jumlah_kursi" => ["required", "numeric"],
+                "status_bus_kode" => "required",
+                "kecepatan" => ["required", "numeric", "max:3"],
+                "harga_sewa" => ["required", "numeric"],
+                "nama_bus" => ["required", "max:50", "string"],
+            ]);
 
-        $bus->update($data);
-        return redirect()->route('dashboard.bus');        
+            $bus->update($data);
+            return redirect()->route('dashboard.bus');        
+
     }
 
     /**
@@ -87,6 +88,7 @@ class DashboardBusController extends Controller
      */
     public function destroy(Bus $bus)
     {
-        //
+        $bus->delete();
+        return redirect()->route('dashboard.bus');
     }
 }
