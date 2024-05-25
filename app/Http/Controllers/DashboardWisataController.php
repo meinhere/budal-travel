@@ -75,7 +75,7 @@ class DashboardWisataController extends Controller
             "titik_lat" => $request->titik_lat,
             "alamat_wisata" => $request->alamat_wisata,
             "tarif_masuk_wisata" => $request->tarif_masuk_wisata,
-            "titik_long" => $request->titik_long 
+            "titik_lokasi" => $request->titik_lat . ',' . $request->titik_long 
         ];
 
         $wisata->update($data);
