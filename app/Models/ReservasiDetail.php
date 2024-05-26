@@ -12,6 +12,7 @@ class ReservasiDetail extends Model
     protected $table = 'reservasi_detail';
     protected $primaryKey = 'kode_reservasi_detail';
     protected $guarded = ['kode_reservasi_detail'];
+    public $incrementing = false;
 
     public static function boot()
     {
@@ -24,10 +25,10 @@ class ReservasiDetail extends Model
     }
 
     public function wisata() {
-        return $this->belongsTo(Wisata::class);
+        return $this->belongsTo(Wisata::class, 'wisata_kode', 'kode_wisata');
     }
 
     public function reservasi() {
-        return $this->belongsTo(Reservasi::class);
+        return $this->belongsTo(Reservasi::class, 'reservasi_kode', 'kode_reservasi');
     }
 }

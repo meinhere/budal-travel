@@ -2,7 +2,7 @@
   <x-slot:title>{{ $title }}</x-slot:title>
 
   <div class="min-h-screen px-5 pb-12 bg-center bg-cover pt-28 lg:pt-12" style="background-image: url({{ $background }})">
-      <div class="p-5 mx-auto bg-white rounded-lg max-w-7xl">
+      <div class="max-w-6xl p-5 mx-auto bg-white rounded-lg">
 				{{-- Content Heading --}}
 				<div class="flex items-center justify-between pb-5 overflow-hidden shadow-sm sm:rounded-lg">
 					<div>
@@ -74,11 +74,6 @@
 								@endforeach
 						</tbody>
 				</table>
-
-				<div class="container mt-5">
-						@foreach ($wisata as $w)
-						@endforeach
-				</div>
 					
 				{{ $wisata->links() }}
 

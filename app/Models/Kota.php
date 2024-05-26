@@ -23,4 +23,8 @@ class Kota extends Model
     public function wisata() {
         return $this->hasMany(Wisata::class, 'kota_kode', 'kode_kota');
     }
+
+    public function reservasi() {
+        return $this->hasMany(Reservasi::class, 'kota_kode', 'kode_kota');
+    }
 }

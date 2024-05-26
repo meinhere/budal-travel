@@ -16,9 +16,11 @@ return new class extends Migration
             $table->char('login_id',4);
             $table->char('bus_kode', 4);
             $table->char('status_reservasi_kode', 1);
+            $table->char('kota_kode', 4);
             $table->foreign('login_id')->references('id_login')->on('login');
             $table->foreign('bus_kode')->references('kode_bus')->on('bus');
             $table->foreign('status_reservasi_kode')->references('kode_status')->on('status_reservasi');
+            $table->foreign('kota_kode')->references('kode_kota')->on('kota');
             $table->string('snap_token', 100);
             $table->timestamp('waktu_reservasi')->useCurrent();
             $table->timestamp('waktu_bayar')->useCurrent();

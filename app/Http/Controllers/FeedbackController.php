@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 
 class FeedbackController extends Controller
@@ -24,6 +25,12 @@ class FeedbackController extends Controller
      */
     public function store(Request $request)
     {
-        return redirect()->route('riwayat')->with('status', 'feedback-sent');
+        Feedback::create([
+            'reservasi_kode' => $request->reservasi_kode,
+            'kategori_kode' => $request->kategori_kode,
+            'ulasan' => $request->ulasan,
+        ]);
+
+        return redirect()->back()->with('success', 'Ulasan berhasil ditambahkan!');
     }
 }

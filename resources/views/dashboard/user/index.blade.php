@@ -2,12 +2,13 @@
   <x-slot:title>{{ $title }}</x-slot:title>
 
   <div class="min-h-screen px-5 pb-12 bg-center bg-cover pt-28 lg:pt-12" style="background-image: url({{ $background }})">
-      <div class="p-5 mx-auto bg-white rounded-lg max-w-7xl">
+      <div class="max-w-5xl p-5 mx-auto bg-white rounded-lg">
 				{{-- Content Heading --}}
 				<div class="flex items-center justify-between pb-5 overflow-hidden shadow-sm sm:rounded-lg">
 					<div>
 						<h3 class="text-xl font-semibold">Kelola Users <span class="pl-2 text-sm font-normal text-indigo-700">{{ $count }} User</span></h3>
 					</div>
+					
 					<form class="basis-1/2 md:basis-1/3">   
 						<label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300">Search</label>
 						<div class="relative">

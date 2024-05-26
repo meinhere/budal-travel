@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
 
     // RIWAYAT TRANSAKSI
     Route::get('/transaction', [RiwayatTransaksiController::class, 'index'])->name('riwayat');
-    Route::get('/transaction/{id}', [RiwayatTransaksiController::class, 'show'])->name('riwayat.show');
+    Route::get('/transaction/{reservasi:kode_reservasi}', [RiwayatTransaksiController::class, 'show'])->name('riwayat.show');
     
     // FEEDBACK
     Route::get('/feedback/{id}', [FeedbackController::class, 'create'])->name('feedback.create');
