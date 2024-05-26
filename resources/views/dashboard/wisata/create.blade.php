@@ -14,7 +14,8 @@
 				</div>
 	
 				<!-- component -->
-				<form action="dashboard/bus" method="post">
+				<form action="{{ route('wisata.store') }}" method="post">
+          @method('POST')
           @csrf
           <div class="flex flex-wrap justify-between w-full gap-4 sm:flex-nowrap">
             <div class="basis-full md:basis-1/3">
