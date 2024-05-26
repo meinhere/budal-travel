@@ -65,7 +65,20 @@ class DashboardWisataController extends Controller
      */
     public function update(Request $request, Wisata $wisata)
     {
-        //
+        // dd($request->all());
+        $data = $request->validate([
+            "kota_kode" => ["required"],
+            "jam_buka" => "required",
+            "tarif_parkir" => ["required", "numeric"],
+            "nama_wisata" => "required",
+            "jam_tutup" => "required",
+            "alamat_wisata" => ["required", "string"],
+            "tarif_masuk_wisata" => ["required", "numeric"],
+            "titik_lokasi" => ["required", "string", "max:50"],
+        ]);
+
+        $wisata->update($data);
+        return redirect()->route('dashboard.wisata');
     }
 
     /**

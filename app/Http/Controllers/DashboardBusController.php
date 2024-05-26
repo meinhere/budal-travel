@@ -42,9 +42,9 @@ class DashboardBusController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Bus $bus)
     {
-        //
+        
     }
 
     /**
@@ -68,7 +68,19 @@ class DashboardBusController extends Controller
      */
     public function update(Request $request, Bus $bus)
     {
-        //
+            $data = $request->validate([
+                "kategori_kode" => "required",
+                "kapasitas_solar" => ["required", "numeric"],
+                "jumlah_kursi" => ["required", "numeric"],
+                "status_bus_kode" => "required",
+                "kecepatan" => ["required", "numeric", "max:3"],
+                "harga_sewa" => ["required", "numeric"],
+                "nama_bus" => ["required", "max:50", "string"],
+            ]);
+
+            $bus->update($data);
+            return redirect()->route('dashboard.bus');        
+
     }
 
     /**
@@ -76,6 +88,7 @@ class DashboardBusController extends Controller
      */
     public function destroy(Bus $bus)
     {
-        //
+        $bus->delete();
+        return redirect()->route('dashboard.bus');
     }
 }
