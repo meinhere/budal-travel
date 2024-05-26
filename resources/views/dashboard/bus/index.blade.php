@@ -83,14 +83,13 @@
                                 class="relative block w-full p-3 text-center text-gray-800 border border-b lg:text-left lg:w-auto lg:table-cell lg:static">
                                 <span
                                     class="absolute top-0 left-0 px-2 py-1 text-xs font-bold uppercase bg-blue-200 lg:hidden">Aksi</span>
-                                {{-- <form action="" method="post"> --}}
-                                {{-- @method('DELETE')
-                                @csrf --}}
-                                <a href="{{ route('dashboard.bus.destroy', $b->kode_bus) }}"
-                                    class="inline-block hover:text-red-600">
-                                    @svg('bi-trash', 'w-5 h-5')
-                                </a>
-                                {{-- </form> --}}
+                                <form action="{{ route('dashboard.bus.destroy', $b->kode_bus) }}" method="post">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="inline-block hover:text-red-600">
+                                        @svg('bi-trash', 'w-5 h-5')
+                                    </button>
+                                </form>
                                 <a href="{{ route('dashboard.bus.edit', $b->kode_bus) }}"
                                     class="inline-block pl-2 hover:text-blue-600">
                                     @svg('bi-pencil', 'w-5 h-5')

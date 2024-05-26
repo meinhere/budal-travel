@@ -115,6 +115,11 @@ class DashboardWisataController extends Controller
      */
     public function destroy(Wisata $wisata)
     {
-        //
+        try {
+            $wisata->delete();
+            return redirect()->route('dashboard.wisata');
+        } catch (\Exception $e) {
+            dd($e);
+        }
     }
 }
