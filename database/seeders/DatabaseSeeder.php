@@ -6,6 +6,8 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\KategoriFeedback;
+use App\Models\Reservasi;
+use App\Models\ReservasiDetail;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,11 +27,13 @@ class DatabaseSeeder extends Seeder
             KaryawanSeeder::class,
             KategoriBusSeeder::class,
             StatusBusSeeder::class,
+            StatusReservasiSeeder::class,
             BusSeeder::class,
             KategoriFeedbackSeeder::class,
             KotaSeeder::class,
             WisataSeeder::class,
-
         ]);
+        
+        ReservasiDetail::factory(40)->recycle(Reservasi::factory(5)->create())->create();
     }
 }

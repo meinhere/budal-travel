@@ -12,6 +12,7 @@ class StatusReservasi extends Model
     protected $table = 'status_reservasi';
     protected $primaryKey = 'kode_status';
     protected $guarded = ['kode_status'];
+    public $timestamps = false;
 
     public static function boot()
     {
@@ -23,6 +24,6 @@ class StatusReservasi extends Model
     }
 
     public function reservasi() {
-        return $this->hasMany(Reservasi::class);
+        return $this->hasMany(Reservasi::class, 'status_reservasi_kode', 'kode_status');
     }
 }

@@ -24,10 +24,10 @@ class Feedback extends Model
     }
 
     public function kategoriFeedback() {
-        return $this->belongsTo(KategoriFeedback::class);
+        return $this->belongsTo(KategoriFeedback::class, 'kategori_kode', 'kode_feedback');
     }
 
     public function reservasi() {
-        return $this->belongsTo(Reservasi::class);
+        return $this->belongsTo(Reservasi::class, 'reservasi_kode', 'kode_reservasi');
     }
 }

@@ -1,18 +1,17 @@
 <x-app-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    <div class="min-h-screen px-5 pb-12 bg-center bg-cover pt-28 lg:pt-12"
-        style="background-image: url({{ $background }})">
+    <div class="min-h-screen px-5 pt-48 pb-12 bg-center bg-cover lg:pt-28" style="background-image: url({{ $background }})">
         <div class="max-w-4xl p-5 mx-auto bg-white rounded-lg">
-            {{-- Content Heading --}}
-            <div class="flex items-center justify-between pb-4 overflow-hidden border-b shadow-sm sm:rounded-lg">
-                <div>
-                    <h3 class="flex items-center gap-2 text-2xl font-bold text-primary-300">
-                        Tambah Bus
-                        @svg('bi-bus-front', 'w-6 h-6')
-                    </h3>
-                </div>
+          {{-- Content Heading --}}
+          <div class="flex items-center justify-between pb-4 overflow-hidden border-b shadow-sm sm:rounded-lg">
+            <div>
+              <h3 class="flex items-center gap-2 text-2xl font-bold text-primary-300">
+                Tambah Bus
+                @svg('bi-bus-front', 'w-6 h-6')
+              </h3>
             </div>
+           </div>
 
             <!-- component -->
             <form action="{{ route('bus.store') }}" method="post">

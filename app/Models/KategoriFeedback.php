@@ -23,7 +23,7 @@ class KategoriFeedback extends Model
     }
 
     public function feedback() {
-        return $this->hasMany(Feedback::class);
+        return $this->hasMany(Feedback::class, 'kategori_feedback_kode', 'kode_kategori');
     }
 
 }

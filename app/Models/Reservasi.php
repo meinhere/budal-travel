@@ -12,6 +12,7 @@ class Reservasi extends Model
     protected $table = 'reservasi';
     protected $primaryKey = 'kode_reservasi';
     protected $guarded = ['kode_reservasi'];
+    public $incrementing = false;
 
     public static function boot()
     {
@@ -24,7 +25,11 @@ class Reservasi extends Model
     }
 
     public function reservasi_detail() {
-        return $this->hasMany(ReservasiDetail::class);
+        return $this->hasMany(ReservasiDetail::class, 'reservasi_kode', 'kode_reservasi');
+    }
+
+    public function status_reservasi() {
+        return $this->belongsTo(StatusReservasi::class, 'status_reservasi_kode', 'kode_status');
     }
     
     public function feedback() {
@@ -32,11 +37,15 @@ class Reservasi extends Model
     }
 
     public function bus() {
-        return $this->belongsTo(Bus::class);
+        return $this->belongsTo(Bus::class, 'bus_kode', 'kode_bus');
+    }
+
+    public function kota() {
+        return $this->belongsTo(Kota::class, 'kota_kode', 'kode_kota');
     }
 
     public function login() {
-        return $this->belongsTo(Login::class);
+        return $this->belongsTo(Login::class, 'login_id', 'id_login');
     }
 
 }

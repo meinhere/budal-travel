@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    <div class="min-h-screen px-5 pb-12 bg-center bg-cover pt-28 lg:pt-12"
+    <div class="min-h-screen px-5 pt-48 pb-12 bg-center bg-cover lg:pt-28"
         style="background-image: url({{ $background }})">
         <div class="max-w-4xl p-5 mx-auto bg-white rounded-lg">
             {{-- Content Heading --}}

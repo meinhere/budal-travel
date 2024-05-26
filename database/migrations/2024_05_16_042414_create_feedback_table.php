@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('feedback', function (Blueprint $table) {
             $table->char('kode_feedback', 8)->primary();
+            $table->char('reservasi_kode', 8);
+            $table->char('kategori_kode', 1);
+            $table->foreign('reservasi_kode')->references('kode_reservasi')->on('reservasi');
+            $table->foreign('kategori_kode')->references('kode_kategori')->on('kategori_feedback');
             $table->text('ulasan');
             $table->timestamps();
         });

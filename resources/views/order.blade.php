@@ -123,8 +123,8 @@
             <div class="detail-tambahan">
               <p>Include</p>
               <ul class="pl-8 list-disc">
-                <li class="text-sm">Makan <span data-modal-target="wisata-modal" data-modal-toggle="wisata-modal" class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span></li>
-                <li class="text-sm">HTM <span data-modal-target="wisata-modal" data-modal-toggle="wisata-modal" class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span></li>
+                <li class="text-sm">Makan <span class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span></li>
+                <li class="text-sm">HTM <span class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span></li>
               </ul>
             </div>
           </div>
