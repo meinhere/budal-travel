@@ -20,7 +20,7 @@ class DashboardBusController extends Controller
             'bus' => Bus::with(['kategori_bus', 'status_bus'])->paginate(10),
             'count' => Bus::count()
         ];
-        
+
         return view('dashboard.bus.index', $data);
     }
 
@@ -35,16 +35,30 @@ class DashboardBusController extends Controller
             'kategori' => KategoriBus::all(),
             'status_bus' => StatusBus::all()
         ];
-        
+
         return view('dashboard.bus.create', $data);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Bus $bus)
+    public function store(Request $request)
     {
-        
+        try {
+            $data = $request->validate([
+                "kategori_kode" => "required",
+                "kapasitas_solar" => ["required", "numeric"],
+                "jumlah_kursi" => ["required", "numeric", "min:2"],
+                "status_bus_kode" => "required",
+                "kecepatan" => ["required", "numeric", "min:3"],
+                "harga_sewa" => ["required", "numeric", "min:7"],
+                "nama_bus" => ["required", "max:50", "string"],
+            ]);
+            Bus::create($data);
+            return redirect()->route('dashboard.bus');
+        } catch (\Exception $e) {
+            dd($e);
+        }
     }
 
     /**
@@ -68,19 +82,22 @@ class DashboardBusController extends Controller
      */
     public function update(Request $request, Bus $bus)
     {
+        try {
             $data = $request->validate([
                 "kategori_kode" => "required",
                 "kapasitas_solar" => ["required", "numeric"],
                 "jumlah_kursi" => ["required", "numeric"],
                 "status_bus_kode" => "required",
-                "kecepatan" => ["required", "numeric", "max:3"],
+                "kecepatan" => ["required", "numeric", "min:3"],
                 "harga_sewa" => ["required", "numeric"],
                 "nama_bus" => ["required", "max:50", "string"],
             ]);
 
             $bus->update($data);
-            return redirect()->route('dashboard.bus');        
-
+            return redirect()->route('dashboard.bus');
+        } catch (\Exception $e) {
+            dd($e);
+        }
     }
 
     /**
@@ -88,7 +105,11 @@ class DashboardBusController extends Controller
      */
     public function destroy(Bus $bus)
     {
-        $bus->delete();
-        return redirect()->route('dashboard.bus');
+        try {
+            $bus->delete();
+            return redirect()->route('dashboard.bus');
+        } catch (\Exception $e) {
+            dd($e);
+        }
     }
 }
