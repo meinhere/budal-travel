@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot:title>{{ $title }}</x-slot:title>
 
-  <div class="min-h-screen px-5 pt-48 pb-12 bg-center bg-cover lg:pt-28" style="background-image: url({{ $background }})">
+  <div class="min-h-screen px-5 pt-28 lg:pt-24 pb-12 bg-center bg-cover" style="background-image: url({{ $background }})">
       <div class="max-w-4xl p-5 mx-auto bg-white rounded-lg">
 				{{-- Content Heading --}}
 				<div class="flex items-center justify-between pb-4 overflow-hidden border-b shadow-sm sm:rounded-lg">
@@ -21,64 +21,72 @@
             <div class="basis-full md:basis-1/3">
               {{-- Kode Kota --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="kota_kode" class="text-xl font-semibold text-secondary-base">Kode Kota</label>
-                <select name="kota_kode" id="kota_kode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5">
+                <x-label-dashboard for="kota_kode">Kode Kota</x-label-dashboard>
+                <select name="kota_kode" id="kota_kode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5 ">
                   @foreach ($kota as $k)
-                    <option value="{{ $k->kode_kota }}">{{ $k->nama_kota }}</option>
+                    <option value="{{ $k->kode_kota }}" {{ $k->kode_kota == old('kota_kode') ? 'selected' : '' }}>{{ $k->nama_kota }}</option>
                   @endforeach
                 </select>
               </div>
 
               {{-- Jam Buka --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="jam_buka" class="text-xl font-semibold text-secondary-base">Jam Buka</label>
-                <input type="time" name="jam_buka" id="jam_buka" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5">
+                <x-label-dashboard for="jam_buka">Jam Buka</x-label-dashboard>
+                <x-input-dashboard type="time" name="jam_buka" id="jam_buka" value="{{ old('jam_buka') }}" />
+                <x-input-error :messages="$errors->get('jam_buka')"></x-input-error>
               </div>
               
               {{-- Tarif Parkir --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="tarif_parkir" class="text-xl font-semibold text-secondary-base">Tarif Parkir</label>
-                <input type="text" name="tarif_parkir" id="tarif_parkir" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5" placeholder="Rp xx.xxx,-">
+                <x-label-dashboard for="tarif_parkir">Tarif Parkir</x-label-dashboard>
+                <x-input-dashboard type="text" name="tarif_parkir" id="tarif_parkir" placeholder="Rp xx.xxx,-" value="{{ old('tarif_parkir') }}" />
+                <x-input-error :messages="$errors->get('tarif_parkir')"></x-input-error>
               </div>
             </div>
             
             <div class="basis-full md:basis-1/3">
               {{-- Nama Wisata --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="nama_wisata" class="text-xl font-semibold text-secondary-base">Nama Wisata</label>
-                <input type="text" name="nama_wisata" id="nama_wisata" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5" placeholder="masukkan nama wisata">
+                <x-label-dashboard for="nama_wisata">Nama Wisata</x-label-dashboard>
+                <x-input-dashboard type="text" name="nama_wisata" id="nama_wisata" placeholder="masukkan nama wisata" value="{{ old('nama_wisata') }}" />
+                <x-input-error :messages="$errors->get('nama_wisata')"></x-input-error>
               </div>
 
               {{-- Jam Tutup --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="jam_tutup" class="text-xl font-semibold text-secondary-base">Jam Tutup</label>
-                <input type="time" name="jam_tutup" id="jam_tutup" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5">
+                <x-label-dashboard for="jam_tutup">Jam Tutup</x-label-dashboard>
+                <x-input-dashboard type="time" name="jam_tutup" id="jam_tutup" value="{{ old('jam_tutup') }}" />
+                <x-input-error :messages="$errors->get('jam_tutup')"></x-input-error>
               </div>
               
               {{-- Titik Lokasi (Lat) --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="titik_lat" class="text-xl font-semibold text-secondary-base">Titik Lokasi (Lat)</label>
-                <input type="text" name="titik_lat" id="titik_lat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5" placeholder="masukkan titik latitude">
+                <x-label-dashboard for="titik_lat">Titik Lokasi (Lat)</x-label-dashboard>
+                <x-input-dashboard type="text" name="titik_lat" id="titik_lat" placeholder="masukkan titik latitude" value="{{ old('titik_lat') }}" />
+                <x-input-error :messages="$errors->get('titik_lat')"></x-input-error>
               </div>
             </div>
 
             <div class="basis-full md:basis-1/3">
               {{-- Alamat Wisata --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="alamat_wisata" class="text-xl font-semibold text-secondary-base">Alamat Wisata</label>
-                <input type="text" name="alamat_wisata" id="alamat_wisata" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5" placeholder="masukkan alamat wisata">
+                <x-label-dashboard for="alamat_wisata">Alamat Wisata</x-label-dashboard>
+                <x-input-dashboard type="text" name="alamat_wisata" id="alamat_wisata" placeholder="masukkan alamat wisata" value="{{ old('alamat_wisata') }}" />
+                <x-input-error :messages="$errors->get('alamat_wisata')"></x-input-error>
               </div>
 
               {{-- Tarif Masuk Wisata --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="tarif_masuk_wisata" class="text-xl font-semibold text-secondary-base">Tarif Masuk Wisata</label>
-                <input type="text" name="tarif_masuk_wisata" id="tarif_masuk_wisata" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5" placeholder="Rp xx.xxx,-">
+                <x-label-dashboard for="tarif_masuk_wisata">Tarif Masuk Wisata</x-label-dashboard>
+                <x-input-dashboard type="text" name="tarif_masuk_wisata" id="tarif_masuk_wisata" placeholder="Rp xx.xxx,-" value="{{ old('tarif_masuk_wisata') }}" />
+                <x-input-error :messages="$errors->get('tarif_masuk_wisata')"></x-input-error>
               </div>
 
               {{-- Titik Lokasi (Long) --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="titik_long" class="text-xl font-semibold text-secondary-base">Titik Lokasi (Long)</label>
-                <input type="text" name="titik_long" id="titik_long" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5" placeholder="masukkan titik longitude">
+                <x-label-dashboard for="titik_long">Titik Lokasi (Long)</x-label-dashboard>
+                <x-input-dashboard type="text" name="titik_long" id="titik_long" placeholder="masukkan titik longitude" value="{{ old('titik_long') }}" />
+                <x-input-error :messages="$errors->get('titik_long')"></x-input-error>
               </div>
             </div>
           </div>

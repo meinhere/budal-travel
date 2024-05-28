@@ -44,21 +44,18 @@ class DashboardBusController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $data = $request->validate([
-                "kategori_kode" => "required",
-                "kapasitas_solar" => ["required", "numeric"],
-                "jumlah_kursi" => ["required", "numeric", "min:2"],
-                "status_bus_kode" => "required",
-                "kecepatan" => ["required", "numeric", "min:3"],
-                "harga_sewa" => ["required", "numeric", "min:7"],
-                "nama_bus" => ["required", "max:50", "string"],
-            ]);
-            Bus::create($data);
-            return redirect()->route('dashboard.bus');
-        } catch (\Exception $e) {
-            dd($e);
-        }
+        $data = $request->validate([
+            "kapasitas_solar" => ["required", "numeric"],
+            "jumlah_kursi" => ["required", "numeric", "min:2"],
+            "kategori_kode" => "required",
+            "kecepatan" => ["required", "numeric", "min:3"],
+            "status_bus_kode" => "required",
+            "harga_sewa" => ["required", "numeric", "min:7"],
+            "nama_bus" => ["required", "max:50", "string"],
+        ]);
+
+        Bus::create($data);
+        return redirect(route('dashboard.bus'))->with('success', 'Bus baru berhasil ditambahkan');
     }
 
     /**
@@ -82,22 +79,18 @@ class DashboardBusController extends Controller
      */
     public function update(Request $request, Bus $bus)
     {
-        try {
-            $data = $request->validate([
-                "kategori_kode" => "required",
-                "kapasitas_solar" => ["required", "numeric"],
-                "jumlah_kursi" => ["required", "numeric"],
-                "status_bus_kode" => "required",
-                "kecepatan" => ["required", "numeric", "min:3"],
-                "harga_sewa" => ["required", "numeric"],
-                "nama_bus" => ["required", "max:50", "string"],
-            ]);
+        $data = $request->validate([
+            "kategori_kode" => "required",
+            "kapasitas_solar" => ["required", "numeric"],
+            "jumlah_kursi" => ["required", "numeric"],
+            "status_bus_kode" => "required",
+            "kecepatan" => ["required", "numeric", "min:3"],
+            "harga_sewa" => ["required", "numeric"],
+            "nama_bus" => ["required", "max:50", "string"],
+        ]);
 
-            $bus->update($data);
-            return redirect()->route('dashboard.bus');
-        } catch (\Exception $e) {
-            dd($e);
-        }
+        $bus->update($data);
+        return redirect(route('dashboard.bus'))->with('success', 'Bus berhasil diubah');
     }
 
     /**
@@ -105,11 +98,7 @@ class DashboardBusController extends Controller
      */
     public function destroy(Bus $bus)
     {
-        try {
-            $bus->delete();
-            return redirect()->route('dashboard.bus');
-        } catch (\Exception $e) {
-            dd($e);
-        }
+        $bus->delete();
+        return redirect(route('dashboard.bus'))->with('success', 'Bus berhasil dihapus');
     }
 }

@@ -10,7 +10,7 @@ class DashboardWisataController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+     */                        
     public function index()
     {
         $data = [
@@ -42,28 +42,23 @@ class DashboardWisataController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
-        try{
-            $data = $request->validate([
-                "kota_kode" => ["required"],
-                "jam_buka" => "required",
-                "tarif_parkir" => ["required", "numeric"],
-                "nama_wisata" => ["required", "max:50", "string"],
-                "jam_tutup" => "required",
-                "alamat_wisata" => ["required", "string"],
-                "tarif_masuk_wisata" => ["required", "numeric"],
-                "titik_lat" => ["required", "string"],
-                "titik_long" => ["required", "string"],
-            ]);
 
-            $data["titik_lokasi"] = $data["titik_lat"] . ", " . $data["titik_long"];
-            
-            Wisata::create($data);
-            return redirect()->route('dashboard.wisata');
-        } catch (\Exception $e) {
-            dd($e);
-        }
+        $data = $request->validate([
+            "kota_kode" => ["required"],
+            "jam_buka" => "required",
+            "tarif_parkir" => ["required", "numeric"],
+            "nama_wisata" => ["required", "max:50", "string"],
+            "jam_tutup" => "required",
+            "alamat_wisata" => ["required", "string"],
+            "tarif_masuk_wisata" => ["required", "numeric"],
+            "titik_lat" => ["required", "numeric"],
+            "titik_long" => ["required", "numeric"],
+        ]);
+
+        $data["titik_lokasi"] = $data["titik_lat"] . ", " . $data["titik_long"];
         
+        Wisata::create($data);
+        return redirect(route('dashboard.wisata'))->with('success', 'Wisata baru berhasil ditambahkan');
     }
 
 
@@ -87,27 +82,22 @@ class DashboardWisataController extends Controller
      */
     public function update(Request $request, Wisata $wisata)
     {
-        try{
-            $data = $request->validate([
-                "kota_kode" => ["required"],
-                "jam_buka" => "required",
-                "tarif_parkir" => ["required", "numeric"],
-                "nama_wisata" => "required",
-                "jam_tutup" => "required",
-                "alamat_wisata" => ["required", "string"],
-                "tarif_masuk_wisata" => ["required", "numeric"],
-                "titik_lat" => ["required", "string"],
-                "titik_long" => ["required", "string"],
-            ]);
+        $data = $request->validate([
+            "kota_kode" => ["required"],
+            "jam_buka" => "required",
+            "tarif_parkir" => ["required", "numeric"],
+            "nama_wisata" => "required",
+            "jam_tutup" => "required",
+            "alamat_wisata" => ["required", "string"],
+            "tarif_masuk_wisata" => ["required", "numeric"],
+            "titik_lat" => ["required", "numeric"],
+            "titik_long" => ["required", "numeric"],
+        ]);
 
-            $data["titik_lokasi"] = $data["titik_lat"] . ", " . $data["titik_long"];
-    
-            $wisata->update($data);
-            return redirect()->route('dashboard.wisata');
-        } catch (\Exception $e) {
-            dd($e);
-        }
-        
+        $data["titik_lokasi"] = $data["titik_lat"] . ", " . $data["titik_long"];
+
+        $wisata->update($data);
+        return redirect(route('dashboard.wisata'))->with('success', 'Wisata berhasil diubah');
     }
 
     /**
@@ -115,11 +105,7 @@ class DashboardWisataController extends Controller
      */
     public function destroy(Wisata $wisata)
     {
-        try {
-            $wisata->delete();
-            return redirect()->route('dashboard.wisata');
-        } catch (\Exception $e) {
-            dd($e);
-        }
+        $wisata->delete();
+        return redirect(route('dashboard.wisata'))->with('success', 'Wisata berhasil dihapus');
     }
 }

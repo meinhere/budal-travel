@@ -2,7 +2,7 @@
   <x-slot:title>{{ $title }}</x-slot:title>
 
   <div class="min-h-screen px-5 pb-12 bg-center bg-cover pt-28 lg:pt-12" style="background-image: url({{ $background }})">
-      <div class="max-w-5xl p-5 mx-auto bg-white rounded-lg">
+      <div class="max-w-4xl p-5 mx-auto bg-white rounded-lg">
 				{{-- Content Heading --}}
 				<div class="flex items-center justify-between pb-5 overflow-hidden shadow-sm sm:rounded-lg">
 					<div>
@@ -24,8 +24,23 @@
 					</form>
 				</div>
 	
+				{{-- Notification Success --}}
+				@if (session()->has('success'))
+				<div id="alert-3" class="flex items-center justify-center p-4 mx-auto mb-4 text-green-800 bg-green-200 rounded-lg dark:bg-gray-800 dark:text-green-400" role="alert">
+						@svg('bi-info-circle', 'w-6 h-6 text-green-500')
+						<span class="sr-only">Info</span>
+						<div class="text-sm font-medium ms-3">
+								{{ session('success') }}
+						</div>
+						<button type="button" class="ms-auto -mx-1.5 -my-1.5 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
+								<span class="sr-only">Close</span>
+								@svg('bi-x-lg', 'w-6 h-6')
+						</button>
+				</div>
+				@endif
+
 				<!-- component -->
-				<table class="w-full border-collapse">
+				<table class="w-full text-sm border-collapse">
 						<thead>
 								<tr>
 										<th class="hidden p-3 font-bold text-gray-600 border lg:table-cell">Nama Karyawan</th>
@@ -58,9 +73,13 @@
 									</td>
 									<td class="relative block w-full p-3 text-center text-gray-800 border border-b lg:w-auto lg:table-cell lg:static">
 											<span class="absolute top-0 left-0 px-2 py-1 text-xs font-bold uppercase bg-blue-200 lg:hidden">Aksi</span>
-											<a href="{{ route('dashboard.user.destroy', $user->id_login) }}" class="inline-block hover:text-red-600">
-												@svg('bi-trash', 'w-5 h-5')
-											</a>
+											<form action="{{ route('dashboard.user.destroy', $user->id_login) }}" method="post" class="inline-block">
+												@method('DELETE')
+												@csrf
+												<button type="submit" class="inline-block hover:text-red-600">
+														@svg('bi-trash', 'w-5 h-5')
+												</button>
+											</form>
 											<a href="{{ route('dashboard.user.edit', $user->id_login) }}" class="inline-block pl-2 hover:text-blue-600">
 												@svg('bi-pencil', 'w-5 h-5')
 											</a>
@@ -69,11 +88,6 @@
 								@endforeach
 						</tbody>
 				</table>
-
-				<div class="container mt-5">
-						@foreach ($users as $k)
-						@endforeach
-				</div>
 					
 				{{ $users->links() }}
 

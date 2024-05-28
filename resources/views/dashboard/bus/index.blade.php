@@ -3,7 +3,7 @@
 
     <div class="min-h-screen px-5 pb-12 bg-center bg-cover pt-28 lg:pt-12"
         style="background-image: url({{ $background }})">
-        <div class="max-w-5xl p-5 mx-auto bg-white rounded-lg">
+        <div class="max-w-4xl p-5 mx-auto bg-white rounded-lg">
             {{-- Content Heading --}}
             <div class="flex items-center justify-between pb-5 overflow-hidden shadow-sm sm:rounded-lg">
                 <div>
@@ -29,8 +29,23 @@
                 </form>
             </div>
 
+            {{-- Notification Success --}}
+            @if (session()->has('success'))
+            <div id="alert-3" class="flex items-center justify-center p-4 mx-auto mb-4 text-green-800 bg-green-200 rounded-lg dark:bg-gray-800 dark:text-green-400" role="alert">
+                @svg('bi-info-circle', 'w-6 h-6 text-green-500')
+                <span class="sr-only">Info</span>
+                <div class="text-sm font-medium ms-3">
+                        {{ session('success') }}
+                </div>
+                <button type="button" class="ms-auto -mx-1.5 -my-1.5 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        @svg('bi-x-lg', 'w-6 h-6')
+                </button>
+            </div>
+            @endif
+
             <!-- component -->
-            <table class="w-full text-left border-collapse">
+            <table class="w-full text-sm text-left border-collapse">
                 <thead>
                     <tr>
                         <th class="hidden p-3 font-bold text-gray-600 border lg:table-cell">Kode Bus</th>
@@ -56,7 +71,7 @@
                                 <span
                                     class="absolute top-0 left-0 px-2 py-1 text-xs font-bold uppercase bg-blue-200 lg:hidden">Nama
                                     & Spesifikasi Bus</span>
-                                <p>{{ $b->nama_bus }}
+                                <p class="pt-4 sm:pt-0">{{ $b->nama_bus }}
                                 <p class="text-sm text-gray-400">{{ $b->kapasitas_solar }} L - {{ $b->jumlah_kursi }}
                                     Kursi - Rp {{ number_format($b->harga_sewa, 0, ',', '.') }}</p>
                                 </p>
@@ -66,8 +81,7 @@
                                 <span
                                     class="absolute top-0 left-0 px-2 py-1 text-xs font-bold uppercase bg-blue-200 lg:hidden">Status
                                     Bus</span>
-                                <span
-                                    class="px-3 py-1 font-semibold text-sm rounded-full {{ $b->status_bus->kode_status == 1 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                                <span class="px-3 py-1 font-semibold text-sm rounded-full {{ $b->status_bus->kode_status == 1 ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
                                     @svg('bi-circle-fill', 'w-2 h-2 inline-block mr-2')
                                     {{ $b->status_bus->deskripsi }}
                                 </span>
@@ -83,7 +97,7 @@
                                 class="relative block w-full p-3 text-center text-gray-800 border border-b lg:text-left lg:w-auto lg:table-cell lg:static">
                                 <span
                                     class="absolute top-0 left-0 px-2 py-1 text-xs font-bold uppercase bg-blue-200 lg:hidden">Aksi</span>
-                                <form action="{{ route('dashboard.bus.destroy', $b->kode_bus) }}" method="post">
+                                <form action="{{ route('dashboard.bus.destroy', $b->kode_bus) }}" method="post" class="inline-block">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="inline-block hover:text-red-600">
@@ -99,11 +113,6 @@
                     @endforeach
                 </tbody>
             </table>
-
-            <div class="container mt-5">
-                @foreach ($bus as $b)
-                @endforeach
-            </div>
 
             {{ $bus->links() }}
 
