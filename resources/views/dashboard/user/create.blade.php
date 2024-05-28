@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot:title>{{ $title }}</x-slot:title>
 
-  <div class="min-h-screen px-5 pt-48 pb-12 bg-center bg-cover lg:pt-28" style="background-image: url({{ $background }})">
+  <div class="min-h-screen px-5 pt-28 lg:pt-24 pb-12 bg-center bg-cover" style="background-image: url({{ $background }})">
       <div class="max-w-4xl p-5 mx-auto bg-white rounded-lg">
 				{{-- Content Heading --}}
 				<div class="flex items-center justify-between pb-4 overflow-hidden border-b shadow-sm sm:rounded-lg">
@@ -14,33 +14,34 @@
 				</div>
 	
 				<!-- component -->
-				<form action="/dashboard/user" method="post" x-data="{ kode: '', role: {{ $role }} }">
+				<form action="/dashboard/user" method="post" x-data="{ kode: {{ old('role_id') ?? 0 }}, role: {{ $role }} }">
           @csrf
           <div class="flex flex-wrap justify-between w-full gap-4 sm:flex-nowrap">
             <div class="basis-full md:basis-1/3">
               {{-- Role --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="role_id" class="text-xl font-semibold text-secondary-base">Role User</label>
+                <x-label-dashboard for="role_id">Role User</x-label-dashboard>
                 <select name="role_id" id="role_id" x-model="kode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5 ">
                   <option value="0">Pelanggan</option>
                   <template x-for="(r, i) in role" :key="i">
-                    <option :value="r.id_role" x-text="r.nama_role"></option>
+                    <option :value="r.id_role" x-text="r.nama_role" :selected="{{ old('role_id') }} == r.id_role"></option>
                   </template>
                 </select>
               </div>
 
               {{-- Nama User --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="nama_user" class="text-xl font-semibold text-secondary-base">Nama User</label>
-                <input type="text" name="nama_user" id="nama_user" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5" placeholder="masukkan nama user">
+                <x-label-dashboard for="nama_user">Nama User</x-label-dashboard>
+                <x-input-dashboard type="text" id="nama_user" name="nama_user" placeholder="masukkan nama user" value="{{ old('nama_user') }}" />
+                <x-input-error :messages="$errors->get('nama_user')"></x-input-error>
               </div>
               
               {{-- Jenis Kelamin --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="kode_jenis_kelamin" class="text-xl font-semibold text-secondary-base">Jenis Kelamin</label>
-                <select name="kode_jenis_kelamin" id="kode_jenis_kelamin" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5 ">
+                <x-label-dashboard for="jenis_kelamin">Jenis Kelamin</x-label-dashboard>
+                <select name="jenis_kelamin_kode" id="jenis_kelamin_kode" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5 ">
                   @foreach ($jenis_kelamin as $j)
-                    <option value="{{ $j->kode_jenis_kelamin }}">{{ $j->keterangan }}</option>
+                    <option value="{{ $j->kode_jenis_kelamin }}" {{ $j->kode_jenis_kelamin == old('jenis_kelamin_kode') }}>{{ $j->keterangan }}</option>
                   @endforeach
                 </select>
               </div>
@@ -49,34 +50,39 @@
             <div class="basis-full md:basis-1/3">
               {{-- Username --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="username" class="text-xl font-semibold text-secondary-base">Username</label>
-                <input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5" placeholder="masukkan username">
+                <x-label-dashboard for="username">Username</x-label-dashboard>
+                <x-input-dashboard type="text" name="username" id="username" placeholder="masukkan username" value="{{ old('username') }}" />
+                <x-input-error :messages="$errors->get('username')"></x-input-error>
               </div>
 
               {{-- Password --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="password" class="text-xl font-semibold text-secondary-base">Password</label>
-                <input type="password" name="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5" placeholder="masukkan password bus">
+                <x-label-dashboard for="password">Password</x-label-dashboard>
+                <x-input-dashboard type="password" name="password" id="password" placeholder="masukkan password" />
+                <x-input-error :messages="$errors->get('password')"></x-input-error>
               </div>
               
               {{-- Konfirmasi Password --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="password_confirmation" class="text-xl font-semibold text-secondary-base">Konfirmasi Password</label>
-                <input type="password" name="password_confirmation" id="password_confirmation" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5" placeholder="masukkan konfirmasi password">
+                <x-label-dashboard for="password_confirmation">Konfirmasi Password</x-label-dashboard>
+                <x-input-dashboard type="password" name="password_confirmation" id="password_confirmation" placeholder="masukkan konfirmasi password" />
+                <x-input-error :messages="$errors->get('password_confirmation')"></x-input-error>
               </div>
             </div>
 
             <div class="basis-full md:basis-1/3">
               {{-- No Telepon --}}
               <div class="flex flex-col gap-2 mt-5">
-                <label for="no_telepon" class="text-xl font-semibold text-secondary-base">No Telepon</label>
-                <input type="text" name="no_telepon" id="no_telepon" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5" placeholder="masukkan no telepon">
+                <x-label-dashboard for="no_telepon">No Telepon</x-label-dashboard>
+                <x-input-dashboard type="text" name="no_telepon" id="no_telepon" placeholder="masukkan no telepon" value="{{ old('no_telepon') }}" />
+                <x-input-error :messages="$errors->get('no_telepon')"></x-input-error>
               </div>
 
               {{-- Alamat --}}
               <div class="flex flex-col gap-2 mt-5" x-show="kode == 0">
-                <label for="alamat" class="text-xl font-semibold text-secondary-base">Alamat</label>
-                <input type="text" name="alamat" id="alamat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-300 focus:border-primary-300 block w-full p-2.5" placeholder="masukkan alamat" :disabled="kode != 0">
+                <x-label-dashboard for="alamat">Alamat</x-label-dashboard>
+                <x-input-dashboard type="text" name="alamat" id="alamat" placeholder="masukkan alamat" value="{{ old('alamat') }}" ::disabled="kode != 0" />
+                <x-input-error :messages="$errors->get('alamat')"></x-input-error>
               </div>
             </div>
           </div>
