@@ -14,10 +14,35 @@
           <div class="form-head">
             <div class="flex w-full pt-4 titik-jemput">
               @svg('iconpark-localtwo-o', ['class' => 'w-8 h-8 text-secondary-base'])
-              <input type="text" placeholder="Pilih Titik Jemput" class="border-0">
+              <div id="geocoder" class="geocoder" placeholder="Pilih Titik Jemput"></div>
+              {{-- <input type="text" placeholder="Pilih Titik Jemput" class="border-0 jemput"> --}}
             </div>
-            <div class="w-full pt-4 maps">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.9848403210676!2d112.72050577414473!3d-7.127749469903781!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd803dd886bbff5%3A0x9777ca139b28195d!2sUniversitas%20Trunojoyo%20Madura!5e0!3m2!1sid!2sid!4v1714999929988!5m2!1sid!2sid" class="w-full border-0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <div class="w-full pt-4">
+                <div id="map" style="height: 200px; width: 500px;"></div>
+                <script>
+
+                  let startLocation = [111.623011, -7.4176117];
+                  const warehouseLocation = [-83.083, 42.363];
+                  const lastAtRestaurant = 0;
+                  const keepTrack = [];
+                  const pointHopper = {};
+
+                  mapboxgl.accessToken = 'pk.eyJ1IjoiY2FsbGViMjEiLCJhIjoiY2xvdXlxOWxyMGs0NjJqbzlrcHZsbjB3OCJ9.k2r8cKpCDJKIepppdBmcZQ';
+                  const map = new mapboxgl.Map({
+                    container: 'map', // container ID
+                    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+                    center: startLocation, // starting position [lng, lat]
+                    zoom: 5.7, // starting zoom
+                  });
+
+                  const geocoder = new MapboxGeocoder({
+                    accessToken: mapboxgl.accessToken,
+                    mapboxgl: mapboxgl
+                  });
+                  document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+                  document.querySelector('.mapboxgl-ctrl-geocoder--input').setAttribute('placeholder', 'Pilih Titik Jemput');
+
+                </script>
             </div>
             <div class="py-4 input-group">
               <div class="w-full pt-4 wisata">
@@ -199,6 +224,10 @@
 
   <script>
     $(document).ready(function() { 
+      $('.jemput').on("keyup", function() {
+        const jemput = $(this).val();
+        console.log(jemput)
+      })
       const jmlOption = $('#list-wisata select option').length;
 
       $('#list-wisata select').select2();
