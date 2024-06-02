@@ -8,6 +8,7 @@
   <script src='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js'></script>
   <link href='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css' rel='stylesheet' />
   <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+  <script id="search-js" defer src="https://api.mapbox.com/search-js/v1.0.0-beta.21/web.js"></script>
   
   {{-- Fonts Style --}}
   <link rel="preconnect" href="https://fonts.googleapis.com">

@@ -14,7 +14,7 @@
           <div class="form-head">
             <div class="flex w-full pt-4 titik-jemput">
               @svg('iconpark-localtwo-o', ['class' => 'w-8 h-8 text-secondary-base'])
-              <div id="geocoder" class="geocoder" placeholder="Pilih Titik Jemput"></div>
+              <div id="geocoder" class="geocoder"></div>
               {{-- <input type="text" placeholder="Pilih Titik Jemput" class="border-0 jemput"> --}}
             </div>
             <div class="w-full pt-4">
@@ -22,26 +22,305 @@
                 <script>
 
                   let startLocation = [111.623011, -7.4176117];
-                  const warehouseLocation = [-83.083, 42.363];
+                  const warehouseLocation = [111.623011, -7.4176117];
                   const lastAtRestaurant = 0;
-                  const keepTrack = [];
+                  let keepTrack = [];
                   const pointHopper = {};
+                  const bound = [
+                    [109.035960, -8.802369],
+                    [114.375734, -6.407968]
+                  ];
 
                   mapboxgl.accessToken = 'pk.eyJ1IjoiY2FsbGViMjEiLCJhIjoiY2xvdXlxOWxyMGs0NjJqbzlrcHZsbjB3OCJ9.k2r8cKpCDJKIepppdBmcZQ';
                   const map = new mapboxgl.Map({
                     container: 'map', // container ID
-                    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+                    style: 'mapbox://styles/mapbox/outdoors-v12', // style URL
                     center: startLocation, // starting position [lng, lat]
-                    zoom: 5.7, // starting zoom
+                    zoom: 6, // starting zoom
+                    cooperativeGestures: true,
+                    maxBounds: bound
                   });
 
+                  // menambah navigasi map plus minus
+                  map.addControl(new mapboxgl.NavigationControl());
+                  map.addControl(new mapboxgl.FullscreenControl());
+
+                  // menambah geocoder
                   const geocoder = new MapboxGeocoder({
                     accessToken: mapboxgl.accessToken,
-                    mapboxgl: mapboxgl
+                    mapboxgl: mapboxgl,
+                    language: 'id',
+                    country: 'ID'
                   });
-                  document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
+                  // membuat input geocoder
+                  let input = document.getElementById('geocoder')
+                  input.appendChild(geocoder.onAdd(map));
                   document.querySelector('.mapboxgl-ctrl-geocoder--input').setAttribute('placeholder', 'Pilih Titik Jemput');
 
+                  // membuat marker
+                  var marker = new mapboxgl.Marker({
+                    draggable: true
+                  })
+
+                  const warehouse = turf.featureCollection([turf.point(warehouseLocation)]);
+
+                  // Create an empty GeoJSON feature collection for drop off locations
+                  const dropoffs = turf.featureCollection([]);
+
+                  // Create an empty GeoJSON feature collection, which will be used as the data source for the route before users add any new data
+                  const nothing = turf.featureCollection([]);
+
+                  map.on('load', async () => {
+
+                    // Create a circle layer
+                    map.addLayer({
+                      id: 'warehouse',
+                      type: 'circle',
+                      source: {
+                        data: warehouse,
+                        type: 'geojson'
+                      },
+                      paint: {
+                        'circle-radius': 20,
+                        'circle-color': 'white',
+                        'circle-stroke-color': '#3887be',
+                        'circle-stroke-width': 3
+                      }
+                    });
+
+                    // Create a symbol layer on top of circle layer
+                    map.addLayer({
+                      id: 'warehouse-symbol',
+                      type: 'symbol',
+                      source: {
+                        data: warehouse,
+                        type: 'geojson'
+                      },
+                      layout: {
+                        'icon-image': 'grocery',
+                        'icon-size': 1.5
+                      },
+                      paint: {
+                        'text-color': '#3887be'
+                      }
+                    });
+
+                    map.addLayer({
+                      id: 'dropoffs-symbol',
+                      type: 'symbol',
+                      source: {
+                        data: dropoffs,
+                        type: 'geojson'
+                      },
+                      layout: {
+                        'icon-allow-overlap': true,
+                        'icon-ignore-placement': true,
+                        'icon-image': 'marker-15'
+                      }
+                    });
+
+                    map.addSource('route', {
+                      type: 'geojson',
+                      data: nothing
+                    });
+
+                    map.addLayer(
+                      {
+                        id: 'routeline-active',
+                        type: 'line',
+                        source: 'route',
+                        layout: {
+                          'line-join': 'round',
+                          'line-cap': 'round'
+                        },
+                        paint: {
+                          'line-color': '#3887be',
+                          'line-width': ['interpolate', ['linear'], ['zoom'], 12, 3, 22, 12]
+                        }
+                      },
+                      'waterway-label'
+                    );
+
+                    map.addLayer(
+                      {
+                        id: 'routearrows',
+                        type: 'symbol',
+                        source: 'route',
+                        layout: {
+                          'symbol-placement': 'line',
+                          'text-field': '▶',
+                          'text-size': [
+                            'interpolate',
+                            ['linear'],
+                            ['zoom'],
+                            12,
+                            24,
+                            22,
+                            60
+                          ],
+                          'symbol-spacing': [
+                            'interpolate',
+                            ['linear'],
+                            ['zoom'],
+                            12,
+                            30,
+                            22,
+                            160
+                          ],
+                          'text-keep-upright': false
+                        },
+                        paint: {
+                          'text-color': '#3887be',
+                          'text-halo-color': 'hsl(55, 11%, 96%)',
+                          'text-halo-width': 3
+                        }
+                      },
+                      'waterway-label'
+                    );
+
+                    // Listen for a click on the map
+                    await map.on('click', addWaypoints);
+                  });
+
+                  async function addWaypoints(event) {
+                    // When the map is clicked, add a new drop off point
+                    // and update the `dropoffs-symbol` layer
+                    await newDropoff(map.unproject(event.point));
+                    updateDropoffs(dropoffs);
+                  }
+
+                  async function newDropoff(coordinates) {
+                    // Store the clicked point as a new GeoJSON feature with
+                    // two properties: `orderTime` and `key`
+                    const pt = turf.point([coordinates.lng, coordinates.lat], {
+                      orderTime: Date.now(),
+                      key: Math.random()
+                    });
+                    dropoffs.features.push(pt);
+                    pointHopper[pt.properties.key] = pt;
+
+                    // Make a request to the Optimization API
+                    const query = await fetch(assembleQueryURL(), { method: 'GET' });
+                    const response = await query.json();
+
+                    // Create an alert for any requests that return an error
+                    if (response.code !== 'Ok') {
+                      const handleMessage =
+                        response.code === 'InvalidInput'
+                          ? 'Refresh to start a new route. For more information: https://docs.mapbox.com/api/navigation/optimization/#optimization-api-errors'
+                          : 'Try a different point.';
+                      alert(`${response.code} - ${response.message}\n\n${handleMessage}`);
+                      // Remove invalid point
+                      dropoffs.features.pop();
+                      delete pointHopper[pt.properties.key];
+                      return;
+                    }
+
+                    // Create a GeoJSON feature collection
+                    const routeGeoJSON = turf.featureCollection([
+                      turf.feature(response.trips[0].geometry)
+                    ]);
+
+                    // Update the `route` source by getting the route source
+                    // and setting the data equal to routeGeoJSON
+                    map.getSource('route').setData(routeGeoJSON);
+                  }
+
+                  function updateDropoffs(geojson) {
+                    map.getSource('dropoffs-symbol').setData(geojson);
+                  }
+
+                  // Here you'll specify all the parameters necessary for requesting a response from the Optimization API
+                  function assembleQueryURL() {
+                    // Store the location of the truck in a variable called coordinates
+                    let coordinates = [startLocation];
+                    const distributions = [];
+                    let restaurantIndex;
+                    keepTrack = [startLocation];
+
+                    // Create an array of GeoJSON feature collections for each point
+                    const restJobs = Object.keys(pointHopper).map(
+                      (key) => pointHopper[key]
+                    );
+
+                    // If there are actually orders from this restaurant
+                    if (restJobs.length > 0) {
+                      // Check to see if the request was made after visiting the restaurant
+                      const needToPickUp =
+                        restJobs.filter((d) => d.properties.orderTime > lastAtRestaurant)
+                          .length > 0;
+
+                      // If the request was made after picking up from the restaurant,
+                      // Add the restaurant as an additional stop
+                      if (needToPickUp) {
+                        restaurantIndex = coordinates.length;
+                        // Add the restaurant as a coordinate
+                        coordinates.push(warehouseLocation);
+                        // push the restaurant itself into the array
+                        keepTrack.push(pointHopper.warehouse);
+                      }
+
+                      for (const job of restJobs) {
+                        // Add dropoff to list
+                        keepTrack.push(job);
+                        coordinates.push(job.geometry.coordinates);
+                        // if order not yet picked up, add a reroute
+                        if (needToPickUp && job.properties.orderTime > lastAtRestaurant) {
+                          distributions.push(
+                            `${restaurantIndex},${coordinates.length - 1}`
+                          );
+                        }
+                      }
+                    }
+
+                    // Set the profile to `driving`
+                    // Coordinates will include the current location of the truck,
+                    return `https://api.mapbox.com/optimized-trips/v1/mapbox/driving/${coordinates.join(
+                      ';'
+                    )}?distributions=${distributions.join(
+                      ';'
+                    )}&overview=full&steps=true&geometries=geojson&source=first&access_token=${
+                      mapboxgl.accessToken
+                    }`;
+                  }
+
+
+                  // Mengembalikan nama daerah asal
+                  var gantiTempat = (lngLat) => {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('GET', `https://api.mapbox.com/search/geocode/v6/reverse?country=id&language=id&longitude=${lngLat.lng}&latitude=${lngLat.lat}&access_token=${mapboxgl.accessToken}`);
+                    xhr.send();
+                    xhr.onload = function() {
+                      if (xhr.status != 200) {
+                        alert(`Error ${xhr.status}: ${xhr.statusText}`);
+                      } else {
+                        var response = JSON.parse(xhr.response);
+                        document.querySelector('.daerah-asal').textContent = response.features[3]['properties']["full_address"].substring(0, response.features[3]['properties']["full_address"].lastIndexOf(', '));
+                      }
+                    };
+                  }
+                  
+                  // input marker
+                  geocoder.on('result', function(e) {
+                    geocoder.clear();
+                    marker.setLngLat(e.result.center).addTo(map)  
+                    const lngLat = marker.getLngLat();
+                    gantiTempat(lngLat);
+                  });
+
+                  // input marker by click
+                  map.on('click', function(e) {
+                    var coordinates = e.lngLat;
+                    marker.setLngLat(coordinates).addTo(map);
+                    gantiTempat(coordinates);
+                  });
+
+                  // input marker by drag
+                  marker.on('dragend', function(e) {
+                    const lngLat = marker.getLngLat();
+                    gantiTempat(lngLat);
+                  });
                 </script>
             </div>
             <div class="py-4 input-group">
@@ -121,7 +400,7 @@
       <div class="px-10 py-8 text-center bg-white rounded-lg lg:text-left">
         <div class="detail-head">
           <h1 class="pb-3 text-secondary-base">DAERAH ASAL</h1>
-          <h3 class="text-2xl font-bold text-secondary-base">Tuban, Jawa Timur</h3>
+          <h3 class="text-2xl font-bold text-secondary-base daerah-asal">Tuban, Jawa Timur</h3>
           <div class="pt-3 detail-bus">
             <p class="text-sm text-gray-400">Bus: {{ $bus->nama_bus }}</p>
             <span data-modal-target="bus-modal" data-modal-toggle="bus-modal" class="text-blue-500 text-[10px] hover:underline cursor-pointer">informasi bus selengkapnya bisa dicek disini</span>
