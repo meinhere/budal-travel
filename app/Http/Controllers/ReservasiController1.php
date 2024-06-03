@@ -37,17 +37,16 @@ class ReservasiController extends Controller
     public function order(Kota $kota, Bus $bus) {
         
         $wisata = new stdClass();
-        // Wisata::with('kota')->select('kode_wisata', 'nama_wisata')->where('kota_kode', $kota->kode_kota)->get()->map(fn($item) => $wisata->{$item->kode_wisata} = $item->nama_wisata);
-        $wisata = Wisata::where('kota_kode', $kota->kode_kota)->get();
+        Wisata::with('kota')->select('kode_wisata', 'nama_wisata')->where('kota_kode', $kota->kode_kota)->get()->map(fn($item) => $wisata->{$item->kode_wisata} = $item->nama_wisata);
+
         $data = [
             'title' => "Halaman Order",
             'background' => '/storage/img/bg/background-detail.jpg',
-            'wisata' => $wisata,
+            'wisata' => json_encode($wisata),
             'kota' => $kota,
             'bus' => $bus,
         ];
-        
-        // return($wisata);
+
         return view('order', $data);
     }
 
