@@ -20,11 +20,7 @@
                         <div class="w-full pt-4">
                             <div id="map" style="height: 200px; width: 500px;"></div>
                             <script>
-                                let startLocation = [111.623011, -7.4176117];
-                                const warehouseLocation = [111.623011, -7.4176117];
-                                const lastAtRestaurant = 0;
-                                let keepTrack = [];
-                                const pointHopper = {};
+                                let startBound = [111.623011, -7.4176117];
                                 const bound = [
                                     [109.035960, -8.802369],
                                     [114.375734, -6.407968]
@@ -34,7 +30,7 @@
                                 const map = new mapboxgl.Map({
                                     container: 'map', // container ID
                                     style: 'mapbox://styles/mapbox/outdoors-v12', // style URL
-                                    center: startLocation, // starting position [lng, lat]
+                                    center: startBound, // starting position [lng, lat]
                                     zoom: 6, // starting zoom
                                     cooperativeGestures: true,
                                     maxBounds: bound
@@ -62,248 +58,23 @@
                                     draggable: true
                                 })
 
-                                const warehouse = turf.featureCollection([turf.point(warehouseLocation)]);
-
-                                // Create an empty GeoJSON feature collection for drop off locations
-                                const dropoffs = turf.featureCollection([]);
-
-                                // Create an empty GeoJSON feature collection, which will be used as the data source for the route before users add any new data
-                                const nothing = turf.featureCollection([]);
-
-                                map.on('load', async () => {
-
-                                    // Create a circle layer
-                                    map.addLayer({
-                                        id: 'warehouse',
-                                        type: 'circle',
-                                        source: {
-                                            data: warehouse,
-                                            type: 'geojson'
-                                        },
-                                        paint: {
-                                            'circle-radius': 20,
-                                            'circle-color': 'white',
-                                            'circle-stroke-color': '#3887be',
-                                            'circle-stroke-width': 3
-                                        }
-                                    });
-
-                                    // Create a symbol layer on top of circle layer
-                                    map.addLayer({
-                                        id: 'warehouse-symbol',
-                                        type: 'symbol',
-                                        source: {
-                                            data: warehouse,
-                                            type: 'geojson'
-                                        },
-                                        layout: {
-                                            'icon-image': 'grocery',
-                                            'icon-size': 1.5
-                                        },
-                                        paint: {
-                                            'text-color': '#3887be'
-                                        }
-                                    });
-
-                                    map.addLayer({
-                                        id: 'dropoffs-symbol',
-                                        type: 'symbol',
-                                        source: {
-                                            data: dropoffs,
-                                            type: 'geojson'
-                                        },
-                                        layout: {
-                                            'icon-allow-overlap': true,
-                                            'icon-ignore-placement': true,
-                                            'icon-image': 'marker-15'
-                                        }
-                                    });
-
-                                    map.addSource('route', {
-                                        type: 'geojson',
-                                        data: nothing
-                                    });
-
-                                    map.addLayer({
-                                            id: 'routeline-active',
-                                            type: 'line',
-                                            source: 'route',
-                                            layout: {
-                                                'line-join': 'round',
-                                                'line-cap': 'round'
-                                            },
-                                            paint: {
-                                                'line-color': '#3887be',
-                                                'line-width': ['interpolate', ['linear'],
-                                                    ['zoom'], 12, 3, 22, 12
-                                                ]
-                                            }
-                                        },
-                                        'waterway-label'
-                                    );
-
-                                    map.addLayer({
-                                            id: 'routearrows',
-                                            type: 'symbol',
-                                            source: 'route',
-                                            layout: {
-                                                'symbol-placement': 'line',
-                                                'text-field': '▶',
-                                                'text-size': [
-                                                    'interpolate',
-                                                    ['linear'],
-                                                    ['zoom'],
-                                                    12,
-                                                    24,
-                                                    22,
-                                                    60
-                                                ],
-                                                'symbol-spacing': [
-                                                    'interpolate',
-                                                    ['linear'],
-                                                    ['zoom'],
-                                                    12,
-                                                    30,
-                                                    22,
-                                                    160
-                                                ],
-                                                'text-keep-upright': false
-                                            },
-                                            paint: {
-                                                'text-color': '#3887be',
-                                                'text-halo-color': 'hsl(55, 11%, 96%)',
-                                                'text-halo-width': 3
-                                            }
-                                        },
-                                        'waterway-label'
-                                    );
-
-                                    // Listen for a click on the map
-                                    await map.on('click', addWaypoints);
-                                });
-
-                                async function addWaypoints(event) {
-                                    // When the map is clicked, add a new drop off point
-                                    // and update the `dropoffs-symbol` layer
-                                    await newDropoff(map.unproject(event.point));
-                                    updateDropoffs(dropoffs);
-                                }
-
-                                async function newDropoff(coordinates) {
-                                    // Store the clicked point as a new GeoJSON feature with
-                                    // two properties: `orderTime` and `key`
-                                    const pt = turf.point([coordinates.lng, coordinates.lat], {
-                                        orderTime: Date.now(),
-                                        key: Math.random()
-                                    });
-                                    dropoffs.features.push(pt);
-                                    pointHopper[pt.properties.key] = pt;
-
-                                    // Make a request to the Optimization API
-                                    const query = await fetch(assembleQueryURL(), {
-                                        method: 'GET'
-                                    });
-                                    const response = await query.json();
-
-                                    // Create an alert for any requests that return an error
-                                    if (response.code !== 'Ok') {
-                                        const handleMessage =
-                                            response.code === 'InvalidInput' ?
-                                            'Refresh to start a new route. For more information: https://docs.mapbox.com/api/navigation/optimization/#optimization-api-errors' :
-                                            'Try a different point.';
-                                        alert(`${response.code} - ${response.message}\n\n${handleMessage}`);
-                                        // Remove invalid point
-                                        dropoffs.features.pop();
-                                        delete pointHopper[pt.properties.key];
-                                        return;
-                                    }
-
-                                    // Create a GeoJSON feature collection
-                                    const routeGeoJSON = turf.featureCollection([
-                                        turf.feature(response.trips[0].geometry)
-                                    ]);
-
-                                    // Update the `route` source by getting the route source
-                                    // and setting the data equal to routeGeoJSON
-                                    map.getSource('route').setData(routeGeoJSON);
-                                }
-
-                                function updateDropoffs(geojson) {
-                                    map.getSource('dropoffs-symbol').setData(geojson);
-                                }
-
-                                // Here you'll specify all the parameters necessary for requesting a response from the Optimization API
-                                function assembleQueryURL() {
-                                    // Store the location of the truck in a variable called coordinates
-                                    let coordinates = [startLocation];
-                                    const distributions = [];
-                                    let restaurantIndex;
-                                    keepTrack = [startLocation];
-
-                                    // Create an array of GeoJSON feature collections for each point
-                                    const restJobs = Object.keys(pointHopper).map(
-                                        (key) => pointHopper[key]
-                                    );
-
-                                    // If there are actually orders from this restaurant
-                                    if (restJobs.length > 0) {
-                                        // Check to see if the request was made after visiting the restaurant
-                                        const needToPickUp =
-                                            restJobs.filter((d) => d.properties.orderTime > lastAtRestaurant)
-                                            .length > 0;
-
-                                        // If the request was made after picking up from the restaurant,
-                                        // Add the restaurant as an additional stop
-                                        if (needToPickUp) {
-                                            restaurantIndex = coordinates.length;
-                                            // Add the restaurant as a coordinate
-                                            coordinates.push(warehouseLocation);
-                                            // push the restaurant itself into the array
-                                            keepTrack.push(pointHopper.warehouse);
-                                        }
-
-                                        for (const job of restJobs) {
-                                            // Add dropoff to list
-                                            keepTrack.push(job);
-                                            coordinates.push(job.geometry.coordinates);
-                                            // if order not yet picked up, add a reroute
-                                            if (needToPickUp && job.properties.orderTime > lastAtRestaurant) {
-                                                distributions.push(
-                                                    `${restaurantIndex},${coordinates.length - 1}`
-                                                );
-                                            }
-                                        }
-                                    }
-
-                                    // Set the profile to `driving`
-                                    // Coordinates will include the current location of the truck,
-                                    return `https://api.mapbox.com/optimized-trips/v1/mapbox/driving/${coordinates.join(
-                      ';'
-                    )}?distributions=${distributions.join(
-                      ';'
-                    )}&overview=full&steps=true&geometries=geojson&source=first&access_token=${
-                      mapboxgl.accessToken
-                    }`;
-                                }
-
-
                                 // Mengembalikan nama daerah asal
                                 var gantiTempat = (lngLat) => {
-                                    var xhr = new XMLHttpRequest();
-                                    xhr.open('GET',
-                                        `https://api.mapbox.com/search/geocode/v6/reverse?country=id&language=id&longitude=${lngLat.lng}&latitude=${lngLat.lat}&access_token=${mapboxgl.accessToken}`
-                                    );
-                                    xhr.send();
-                                    xhr.onload = function() {
-                                        if (xhr.status != 200) {
-                                            alert(`Error ${xhr.status}: ${xhr.statusText}`);
-                                        } else {
-                                            var response = JSON.parse(xhr.response);
-                                            document.querySelector('.daerah-asal').textContent = response.features[3]['properties'][
-                                                "full_address"
-                                            ].substring(0, response.features[3]['properties']["full_address"].lastIndexOf(', '));
-                                        }
-                                    };
+                                  var xhr = new XMLHttpRequest();
+                                  xhr.open('GET',
+                                      `https://api.mapbox.com/search/geocode/v6/reverse?country=id&language=id&longitude=${lngLat.lng}&latitude=${lngLat.lat}&access_token=${mapboxgl.accessToken}`
+                                  );
+                                  xhr.send();
+                                  xhr.onload = function() {
+                                      if (xhr.status != 200) {
+                                          alert(`Error ${xhr.status}: ${xhr.statusText}`);
+                                      } else {
+                                          var response = JSON.parse(xhr.response);
+                                          document.querySelector('.daerah-asal').textContent = response.features[3]['properties'][
+                                              "full_address"
+                                          ].substring(0, response.features[3]['properties']["full_address"].lastIndexOf(', '));
+                                      }
+                                  };
                                 }
 
                                 // input marker
@@ -312,6 +83,35 @@
                                     marker.setLngLat(e.result.center).addTo(map)
                                     const lngLat = marker.getLngLat();
                                     gantiTempat(lngLat);
+                                    getRoute(lngLat);
+  
+                                    // Check if the layer already exists
+                                    if (map.getLayer('point')) {
+                                        // If the layer exists, remove it
+                                        map.removeLayer('point');
+                                        map.removeSource('point');
+                                    }
+                                    
+                                    map.addLayer({
+                                      id: 'point',
+                                      type: 'circle',
+                                      source: {
+                                        type: 'geojson',
+                                        data: {
+                                          type: 'FeatureCollection',
+                                          features: [
+                                            {
+                                              type: 'Feature',
+                                              properties: {},
+                                              geometry: {
+                                                type: 'Point',
+                                                coordinates: lngLat
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      },
+                                    });
                                 });
 
                                 // input marker by click
@@ -319,13 +119,198 @@
                                     var coordinates = e.lngLat;
                                     marker.setLngLat(coordinates).addTo(map);
                                     gantiTempat(coordinates);
+                                    ruteTerdekat(coorWisata);
+                                    getRoute(coordinates);
+
+                                    // Check if the layer already exists
+                                    if (map.getLayer('point')) {
+                                        // If the layer exists, remove it
+                                        map.removeLayer('point');
+                                        map.removeSource('point');
+                                    }
+
+                                    map.addLayer({
+                                      id: 'point',
+                                      type: 'circle',
+                                      source: {
+                                        type: 'geojson',
+                                        data: {
+                                          type: 'FeatureCollection',
+                                          features: [
+                                            {
+                                              type: 'Feature',
+                                              properties: {},
+                                              geometry: {
+                                                type: 'Point',
+                                                coordinates: coordinates
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      },
+                                    });
                                 });
 
                                 // input marker by drag
                                 marker.on('dragend', function(e) {
-                                    const lngLat = marker.getLngLat();
-                                    gantiTempat(lngLat);
+                                  const lngLat = marker.getLngLat();
+                                  gantiTempat(lngLat);
+                                  ruteTerdekat(coorWisata);
+                                  getRoute(lngLat);
+
+                                  // Check if the layer already exists
+                                  if (map.getLayer('point')) {
+                                      // If the layer exists, remove it
+                                      map.removeLayer('point');
+                                      map.removeSource('point');
+                                  }
+
+                                  map.addLayer({
+                                    id: 'point',
+                                    type: 'circle',
+                                    source: {
+                                      type: 'geojson',
+                                      data: {
+                                        type: 'FeatureCollection',
+                                        features: [
+                                          {
+                                            type: 'Feature',
+                                            properties: {},
+                                            geometry: {
+                                              type: 'Point',
+                                              coordinates: lngLat
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    },
+                                  });
                                 });
+
+                                // mendapatkan jarak dan durasi rute wisata
+                                durations = [];
+                                let coorWisata = [];
+                                let ruteTerdekat = (coordinates) => {
+                                  var startCoor = marker.getLngLat();
+                                  const xhr = new XMLHttpRequest();
+                                  let curb = '';
+                                  if (coordinates.length === 0) {
+                                    return;
+                                  }
+                                  for (let i = 0; i < coordinates.length; i++) {
+                                    curb += ';curb';
+                                  }
+                                  const coordinateString = coordinates.map(coordinate => coordinate.join(',')).join(';');
+                                  // console.log(`https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${startCoor.lng},${startCoor.lat};${coordinateString}?approaches=curb${curb}&access_token=${mapboxgl.accessToken}`);
+                                  xhr.open('GET', `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${startCoor.lng},${startCoor.lat};${coordinateString}?approaches=curb${curb}&access_token=${mapboxgl.accessToken}`);
+                                  xhr.send();
+                                  xhr.onload = function() {
+                                    if (xhr.status != 200) {
+                                      alert(`Error ${xhr.status}: ${xhr.statusText}`);
+                                    } else {
+                                      var response = JSON.parse(xhr.response);
+                                      var durations = response.durations;
+                                      // console.log(response);
+                                      // console.log(findShortestPath(durations, coordinates).path);
+                                      return {
+                                        durations: durations,
+                                        coordinates: coordinates
+                                      }
+                                    }
+                                  };
+                                }
+
+                                // mencari rute terdekat
+                                function findShortestPath(durations, coordinates) {
+                                  let n = durations.length;
+                                  let visited = new Array(n).fill(false);
+                                  let path = [];
+                                  let current = 0;
+                                  let totalDistance = 0;
+                                  
+                                  visited[current] = true;
+                                  path.push(current);
+
+                                  for (let step = 1; step < n; step++) {
+                                      let nearest = -1;
+                                      let minDistance = Infinity;
+
+                                      for (let i = 0; i < n; i++) {
+                                          if (!visited[i] && durations[current][i] < minDistance) {
+                                              nearest = i;
+                                              minDistance = durations[current][i];
+                                          }
+                                      }
+
+                                      visited[nearest] = true;
+                                      path.push(nearest);
+                                      totalDistance += minDistance;
+                                      current = nearest;
+                                  }
+
+                                  totalDistance += durations[current][0]; // Return to the initial point
+                                  path.push(0); // Return to the initial point
+                                  let pathCoordinates = path.map(index => coordinates[index]).filter(coordinate => coordinate !== undefined);
+
+                                  return { path: pathCoordinates, totalDistance };
+                                }
+
+                                // create a function to make a directions request
+                                async function getRoute(end) {
+                                  coordinates = coorWisata;
+                                  const coordinateString = coordinates.map(coordinate => coordinate.join(',')).join(';');
+                                  start = marker.getLngLat();
+                                  // make a directions request using cycling profile
+                                  // an arbitrary start will always be the same
+                                  // only the end or destination will change
+                                  const query = await fetch(
+                                    `https://api.mapbox.com/directions/v5/mapbox/driving/${start.lng},${start.lat};${coordinateString}?geometries=geojson&max_height=4&max_weight=10&access_token=${mapboxgl.accessToken}`,
+                                    { method: 'GET' }
+                                  );
+                                  const json = await query.json();
+                                  const data = json.routes[0];
+                                  const route = data.geometry.coordinates;
+                                  console.log(route);
+                                  const geojson = {
+                                    type: 'Feature',
+                                    properties: {},
+                                    geometry: {
+                                      type: 'LineString',
+                                      coordinates: route
+                                    }
+                                  };
+                                  // if the route already exists on the map, we'll reset it using setData
+                                  if (map.getSource('route')) {
+                                    map.getSource('route').setData(geojson);
+                                  }
+                                  // otherwise, we'll make a new request
+                                  else {
+                                    map.addLayer({
+                                      id: 'route',
+                                      type: 'line',
+                                      source: {
+                                        type: 'geojson',
+                                        data: geojson
+                                      },
+                                      layout: {
+                                        'line-join': 'round',
+                                        'line-cap': 'round'
+                                      },
+                                      paint: {
+                                        'line-color': '#3887be',
+                                        'line-width': 5,
+                                        'line-opacity': 0.75
+                                      }
+                                    });
+                                  }
+                                  // add turn instructions here at the end
+                                }
+
+                                $(map).on('load', () => {
+                                  
+                                  // this is where the code from the next step will go
+                                });
+
                             </script>
                         </div>
                         <div class="py-4 input-group">
@@ -344,73 +329,12 @@
                             <div class="w-full pt-4" id="wisata-container">
                                 @foreach ($wisata as $i => $w)
                                     <div class="mt-2 list-wisata">
-                                        <input type="checkbox" name="wisata[]" id="input" class="wisata-checkbox"
+                                        <input type="checkbox" name="wisata[]" id="wisata_{{ $w->kode_wisata }}" class="wisata-checkbox"
                                             data-id="{{ $i }}" value="{{ $w->kode_wisata }}">
-                                        <label for="wisata_{{ $w->kode }}">{{ $w->nama_wisata }}</label>
+                                        <label for="wisata_{{ $w->kode_wisata }}">{{ $w->nama_wisata }}</label>
                                     </div>
                                 @endforeach
                             </div>
-                            {{-- <div id="wisata_selected"></div>
-                            <div id="total"></div> --}}
-
-
-                            {{-- <div class="w-full pt-4" x-data="{ inputs: [{}] }" id="list-wisata">
-                                <template x-for="(input, index) in inputs" :key="index">
-                                    <div class="flex mt-3 input-group dropdown">
-                                        <select class="mr-2" x-data="{ wisata: {{ $wisata }} }" name="wisata[]">
-                                            <template x-for="(name, id) in wisata">
-                                                <option x-text="name" :value="id"></option>
-                                            </template>
-                                        </select>
-
-                                        <button type="button" class="ml-2 border border-transparent rounded"
-                                            @click="inputs.pop({})">
-                                            @svg('bi-trash', ['class' => 'w-6 h-6 text-secondary-base hover:text-black'])
-                                        </button>
-
-                                        <button type="button" class="ml-2 border border-transparent rounded"
-                                            id="add-wisata" @click="inputs.push({})">
-                                            @svg('iconpark-plus', ['class' => 'w-6 h-6 text-secondary-base hover:text-black'])
-                                        </button>
-                                    </div>
-                                </template>
-                            </div> --}}
-                            {{-- <div class="w-full pt-4" id="list-wisata">
-                            </div> --}}
-
-
-
-                            {{-- <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    const wisata = {!! json_encode($wisata) !!};
-                                    const listWisata = document.getElementById('list-wisata');
-
-                                    function populateCheckboxes(container) {
-                                        container.innerHTML = '';
-                                        for (const [id, name] of Object.entries(wisata)) {
-                                            const div = document.createElement('div');
-                                            div.className = 'mt-3 input-group dropdown';
-
-                                            const label = document.createElement('label');
-                                            label.className = 'mr-2';
-
-                                            const checkbox = document.createElement('input');
-                                            checkbox.type = 'checkbox';
-                                            checkbox.name = 'wisata[]';
-                                            checkbox.value = id;
-                                            checkbox.className = 'mr-2';
-
-                                            label.appendChild(checkbox);
-                                            label.appendChild(document.createTextNode(name));
-                                            div.appendChild(label);
-                                            container.appendChild(div);
-                                        }
-                                    }
-
-                                    // Mengisi kontainer dengan checkbox wisata
-                                    populateCheckboxes(listWisata);
-                                });
-                            </script> --}}
                         </div>
                         <div class="py-4 input-group">
                             <div class="w-full pt-4 wisata">
@@ -461,7 +385,7 @@
                             </div>
                         </div>
                         <div class="py-3 input-group">
-                            <input type="checkbox" name="htm"
+                            <input type="checkbox" name="htm" id="htm"
                                 class="border-2 border-secondary-base active:bg-secondary-base focus:ring-0 focus:ring-transparent checked:bg-secondary-base checked:focus:bg-secondary-base checked:hover:bg-secondary-base">
                             <label class="pl-3 text-secondary-base">HTM</label>
                         </div>
@@ -511,18 +435,6 @@
                         <div class="detail-wisata">
                             <p>Wisata</p>
                             <ul class="pl-8 list-disc" id="wisata_selected">
-                                {{-- <li class="text-sm">Museum Lawang Sewu <span data-modal-target="wisata-modal"
-                                        data-modal-toggle="wisata-modal"
-                                        class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span>
-                                </li>
-                                <li class="text-sm">Oleh-Oleh Khas Semarang <span data-modal-target="wisata-modal"
-                                        data-modal-toggle="wisata-modal"
-                                        class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span>
-                                </li>
-                                <li class="text-sm">Masjid Agung Jawa Tengah <span data-modal-target="wisata-modal"
-                                        data-modal-toggle="wisata-modal"
-                                        class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span>
-                                </li> --}}
                             </ul>
                         </div>
                         <div class="detail-tambahan">
@@ -567,14 +479,14 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-4 space-y-2 md:p-5">
-                    <p class="font-bold text-gray-700">Nama Bus: <span
-                            class="font-normal text-gray-600">{{ $bus->nama_bus }}</span></p>
-                    <p class="font-bold text-gray-700">Kecepatan Maks: <span
-                            class="font-normal text-gray-600">{{ $bus->kecepatan }} km/jam</span></p>
-                    <p class="font-bold text-gray-700">Kapasitas Solar: <span
-                            class="font-normal text-gray-600">{{ $bus->kapasitas_solar }} L</span></p>
-                    <p class="font-bold text-gray-700">Jumlah Penumpang: <span
-                            class="font-normal text-gray-600">{{ $bus->jumlah_kursi }} orang</span></p>
+                    <p class="font-bold text-gray-400">Nama Bus: <span
+                            class="font-normal text-gray-400">{{ $bus->nama_bus }}</span></p>
+                    <p class="font-bold text-gray-400">Kecepatan Maks: <span
+                            class="font-normal text-gray-400">{{ $bus->kecepatan }} km/jam</span></p>
+                    <p class="font-bold text-gray-400">Kapasitas Solar: <span
+                            class="font-normal text-gray-400">{{ $bus->kapasitas_solar }} L</span></p>
+                    <p class="font-bold text-gray-400">Jumlah Penumpang: <span
+                            class="font-normal text-gray-400">{{ $bus->jumlah_kursi }} orang</span></p>
                 </div>
                 <!-- Modal footer -->
                 <div class="flex items-center justify-center gap-4 p-4 border-gray-200 rounded-b md:p-5">
@@ -584,42 +496,6 @@
             </div>
         </div>
     </div>
-
-    {{-- Wisata Modal --}}
-    <div id="wisata-modal" tabindex="-1" aria-hidden="true"
-        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative w-full max-w-2xl max-h-full p-4">
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <!-- Modal header -->
-                <div class="flex items-center justify-center p-4 border-b rounded-t md:p-5 dark:border-gray-600">
-                    <h3 class="flex items-center gap-2 text-xl font-semibold text-gray-900 dark:text-white">
-                        Detail Informasi Wisata
-                        @svg('bi-houses', 'w-6 h-6')
-                    </h3>
-                </div>
-                <!-- Modal body -->
-                <div class="p-4 space-y-2 md:p-5">
-                    <p class="font-bold text-gray-700">Nama Wisata: <span class="font-normal text-gray-600">...</span>
-                    </p>
-                    <p class="font-bold text-gray-700">Alamat Wisata: <span
-                            class="font-normal text-gray-600">...</span></p>
-                    <p class="font-bold text-gray-700">Jam Buka/Jam Tutup: <span
-                            class="font-normal text-gray-600">.../...</span></p>
-                    <p class="font-bold text-gray-700">Tarif Masuk Wisata: <span
-                            class="font-normal text-gray-600">...</span></p>
-                    <p class="font-bold text-gray-700">Tarif Parkir: <span
-                            class="font-normal text-gray-600">...</span></p>
-                </div>
-                <!-- Modal footer -->
-                <div class="flex items-center justify-center gap-4 p-4 border-gray-200 rounded-b md:p-5">
-                    <button data-modal-hide="wisata-modal" type="button"
-                        class="py-2.5 px-12 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-black hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-100">Kembali</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
 
     <script>
         const data_bus = {!! json_encode($bus) !!};
@@ -691,21 +567,56 @@
                 let id = this.dataset.id;
 
                 if (this.checked) {
+                    coorWisata.push([data_wisata[id].titik_lokasi.slice(-18).trim(), data_wisata[id].titik_lokasi.substring(-1, 18)]);
                     let li = document.createElement('li');
                     li.classList.add('text-sm');
                     li.dataset.id = id;
                     total_wisata_tarif.push(data_wisata[id].tarif_masuk_wisata);
                     total_parkir_wisata.push(data_wisata[id].tarif_parkir);
                     li.innerHTML = `
-                        ${data_wisata[id].nama_wisata}<span data-modal-target="wisata-modal"
-                        data-modal-toggle="wisata-modal"
-                        class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span>`;
+                                ${data_wisata[id].nama_wisata}<span data-modal-target="${data_wisata[id].kode_wisata}" data-modal-toggle="${data_wisata[id].kode_wisata}"
+                                class="text-blue-500 text-[10px] hover:underline cursor-pointer"> detail</span>`;
                     wisata_selected.appendChild(li);
+
+                    let modal_wisata = `
+                    <div id="${data_wisata[id].kode_wisata}" tabindex="-1" aria-hidden="true"
+                      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                      <div class="relative w-full max-w-2xl max-h-full p-4">
+                          <!-- Modal content -->
+                          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                              <!-- Modal header -->
+                              <div class="flex items-center justify-center p-4 border-b rounded-t md:p-5 dark:border-gray-600">
+                                  <h3 class="flex items-center gap-2 text-xl font-semibold text-gray-900 dark:text-white">
+                                      Detail Informasi Wisata
+                                      @svg('bi-houses', 'w-6 h-6')
+                                  </h3>
+                              </div>
+                              <!-- Modal body -->
+                              <div class="p-4 space-y-2 md:p-5">
+                                  <p class="font-bold text-gray-400">Nama Wisata: <span class="font-normal text-gray-400">${data_wisata[id].nama_wisata}</span></p>
+                                  <p class="font-bold text-gray-400">Alamat Wisata: <span class="font-normal text-gray-400">${data_wisata[id].alamat_wisata}</span></p>
+                                  <p class="font-bold text-gray-400">Jam Buka/Jam Tutup: <span class="font-normal text-gray-400">${data_wisata[id].jam_buka}/${data_wisata[id].jam_tutup}</span></p>
+                                  <p class="font-bold text-gray-400">Tarif Masuk Wisata: <span class="font-normal text-gray-400">${data_wisata[id].tarif_masuk_wisata}</span></p>
+                                  <p class="font-bold text-gray-400">Tarif Parkir: <span class="font-normal text-gray-400">${data_wisata[id].tarif_parkir}</span></p>
+                              </div>
+                              <!-- Modal footer -->
+                              <div class="flex items-center justify-center gap-4 p-4 border-gray-200 rounded-b md:p-5">
+                                  <button data-modal-hide="${data_wisata[id].kode_wisata}" type="button"
+                                      class="py-2.5 px-12 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-black hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-100">Kembali</button>
+                              </div>
+                          </div>
+                      </div>
+                    </div>`;
+                    $(modal_wisata).insertAfter("#bus-modal");
+                    const modalElement = document.getElementById(data_wisata[id].kode_wisata);
+                    const modal = new Modal(modalElement);
 
                 } else {
                     let li = wisata_selected.querySelector(`li[data-id="${id}"]`);
                     if (li) {
                         wisata_selected.removeChild(li);
+                        $("#" + data_wisata[id].kode_wisata).remove();
+                        coorWisata.splice(coorWisata.indexOf([data_wisata[id].titik_lokasi.slice(-18).trim(), data_wisata[id].titik_lokasi.substring(-1, 19)]), 1);
                     }
                     const tarifIndex = total_wisata_tarif.indexOf(data_wisata[id].tarif_masuk_wisata);
                     if (tarifIndex > -1) {
@@ -720,6 +631,18 @@
                 updateTotal();
                 updateCheckboxState();
             });
+        });
+        $(document).on('click', '[data-modal-toggle]', function() {
+            const targetId = $(this).data('modal-target');
+            const modalElement = document.getElementById(targetId);
+            const modal = new Modal(modalElement);
+            modal.show();
+        });
+        $(document).on('click', '[data-modal-hide]', function() {
+            const targetId = $(this).data('modal-hide');
+            const modalElement = document.getElementById(targetId);
+            const modal = new Modal(modalElement);
+            modal.hide();
         });
 
         makanan_selected.addEventListener('click', function() {
