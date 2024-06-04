@@ -9,7 +9,10 @@
                 <h3 class="text-2xl font-bold text-secondary-base">Detail Pesanan</h3>
             </div>
 
-            <form action="" class="flex flex-wrap justify-center gap-3 pt-3 lg:flex-nowrap lg:justify-between">
+            <form action="/order" method="POST"
+                class="flex flex-wrap justify-center gap-3 pt-3 lg:flex-nowrap lg:justify-between">
+                @csrf
+                @method('POST')
                 <div class="order-2 px-1 py-3 lg:order-1 sm:basis-3/4 md:basis-4/6 lg:basis-4/6">
                     <div class="form-head">
                         <div class="flex w-full pt-4 titik-jemput">
@@ -335,12 +338,6 @@
                                     <span class="pl-3 text-secondary-base">Tambah Wisata</span>
                                 </label>
                             </div>
-                            {{-- <div class="w-full pt-4">
-                                @foreach ($wisata as $w)
-                                    <input type="checkbox" name="" id="" value="">
-                                    <label for="">{{ $w }}</label>
-                                @endforeach
-                            </div> --}}
                             <div class="w-full pt-4" id="wisata-container">
                                 @foreach ($wisata as $i => $w)
                                     <div class="mt-2 list-wisata">
@@ -350,67 +347,6 @@
                                     </div>
                                 @endforeach
                             </div>
-                            {{-- <div id="wisata_selected"></div>
-                            <div id="total"></div> --}}
-
-
-                            {{-- <div class="w-full pt-4" x-data="{ inputs: [{}] }" id="list-wisata">
-                                <template x-for="(input, index) in inputs" :key="index">
-                                    <div class="flex mt-3 input-group dropdown">
-                                        <select class="mr-2" x-data="{ wisata: {{ $wisata }} }" name="wisata[]">
-                                            <template x-for="(name, id) in wisata">
-                                                <option x-text="name" :value="id"></option>
-                                            </template>
-                                        </select>
-
-                                        <button type="button" class="ml-2 border border-transparent rounded"
-                                            @click="inputs.pop({})">
-                                            @svg('bi-trash', ['class' => 'w-6 h-6 text-secondary-base hover:text-black'])
-                                        </button>
-
-                                        <button type="button" class="ml-2 border border-transparent rounded"
-                                            id="add-wisata" @click="inputs.push({})">
-                                            @svg('iconpark-plus', ['class' => 'w-6 h-6 text-secondary-base hover:text-black'])
-                                        </button>
-                                    </div>
-                                </template>
-                            </div> --}}
-                            {{-- <div class="w-full pt-4" id="list-wisata">
-                            </div> --}}
-
-
-
-                            {{-- <script>
-                                document.addEventListener('DOMContentLoaded', function() {
-                                    const wisata = {!! json_encode($wisata) !!};
-                                    const listWisata = document.getElementById('list-wisata');
-
-                                    function populateCheckboxes(container) {
-                                        container.innerHTML = '';
-                                        for (const [id, name] of Object.entries(wisata)) {
-                                            const div = document.createElement('div');
-                                            div.className = 'mt-3 input-group dropdown';
-
-                                            const label = document.createElement('label');
-                                            label.className = 'mr-2';
-
-                                            const checkbox = document.createElement('input');
-                                            checkbox.type = 'checkbox';
-                                            checkbox.name = 'wisata[]';
-                                            checkbox.value = id;
-                                            checkbox.className = 'mr-2';
-
-                                            label.appendChild(checkbox);
-                                            label.appendChild(document.createTextNode(name));
-                                            div.appendChild(label);
-                                            container.appendChild(div);
-                                        }
-                                    }
-
-                                    // Mengisi kontainer dengan checkbox wisata
-                                    populateCheckboxes(listWisata);
-                                });
-                            </script> --}}
                         </div>
                         <div class="py-4 input-group">
                             <div class="w-full pt-4 wisata">
@@ -428,19 +364,6 @@
 
                     <div class="py-6 border-t form-foot border-secondary-base">
                         <h3 class="pb-4 text-2xl font-bold text-secondary-base">Include</h3>
-
-                        {{-- <div class="flex items-center py-3 input-group" x-data="{ isOpen: false }">
-                            <input type="checkbox" name="makan" id="makan"
-                                class="border-2 border-secondary-base active:bg-secondary-base focus:ring-0 focus:ring-transparent checked:bg-secondary-base checked:focus:bg-secondary-base checked:hover:bg-secondary-base"
-                                @click="isOpen = !isOpen" />
-                            <label for="makan" class="pl-3 text-secondary-base">Makan</label>
-                            <div x-show="isOpen" class="flex">
-                                <input type="text" name="jumlah-makan"
-                                    class="w-3/4 border-0 focus:border-0 focus:ring-0" placeholder="Jumlah makan">
-                                <input type="text" name="harga-mulai"
-                                    class="w-3/4 border-0 focus:border-0 focus:ring-0" placeholder="Harga mulai">
-                            </div>
-                        </div> --}}
                         <div class="flex items-center py-3 input-group" x-data="{ isOpen: false }">
                             <input type="checkbox" name="makan" id="makan"
                                 class="border-2 border-secondary-base active:bg-secondary-base focus:ring-0 focus:ring-transparent checked:bg-secondary-base checked:focus:bg-secondary-base checked:hover:bg-secondary-base"
@@ -461,7 +384,7 @@
                             </div>
                         </div>
                         <div class="py-3 input-group">
-                            <input type="checkbox" name="htm"
+                            <input type="checkbox" name="htm" id="htm"
                                 class="border-2 border-secondary-base active:bg-secondary-base focus:ring-0 focus:ring-transparent checked:bg-secondary-base checked:focus:bg-secondary-base checked:hover:bg-secondary-base">
                             <label class="pl-3 text-secondary-base">HTM</label>
                         </div>
@@ -511,29 +434,11 @@
                         <div class="detail-wisata">
                             <p>Wisata</p>
                             <ul class="pl-8 list-disc" id="wisata_selected">
-                                {{-- <li class="text-sm">Museum Lawang Sewu <span data-modal-target="wisata-modal"
-                                        data-modal-toggle="wisata-modal"
-                                        class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span>
-                                </li>
-                                <li class="text-sm">Oleh-Oleh Khas Semarang <span data-modal-target="wisata-modal"
-                                        data-modal-toggle="wisata-modal"
-                                        class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span>
-                                </li>
-                                <li class="text-sm">Masjid Agung Jawa Tengah <span data-modal-target="wisata-modal"
-                                        data-modal-toggle="wisata-modal"
-                                        class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span>
-                                </li> --}}
                             </ul>
                         </div>
                         <div class="detail-tambahan">
                             <p>Include</p>
-                            <ul class="pl-8 list-disc">
-                                <li class="text-sm" id="makanan_selected">
-                                    {{-- <span class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span> --}}
-                                </li>
-                                <li class="text-sm" id="htm_selected">
-                                    {{-- <span class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span> --}}
-                                </li>
+                            <ul class="pl-8 list-disc" id="includes">
                             </ul>
                         </div>
                     </div>
@@ -630,13 +535,16 @@
         const jumlah_penumpang = document.querySelector("#jumlah-penumpang");
         const harga_makan = document.querySelector("#harga-makan");
         const jumlah_makan = document.querySelector("#jumlah-makan");
-        var total_penumpang = 1;
+        const makananCheckbox = document.getElementById("makan");
+        const htmCheckbox = document.getElementById("htm");
+        const includes = document.getElementById("includes");
         const maxSelection = 4;
         const total = document.querySelector("#total");
-        total.innerText = data_bus.harga_sewa;
+        var total_penumpang = 0;
         var total_wisata_tarif = [];
         var total_parkir_wisata = [];
-        // var harga_makan = document.querySelector("#harga-makan");
+        total.innerText = data_bus.harga_sewa;
+
 
         document.addEventListener('input', function() {
             let value = parseInt(jumlah_penumpang.value, 10);
@@ -644,7 +552,7 @@
                 alert("Jumlah penumpang tidak boleh lebih dari 60.");
                 jumlah_penumpang.value = total_penumpang;
             } else {
-                total_penumpang = value || 1;
+                total_penumpang = value || 0;
             }
             updateTotal();
         });
@@ -676,8 +584,23 @@
 
         function updateTotal() {
             const totalMakan = hitungTotalBiayaMakan();
-            total.innerText = (data_bus.harga_sewa + (sumTotalTarif() * total_penumpang) + sumTotalParkir() + totalMakan)
-                .toLocaleString();
+            const totalTarifMasuk = sumTotalTarif();
+            const totalTarifParkir = sumTotalParkir();
+            let totalHarga;
+
+            if (htmCheckbox.checked) {
+                totalHarga = data_bus.harga_sewa + (totalTarifMasuk * total_penumpang) + totalTarifParkir + totalMakan;
+            } else {
+                totalHarga = data_bus.harga_sewa + totalTarifParkir + totalMakan;
+            }
+
+            if (makananCheckbox.checked) {
+                totalHarga + totalMakan
+            } else {
+                totalHarga -= totalMakan;
+            }
+
+            total.innerText = totalHarga.toLocaleString();
         }
 
         list_wisata.forEach(list => {
@@ -722,56 +645,27 @@
             });
         });
 
-        makanan_selected.addEventListener('click', function() {
-            alert("Makanan");
-        });
-
-        const makananCheckbox = document.querySelector("#makan");
-        const htmCheckbox = document.querySelector("#htm");
-        const makananSelected = document.querySelector("#makanan_selected");
-        const htmSelected = document.querySelector("#htm_selected");
-
-        makananCheckbox.addEventListener('change', function() {
-            let id = this.dataset.id;
-            if (this.checked) {
-                let li = document.createElement('li');
-                li.classList.add('text-sm');
-                li.dataset.id = id;
-                li.innerHTML = `Makanan<span data-modal-target="makanan-modal"
-                    data-modal-toggle="makanan-modal"
-                    class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span>`;
-                // makananSelected.style.display = 'block';
+        function checkIncludes(el) {
+            if (el.checked) {
+                includes.innerHTML += `<li data-id="${el.id}">
+                    ${el.id}
+                    <span class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span>
+                </li>`;
             } else {
-                let li = makananSelected.querySelector(`li[data-id="${id}"]`);
+                let li = document.querySelector(`li[data-id="${el.id}"]`);
                 if (li) {
-                    makananSelected.removeChild(li);
+                    includes.removeChild(li);
                 }
             }
-        });
 
-        htmCheckbox.addEventListener('change', function() {
-            let id = this.dataset.id;
-            if (this.checked) {
-                let li = document.createElement('li');
-                li.classList.add('text-sm');
-                li.dataset.id = id;
-                li.innerHTML = `HTM<span data-modal-target="htm-modal"
-                    data-modal-toggle="htm-modal"
-                    class="text-blue-500 text-[10px] hover:underline cursor-pointer">detail</span>`;
-                // htmSelected.style.display = 'block';
-            } else {
-                let li = htmSelected.querySelector(`li[data-id="${id}"]`);
-                if (li) {
-                    htmSelected.removeChild(li);
-                } else {
-                    htmSelected.style.display = 'none';
-                }
-            }
-        });
+            updateTotal();
+        }
 
-
-        document.getElementById('jumlah-makan').addEventListener('input', updateTotal);
-        document.getElementById('harga-makan').addEventListener('change', updateTotal);
+        htmCheckbox.addEventListener('change', () => checkIncludes(htmCheckbox));
+        makananCheckbox.addEventListener('change', () => checkIncludes(makananCheckbox));
+        jumlah_penumpang.addEventListener('input', updateTotal);
+        harga_makan.addEventListener('change', updateTotal);
+        jumlah_makan.addEventListener('input', updateTotal);
 
         updateCheckboxState();
     </script>
