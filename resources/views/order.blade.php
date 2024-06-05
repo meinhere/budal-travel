@@ -28,6 +28,9 @@
                                     [109.035960, -8.802369],
                                     [114.375734, -6.407968]
                                 ];
+                                let coorWisata = [[112.05815381984246, -6.900818419158597]];
+                                let namaWisata = [];
+                                
 
                                 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FsbGViMjEiLCJhIjoiY2xvdXlxOWxyMGs0NjJqbzlrcHZsbjB3OCJ9.k2r8cKpCDJKIepppdBmcZQ';
                                 const map = new mapboxgl.Map({
@@ -62,7 +65,9 @@
                                 })
 
                                 // Mengembalikan nama daerah asal
+                                var startSave = []
                                 var gantiTempat = (lngLat) => {
+
                                   var xhr = new XMLHttpRequest();
                                   xhr.open('GET',
                                       `https://api.mapbox.com/search/geocode/v6/reverse?country=id&language=id&longitude=${lngLat.lng}&latitude=${lngLat.lat}&access_token=${mapboxgl.accessToken}`
@@ -85,6 +90,7 @@
                                     geocoder.clear();
                                     marker.setLngLat(e.result.center).addTo(map)
                                     const lngLat = marker.getLngLat();
+                                    coorWisata[0] = [lngLat.lng, lngLat.lat];
                                     gantiTempat(lngLat);
                                     getRoute(lngLat);
   
@@ -121,6 +127,7 @@
                                 map.on('click', function(e) {
                                     var coordinates = e.lngLat;
                                     marker.setLngLat(coordinates).addTo(map);
+                                    coorWisata[0] = [coordinates.lng, coordinates.lat];
                                     gantiTempat(coordinates);
                                     ruteTerdekat(coorWisata);
                                     getRoute(coordinates);
@@ -157,6 +164,7 @@
                                 // input marker by drag
                                 marker.on('dragend', function(e) {
                                   const lngLat = marker.getLngLat();
+                                  coorWisata[0] = [lngLat.lng, lngLat.lat];
                                   gantiTempat(lngLat);
                                   ruteTerdekat(coorWisata);
                                   getRoute(lngLat);
@@ -192,39 +200,38 @@
 
                                 // mendapatkan jarak dan durasi rute wisata
                                 durations = [];
-                                let coorWisata = [];
                                 let ruteTerdekat = (coordinates) => {
-                                  var startCoor = marker.getLngLat();
-                                  const xhr = new XMLHttpRequest();
-                                  let curb = '';
-                                  if (coordinates.length === 0) {
-                                    return;
-                                  }
-                                  for (let i = 0; i < coordinates.length; i++) {
-                                    curb += ';curb';
-                                  }
-                                  const coordinateString = coordinates.map(coordinate => coordinate.join(',')).join(';');
-                                  // console.log(`https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${startCoor.lng},${startCoor.lat};${coordinateString}?approaches=curb${curb}&access_token=${mapboxgl.accessToken}`);
-                                  xhr.open('GET', `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${startCoor.lng},${startCoor.lat};${coordinateString}?approaches=curb${curb}&access_token=${mapboxgl.accessToken}`);
-                                  xhr.send();
-                                  xhr.onload = function() {
-                                    if (xhr.status != 200) {
-                                      alert(`Error ${xhr.status}: ${xhr.statusText}`);
-                                    } else {
-                                      var response = JSON.parse(xhr.response);
-                                      var durations = response.durations;
-                                      // console.log(response);
-                                      // console.log(findShortestPath(durations, coordinates).path);
-                                      return {
-                                        durations: durations,
-                                        coordinates: coordinates
-                                      }
-                                    }
-                                  };
+                                    return new Promise((resolve, reject) =>{
+                                        var startCoor = marker.getLngLat();
+                                        const xhr = new XMLHttpRequest();
+                                        let curb = '';
+                                        if (coordinates.length === 0) {
+                                          return;
+                                        }
+                                        for (let i = 0; i < coordinates.length; i++) {
+                                          curb += ';curb';
+                                        }
+                                        const coordinateString = coordinates.map(coordinate => coordinate.join(',')).join(';');
+                                        // console.log(`https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${startCoor.lng},${startCoor.lat};${coordinateString}?approaches=curb${curb}&access_token=${mapboxgl.accessToken}`);
+                                        xhr.open('GET', `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${startCoor.lng},${startCoor.lat};${coordinateString}?approaches=curb${curb}&access_token=${mapboxgl.accessToken}`);
+                                        xhr.send();
+                                        xhr.onload = function() {
+                                          if (xhr.status != 200) {
+                                            alert(`Error ${xhr.status}: ${xhr.statusText}`);
+                                          } else {
+                                            var response = JSON.parse(xhr.response);
+                                            var durations = response.durations;
+                                            console.log(response);
+                                          //   console.log(findShortestPath(durations, coordinates).path);
+                                            resolve(durations);
+                                          }
+                                        };
+                                    })
                                 }
 
                                 // mencari rute terdekat
-                                function findShortestPath(durations, coordinates) {
+                                async function findShortestPath(durations, coordinates) {
+                                  durations = await durations.then((res) => res);
                                   let n = durations.length;
                                   let visited = new Array(n).fill(false);
                                   let path = [];
@@ -245,10 +252,12 @@
                                           }
                                       }
 
-                                      visited[nearest] = true;
-                                      path.push(nearest);
-                                      totalDistance += minDistance;
-                                      current = nearest;
+                                      if (nearest !== -1) {
+                                        visited[nearest] = true;
+                                        path.push(nearest);
+                                        totalDistance += minDistance;
+                                        current = nearest;
+                                      }
                                   }
 
                                   totalDistance += durations[current][0]; // Return to the initial point
@@ -260,20 +269,23 @@
 
                                 // create a function to make a directions request
                                 async function getRoute(end) {
-                                  coordinates = coorWisata;
-                                  const coordinateString = coordinates.map(coordinate => coordinate.join(',')).join(';');
+                                  var start = marker.getLngLat();
+                                  if (coorWisata.length === 0) {
+                                    return;
+                                  }
+                                  var coordinateString = await findShortestPath(ruteTerdekat(coorWisata), coorWisata).then((res) => res.path);
+                                  if (coordinateString.length > 2) coordinateString = coordinateString.slice(1);
+                                  coordinateString = coordinateString.map(coordinate => coordinate.join(',')).join(';');
                                   start = marker.getLngLat();
-                                  // make a directions request using cycling profile
-                                  // an arbitrary start will always be the same
-                                  // only the end or destination will change
+                                //   console.log(`https://api.mapbox.com/directions/v5/mapbox/driving/${coordinateString}?geometries=geojson&max_height=4&max_weight=10&access_token=${mapboxgl.accessToken}`);
                                   const query = await fetch(
-                                    `https://api.mapbox.com/directions/v5/mapbox/driving/${start.lng},${start.lat};${coordinateString}?geometries=geojson&max_height=4&max_weight=10&access_token=${mapboxgl.accessToken}`,
+                                    `https://api.mapbox.com/directions/v5/mapbox/driving/${coordinateString}?geometries=geojson&max_height=4&max_weight=10&access_token=${mapboxgl.accessToken}`,
                                     { method: 'GET' }
                                   );
                                   const json = await query.json();
                                   const data = json.routes[0];
                                   const route = data.geometry.coordinates;
-                                  console.log(route);
+                                //   console.log(route);
                                   const geojson = {
                                     type: 'Feature',
                                     properties: {},
@@ -306,13 +318,48 @@
                                       }
                                     });
                                   }
+
+
+                                   // add turn instructions here at the end
+                                   $(coorWisata).each((index, coor) => {
+
+                                      if (map.getLayer('end' + index)) {
+                                        map.removeLayer('end' + index);
+                                        map.removeSource('end' + index);
+                                      }
+                                      
+                                      if (index) {
+                                        map.addLayer({
+                                            id: 'end' + index,
+                                            type: 'circle',
+                                            source: {
+                                            type: 'geojson',
+                                            data: {
+                                                type: 'FeatureCollection',
+                                                features: [
+                                                {
+                                                    type: 'Feature',
+                                                    properties: {
+                                                        'title': 'Wisata ' + index,
+                                                        'description': namaWisata[index]
+                                                    },
+                                                    geometry: {
+                                                    type: 'Point',
+                                                    coordinates: coor
+                                                    }
+                                                }
+                                                ]
+                                            }
+                                            },
+                                            paint: {
+                                            'circle-radius': 10,
+                                            'circle-color': 'yellow'
+                                            }
+                                        });
+                                      }
+                                    });
                                   // add turn instructions here at the end
                                 }
-
-                                $(map).on('load', () => {
-                                  
-                                  // this is where the code from the next step will go
-                                });
 
                             </script>
                         </div>
@@ -563,7 +610,8 @@
                 let id = this.dataset.id;
 
                 if (this.checked) {
-                    coorWisata.push([data_wisata[id].titik_lokasi.slice(-18).trim(), data_wisata[id].titik_lokasi.substring(-1, 18)]);
+                    coorWisata.push([parseFloat(data_wisata[id].titik_lokasi.slice(-18).trim()), parseFloat(data_wisata[id].titik_lokasi.substring(-1, 18))]);
+                    namaWisata.push(data_wisata[id].nama_wisata);
                     let li = document.createElement('li');
                     li.classList.add('text-sm');
                     li.dataset.id = id;
