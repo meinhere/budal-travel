@@ -2,6 +2,10 @@
     <x-slot:title>{{ $title }}</x-slot:title>
     <x-slot:background>{{ $background }}</x-slot:background>
 
+    <script type="text/javascript"
+		src="https://app.stg.midtrans.com/snap/snap.js"
+    data-client-key="{{ config('services.midtrans.clientKey'); }}"></script>
+
     <div class="flex flex-wrap justify-center max-w-6xl gap-12 pt-5 mx-2 lg:flex-nowrap lg:mx-auto">
         <div class="px-5 py-6 bg-white rounded-lg basis-full md:basis-3/4 lg:px-10 lg:py-8 lg:basis-4/5">
             <div class="text-center lg:text-left">
@@ -10,15 +14,20 @@
             </div>
 
             <form action="/order" method="POST"
-                class="flex flex-wrap justify-center gap-3 pt-3 lg:flex-nowrap lg:justify-between">
+                class="flex flex-wrap justify-center gap-3 pt-3 lg:flex-nowrap lg:justify-between" id="form">
                 @csrf
                 @method('POST')
+
+                <input type="hidden" name="login_id" value="{{ auth()->user()->id_login }}">
+                <input type="hidden" name="kota_kode" value="{{ $kota->kode_kota }}">
+                <input type="hidden" name="bus_kode" value="{{ $bus->kode_bus }}">
+                <input type="hidden" name="titik_awal" id="titik_awal" value="112.05815381984246, -6.900818419158597">
+
                 <div class="order-2 px-1 py-3 lg:order-1 sm:basis-3/4 md:basis-4/6 lg:basis-4/6">
                     <div class="form-head">
                         <div class="flex w-full pt-4 titik-jemput">
                             @svg('iconpark-localtwo-o', ['class' => 'w-8 h-8 text-secondary-base'])
                             <div id="geocoder" class="geocoder"></div>
-                            {{-- <input type="text" placeholder="Pilih Titik Jemput" class="border-0 jemput"> --}}
                         </div>
                         <div class="w-full pt-4">
                             <div id="map" style="height: 200px; width: 500px;"></div>
@@ -67,7 +76,8 @@
                                 // Mengembalikan nama daerah asal
                                 var startSave = []
                                 var gantiTempat = (lngLat) => {
-
+                                  $('#titik_awal').val(`${lngLat.lng}, ${lngLat.lat}`)
+                                
                                   var xhr = new XMLHttpRequest();
                                   xhr.open('GET',
                                       `https://api.mapbox.com/search/geocode/v6/reverse?country=id&language=id&longitude=${lngLat.lng}&latitude=${lngLat.lat}&access_token=${mapboxgl.accessToken}`
@@ -92,6 +102,7 @@
                                     const lngLat = marker.getLngLat();
                                     coorWisata[0] = [lngLat.lng, lngLat.lat];
                                     gantiTempat(lngLat);
+                                    ruteTerdekat(coorWisata);
                                     getRoute(lngLat);
   
                                     // Check if the layer already exists
@@ -221,7 +232,7 @@
                                           } else {
                                             var response = JSON.parse(xhr.response);
                                             var durations = response.durations;
-                                            console.log(response);
+                                            // console.log(response);
                                           //   console.log(findShortestPath(durations, coordinates).path);
                                             resolve(durations);
                                           }
@@ -320,14 +331,16 @@
                                   }
 
 
-                                   // add turn instructions here at the end
-                                   $(coorWisata).each((index, coor) => {
+                                   // add turn instructions here at the end`
+                                  for (let i=1; i < 5; i++) {
+                                    if(map.getLayer('end' + i)) {
+                                        map.removeLayer('end' + i);
+                                        map.removeSource('end' + i);
+                                    }
+                                  }
 
-                                      if (map.getLayer('end' + index)) {
-                                        map.removeLayer('end' + index);
-                                        map.removeSource('end' + index);
-                                      }
-                                      
+                                   
+                                   $(coorWisata).each((index, coor) => {                                      
                                       if (index) {
                                         map.addLayer({
                                             id: 'end' + index,
@@ -388,7 +401,7 @@
                                 </label>
                             </div>
                             <div class="flex w-full pt-4">
-                                <input type="text" name="jumlah-penumpang" id="jumlah-penumpang"
+                                <input type="text" name="jumlah_penumpang" id="jumlah_penumpang"
                                     class="w-3/4 border-0" placeholder="Berupa angka">
                             </div>
                         </div>
@@ -402,9 +415,9 @@
                                 @click="isOpen = !isOpen" />
                             <label for="makan" class="pl-3 text-secondary-base">Makan</label>
                             <div x-show="isOpen" class="flex">
-                                <input type="text" name="jumlah-makan" id="jumlah-makan"
+                                <input type="text" name="jumlah_makan" id="jumlah_makan"
                                     class="w-3/4 border-0 focus:border-0 focus:ring-0" placeholder="Jumlah makan">
-                                <select name="harga-mulai" id="harga-makan"
+                                <select name="harga_makan" id="harga_makan"
                                     class="w-3/4 border-0 focus:border-0 focus:ring-0">
                                     <option value="" disabled selected>Harga mulai</option>
                                     <option value="10000">10,000</option>
@@ -416,7 +429,7 @@
                             </div>
                         </div>
                         <div class="py-3 input-group">
-                            <input type="checkbox" name="htm" id="htm"
+                            <input type="checkbox" name="tarif_masuk" id="tarif_masuk"
                                 class="border-2 border-secondary-base active:bg-secondary-base focus:ring-0 focus:ring-transparent checked:bg-secondary-base checked:focus:bg-secondary-base checked:hover:bg-secondary-base">
                             <label class="pl-3 text-secondary-base">HTM</label>
                         </div>
@@ -426,14 +439,26 @@
                         class="w-full py-3 font-bold rounded-lg bg-primary-200 text-secondary-base">Pesan</button>
                 </div>
                 <div class="order-1 px-1 py-3 lg:order-2 sm:basis-3/4 md:basis-4/6 lg:basis-2/6">
-                    <div class="flex flex-col w-full pt-4 jam-berangkat">
+                    <div class="flex flex-col w-full pt-4 mb-3">
+                        <label class="flex items-center">
+                            @svg('bi-calendar-date', ['class' => 'w-7 h-7 text-secondary-base'])
+                            <span class="pl-3 text-secondary-base">Tanggal Berangkat</span>
+                        </label>
+                        <div class="w-full px-4 py-2 mt-4 rounded-lg bg-secondary-100 text-secondary-base">
+                            <span class="block">Pilih Tanggal</span>
+                            <input type="date" name="waktu_reservasi"
+                                class="p-0 bg-transparent border-0 text-secondary-base focus:ring-0" value="{{ now()->format('m/d/YYYY') }}                                                               ">
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col w-full pt-4 mb-3">
                         <label class="flex items-center">
                             @svg('bi-clock', ['class' => 'w-7 h-7 text-secondary-base'])
                             <span class="pl-3 text-secondary-base">Jam Berangkat</span>
                         </label>
                         <div class="w-full px-4 py-2 mt-4 rounded-lg bg-secondary-100 text-secondary-base">
                             <span class="block">Pilih Jam</span>
-                            <input type="time" name="jam-berangkat"
+                            <input type="time" name="jam_berangkat"
                                 class="p-0 bg-transparent border-0 text-secondary-base focus:ring-0">
                         </div>
                     </div>
@@ -528,11 +553,11 @@
         const list_wisata = document.querySelectorAll('.wisata-checkbox');
         const wisata_selected = document.querySelector("#wisata_selected");
         const makanan_selected = document.querySelector("#makanan_selected");
-        const jumlah_penumpang = document.querySelector("#jumlah-penumpang");
-        const harga_makan = document.querySelector("#harga-makan");
-        const jumlah_makan = document.querySelector("#jumlah-makan");
+        const jumlah_penumpang = document.querySelector("#jumlah_penumpang");
+        const harga_makan = document.querySelector("#harga_makan");
+        const jumlah_makan = document.querySelector("#jumlah_makan");
         const makananCheckbox = document.getElementById("makan");
-        const htmCheckbox = document.getElementById("htm");
+        const htmCheckbox = document.getElementById("tarif_masuk");
         const includes = document.getElementById("includes");
         const maxSelection = 4;
         const total = document.querySelector("#total");
@@ -671,9 +696,13 @@
                         total_parkir_wisata.splice(parkirIndex, 1);
                     }
                 }
-
                 updateTotal();
                 updateCheckboxState();
+
+                let coordinates = map._markers[0]._lngLat;
+                gantiTempat(coordinates);
+                ruteTerdekat(coorWisata);
+                getRoute(coordinates);
             });
         });
         $(document).on('click', '[data-modal-toggle]', function() {
@@ -712,5 +741,26 @@
         jumlah_makan.addEventListener('input', updateTotal);
 
         updateCheckboxState();
+
+        // Integrasi Midtrans
+        const form = document.getElementById('form');
+        
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const data = new URLSearchParams(formData);
+
+            try {
+                const result = await fetch('/order', {
+                    method: "POST",
+                    body: data
+                });
+                const token = await result.text();
+                window.snap.pay(token);
+            } catch (err) {
+                console.log(err);
+            }
+        });
+
     </script>
 </x-layout>
