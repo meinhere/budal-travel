@@ -13,7 +13,7 @@
         <x-card-dashboard-transaction :value="$pendapatan['total']" :profit="true" :presentage="45" :from="4.6">Total Pendapatan</x-card-dashboard-transaction>
         <x-card-dashboard-transaction :value="$pendapatan['success']" :profit="true" :presentage="45" :from="4.6">Sudah Dibayar</x-card-dashboard-transaction>
         <x-card-dashboard-transaction :value="$pendapatan['pending']" :profit="false" :presentage="17" :from="4.6">Belum Dibayar</x-card-dashboard-transaction>
-      </div>
+    </div>
 
       {{-- Detail Transaksi --}}
       <div class="px-4 mt-12 sm:px-6">

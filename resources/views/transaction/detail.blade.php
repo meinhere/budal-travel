@@ -71,7 +71,7 @@
       {{-- Total & Detail --}}
       @php $total = 0 @endphp
       @foreach ($reservasi_detail as $rd)
-          @php $total += $rd->wisata->tarif_masuk_wisata + ($reservasi->tarif_masuk == 'ya') ? $rd->wisata->tarif_parkir : 0 @endphp
+          @php $total += $rd->wisata->tarif_parkir + ($r->tarif_masuk == 'ya') ?  $rd->wisata->tarif_masuk_wisata : 0 @endphp
       @endforeach
       @php
           $total += $reservasi->bus->harga_sewa + ($reservasi->harga_makan * $reservasi->jumlah_makan * $reservasi->jumlah_penumpang)

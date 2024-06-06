@@ -20,7 +20,7 @@
                     <p class="pt-2 text-lg text-primary-base">Manage your bus travel agency operations efficiently with Budal Travel's comprehensive admin dashboard. Streamline bookings, manage schedules, and oversee customer information with ease.</p>
                 </div>
 
-                <div class="w-full sm:w-3/5 md:w-1/3 pt-8 pb-20">
+                <div class="w-full pt-8 pb-20 sm:w-3/5 md:w-1/3">
                     <div class="w-full mt-4 rounded-md shadow-md h-28 bg-white/20 text-primary-base backdrop-blur-sm">
                         <div class="absolute w-24 h-8 translate-y-4 bg-secondary-base"></div>
                         <h1 class="relative pt-3 pl-6 text-4xl font-extrabold">+{{ $count_wisata }} <span class="text-xl">Destinasi Wisata</span></h1>
@@ -42,32 +42,46 @@
 
         @else
         {{-- Card --}}
-        <div class="flex px-6 sm:px-12 flex-wrap items-center justify-center gap-6 mb-4 lg:flex-nowrap mt-14 lg:mt-20">
-            <div class="p-4 shadow basis-full lg:basis-1/3 rounded-xl">
-                <div class="pb-8">
-                    <h3 class="text-base font-normal text-gray-500">Total Pendapatan</h3>
-                    <span class="text-xl font-bold leading-none text-gray-900 sm:text-3xl">Rp 100.000.000,-</span>
-                </div>
-
-                <p class="text-xs font-semibold text-gray-400"><span class="px-3 py-1 mr-1 text-green-500 bg-green-100 rounded-xl">+45%</span> From 4.6%</p>
-            </div>
-            <div class="p-4 shadow basis-full lg:basis-1/3 rounded-xl">
-                <div class="pb-8">
-                    <h3 class="text-base font-normal text-gray-500">Sudah Dibayar</h3>
-                    <span class="text-xl font-bold leading-none text-gray-900 sm:text-3xl">Rp 80.000.000,-</span>
-                </div>
-
-                <p class="text-xs font-semibold text-gray-400"><span class="px-3 py-1 mr-1 text-green-500 bg-green-100 rounded-xl">+45%</span> From 4.6%</p>
-            </div>
-            <div class="p-4 shadow basis-full lg:basis-1/3 rounded-xl">
-                <div class="pb-8">
-                    <h3 class="text-base font-normal text-gray-500">Belum Dibayar</h3>
-                    <span class="text-xl font-bold leading-none text-gray-900 sm:text-3xl">Rp 20.000.000,-</span>
-                </div>
-
-                <p class="text-xs font-semibold text-gray-400"><span class="px-3 py-1 mr-1 text-red-500 bg-red-100 rounded-xl">-17%</span> From 4.6%</p>
-            </div>
+        <div class="flex flex-wrap items-center justify-center gap-6 px-6 mb-4 sm:px-12 lg:flex-nowrap mt-14 lg:mt-20">
+            <x-card-dashboard-transaction :value="$pendapatan['total']" :profit="true" :presentage="45" :from="4.6">Total Pendapatan</x-card-dashboard-transaction>
+            <x-card-dashboard-transaction :value="$pendapatan['success']" :profit="true" :presentage="45" :from="4.6">Sudah Dibayar</x-card-dashboard-transaction>
+            <x-card-dashboard-transaction :value="$pendapatan['pending']" :profit="false" :presentage="17" :from="4.6">Belum Dibayar</x-card-dashboard-transaction>
         </div>
+
+        {{-- Chart --}}
+        <div class="mt-10">
+            <h2 class="text-2xl font-semibold text-black">Reservation Chart</h2>
+            <canvas id="reservationChart" width="400" height="200"></canvas>
+        </div>
+
+        @push('scripts')
+        <script>
+            const reservationData = {!! json_encode($reservasi) !!};
+
+            const ctx = document.getElementById('reservationChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: reservationData.labels,
+                    datasets: [{
+                        label: 'Reservations',
+                        data: reservationData.data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            precision: 0
+                        }
+                    }
+                }
+            });
+        </script>
+        @endpush
         @endcan
     </div>
 </x-app-layout>
