@@ -2,9 +2,25 @@
   <x-slot:title>{{ $title }}</x-slot:title>
   <x-slot:background>{{ $background }}</x-slot:background>
 
+  @if (session()->has('success'))
+    <div id="alert-3" class="flex items-center justify-center p-4 mx-auto mb-4 text-green-800 bg-green-200 rounded-lg dark:bg-gray-800 dark:text-green-400" role="alert">
+        @svg('bi-info-circle', 'w-6 h-6 text-green-500')
+        <span class="sr-only">Info</span>
+        <div class="text-sm font-medium ms-3">
+            {{ session('success') }}
+        </div>
+        <button type="button" class="ms-auto -mx-1.5 -my-1.5 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-3" aria-label="Close">
+            <span class="sr-only">Close</span>
+            @svg('bi-x-lg', 'w-6 h-6')
+        </button>
+    </div>
+  @endif
+
   <div class="flex flex-col justify-center max-w-6xl gap-4 pt-4 mx-2 md:pt-20">
     @if ($reservasi->isEmpty())
-      @svg('bi-emoji-frown', ['class' => 'w-24 h-24 text-primary-200'])
+    <div class="flex flex-wrap justify-center w-full gap-4 p-5 rounded-lg lg:w-3/4 lg:flex-nowrap lg:mx-auto bg-primary-base">
+      <h3 class="text-xl text-secondary-base">Belum ada Riwayat Transaksi yang dilakukan</h3>
+    </div>
     @else
       <div class="flex flex-wrap justify-center w-full gap-4 lg:flex-nowrap lg:mx-auto">
         @foreach ($reservasi as $r)
@@ -47,18 +63,18 @@
               </div>
 
               {{-- Total & Detail --}}
-              @php $total = 0 @endphp
+              @php $total = $r->bus->harga_sewa @endphp
               @foreach ($r->reservasi_detail as $rd)
-                  @php $total += $rd->wisata->tarif_parkir + ($r->tarif_masuk == 'ya') ?  $rd->wisata->tarif_masuk_wisata : 0 @endphp
+                  @php $total += $rd->wisata->tarif_parkir + ($r->tarif_masuk == 'ya') ?  $rd->wisata->tarif_masuk_wisata * $r->jumlah_penumpang : 0 @endphp
               @endforeach
               @php
-                  $total += $r->bus->harga_sewa + ($r->harga_makan * $r->jumlah_makan * $r->jumlah_penumpang)
+                  $total += $r->harga_makan * $r->jumlah_makan * $r->jumlah_penumpang
               @endphp
 
               <div class="flex items-center justify-between gap-4 py-2">
                 <div class="flex gap-2">
                   <span class="text-sm">Total</span>
-                  <h3 class="text-2xl text-primary-300">Rp {{ number_format($total, 0, ',', '.')}}</h3>
+                  <h3 class="text-2xl text-primary-300">Rp {{ number_format($total, 0, ',', '.') }}</h3>
                 </div>
                 <a href="{{ route('riwayat.show', $r->kode_reservasi) }}" class="px-6 py-3 text-sm text-white uppercase rounded-lg bg-primary-200 font-extralight">Details</a>
               </div>
