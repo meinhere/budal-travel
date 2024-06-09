@@ -2,8 +2,13 @@
     <x-slot:title>{{ $title }}</x-slot:title>
     <x-slot:background>{{ $background }}</x-slot:background>
 
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
     <script type="text/javascript"
-		src="https://app.stg.midtrans.com/snap/snap.js"
+        src="https://app.stg.midtrans.com/snap/snap.js"
     data-client-key="{{ config('services.midtrans.clientKey'); }}"></script>
 
     <div class="flex flex-wrap justify-center max-w-6xl gap-12 pt-5 mx-2 lg:flex-nowrap lg:mx-auto">
@@ -40,7 +45,6 @@
                                 let coorWisata = [[112.05815381984246, -6.900818419158597]];
                                 let namaWisata = [];
                                 
-
                                 mapboxgl.accessToken = 'pk.eyJ1IjoiY2FsbGViMjEiLCJhIjoiY2xvdXlxOWxyMGs0NjJqbzlrcHZsbjB3OCJ9.k2r8cKpCDJKIepppdBmcZQ';
                                 const map = new mapboxgl.Map({
                                     container: 'map', // container ID

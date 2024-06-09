@@ -23,7 +23,7 @@
       <div class="hidden sm:flex sm:items-center sm:ms-6">
         <x-dropdown align="right" width="48">
             <x-slot name="trigger">
-                <button @click="isOpen = !isOpen" class="inline-flex items-center gap-2 transition duration-150 ease-in-outborder-transparent ">
+                <button @click="isOpen = !isOpen" class="inline-flex items-center gap-2 transition duration-150 ease-in-outborder-transparent " id="profile-button">
                   @svg('carbon-user-avatar-filled', ['class' => 'w-12 h-12 text-primary-200'])
                   @svg('carbon-chevron-down', ['class' => 'w-6 h-6 text-primary-base', 'x-show' => '!isOpen'])
                   @svg('carbon-chevron-up', ['class' => 'w-6 h-6 text-primary-base', 'x-show' => 'isOpen'])
