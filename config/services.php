@@ -39,4 +39,8 @@ return [
         'is3ds'         => env('MIDTRANS_IS_3DS'),
     ],
 
+    'mapbox' => [
+        'access_token' => env('MAPBOX_ACCESS_TOKEN'),
+    ]
+
 ];
