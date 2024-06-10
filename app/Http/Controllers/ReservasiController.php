@@ -54,6 +54,7 @@ class ReservasiController extends Controller
             'wisata' => $wisata,
             'kota' => $kota,
             'bus' => $bus,
+            'accessToken' => config('services.mapbox.access_token'),
         ];
         
         return view('order', $data);
