@@ -4,11 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-  <script src='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js'></script>
-  <link href='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css' rel='stylesheet' />
-  <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
-  <script id="search-js" defer src="https://api.mapbox.com/search-js/v1.0.0-beta.21/web.js"></script>
   
   {{-- Fonts Style --}}
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,8 +25,6 @@
  <title>{{ $title }}</title>
 </head>
 <body class="h-full">
-  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
-  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
   <div class="min-h-full bg-center bg-cover before:fixed before:h-full before:w-full before:bg-black/30" style="background-image: url({{ $background }});">
     <div class="relative">
       <x-navbar></x-navbar>

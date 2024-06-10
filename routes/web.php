@@ -31,6 +31,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/order/{kota}/bus/{bus}', [ReservasiController::class, 'order'])->name('order');
     Route::post('/order', [ReservasiController::class, 'store'])->name('store');
 
+    // MIDTRANS PAYMENT
+    Route::get('/order/{reservasi:kode_reservasi}/success', [ReservasiController::class, 'paymentSuccess'])->name('payment.success');
+    Route::get('/order/{reservasi:kode_reservasi}/closed', [ReservasiController::class, 'paymentClosed'])->name('payment.closed');
+    Route::get('/order/{reservasi:kode_reservasi}/failed', [ReservasiController::class, 'paymentFailed'])->name('payment.failed');
+
     // PROFILE
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

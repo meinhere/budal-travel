@@ -69,12 +69,12 @@
       </div>
 
       {{-- Total & Detail --}}
-      @php $total = 0 @endphp
+      @php $total = $reservasi->bus->harga_sewa @endphp
       @foreach ($reservasi_detail as $rd)
-          @php $total += $rd->wisata->tarif_parkir + ($r->tarif_masuk == 'ya') ?  $rd->wisata->tarif_masuk_wisata : 0 @endphp
+          @php $total += $rd->wisata->tarif_parkir + ($reservasi->tarif_masuk == 'ya') ?  $rd->wisata->tarif_masuk_wisata * $reservasi->jumlah_penumpang : 0 @endphp
       @endforeach
       @php
-          $total += $reservasi->bus->harga_sewa + ($reservasi->harga_makan * $reservasi->jumlah_makan * $reservasi->jumlah_penumpang)
+          $total +=  $reservasi->harga_makan * $reservasi->jumlah_makan * $reservasi->jumlah_penumpang
       @endphp
 
       <div class="flex items-center justify-between gap-4 py-2">
@@ -87,9 +87,13 @@
       {{-- Button --}}
       <div class="flex justify-center gap-3 py-4">
         <!-- Modal toggle -->
-        <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block py-3 text-sm font-medium text-center text-white uppercase bg-blue-500 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 px-7" type="button">
-          Berikan Ulasan
-        </button>
+        @if ($reservasi->status_reservasi->kode_status == 1)
+          <button data-modal-target="default-modal" data-modal-toggle="default-modal" class="block py-3 text-sm font-medium text-center text-white uppercase bg-blue-500 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 px-7" type="button">
+            Berikan Ulasan
+          </button>
+        @elseif ($reservasi->status_reservasi->kode_status == 3)
+          <button id="payment" class="block py-3 text-sm font-medium text-center text-white uppercase bg-blue-500 rounded-lg hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 px-7">Bayar</button>
+        @endif
         
         <a href="/transaction" class="px-6 py-3 text-sm font-medium text-white uppercase rounded-lg bg-primary-200">Kembali</a>
       </div>
@@ -97,6 +101,7 @@
   </div>
 
   <!-- Main modal -->
+  @if ($reservasi->status_reservasi_kode == '1')
   <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
     <div class="relative w-full max-w-2xl max-h-full p-4">
         <!-- Modal content -->
@@ -141,6 +146,38 @@
             </form>
         </div>
     </div>
-</div>
+  </div>
   
+  @elseif ($reservasi->status_reservasi_kode == '3')
+  {{-- Integrasi Midtrans --}}
+  <script src="https://app.sandbox.midtrans.com/snap/snap.js" data-client-key="{{ config('services.midtrans.clientKey'); }}"></script>
+  <script>
+    const btnPayment = document.getElementById('payment');
+  
+    btnPayment.addEventListener('click', () => {
+      const token = "{{ $reservasi->snap_token }}";
+      const kode = "{{ $reservasi->kode_reservasi }}";
+  
+      window.snap.pay(token, {
+        onSuccess: function(result){
+            /* You may add your own implementation here */
+            window.location.href = `/order/${kode}/success`;
+        },
+        onPending: function(result){
+            /* You may add your own implementation here */
+            alert("wating your payment!"); console.log(result);
+        },
+        onError: function(result){
+            /* You may add your own implementation here */
+            window.location.href = `/order/${kode}/failed`;
+        },
+        onClose: function(){
+            /* You may add your own implementation here */
+            window.location.href = `/transaction/${kode}`;
+        }
+      });
+    });
+  </script>
+  @endif
+
 </x-layout>
