@@ -374,7 +374,7 @@
                     geometry: {
                         type: 'Point',
                         coordinates: lngLat
-                    }
+                      }
                     }
                 ]
                 }
@@ -815,7 +815,6 @@
             
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-
             confirm("Apakah anda yakin ingin memesan?");
 
             // Get Token from Midtrans
