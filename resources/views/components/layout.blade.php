@@ -21,6 +21,8 @@
  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
 
  @vite(['resources/css/app.css', 'resources/js/app.js'])
+ {{-- <link rel="stylesheet" href="{{ asset('/build/assets/app-BIGoXwAh.css') }}">
+ <script type="module" src="{{ asset('/build/assets/app-Cfs7nfZk.js') }}" defer></script> --}}
  
  <title>{{ $title }}</title>
 </head>

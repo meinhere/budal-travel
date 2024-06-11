@@ -40,7 +40,7 @@ return [
     ],
 
     'mapbox' => [
-        'access_token' => env('MAPBOX_ACCESS_TOKEN'),
-    ]
+        'accessToken' => env('MAPBOX_ACCESS_TOKEN'),
+    ],
 
 ];

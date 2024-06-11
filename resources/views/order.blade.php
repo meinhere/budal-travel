@@ -54,7 +54,7 @@
                                 </label>
                             </div>
                             <div class="flex w-full pt-4">
-                                <input type="number" name="jumlah_penumpang" id="jumlah_penumpang" class="w-3/4 border-0" placeholder="Berupa angka" required>
+                                <input type="number" name="jumlah_penumpang" id="jumlah_penumpang" class="w-3/4 border-0 focus:border-0 focus:ring-0" placeholder="Berupa angka" required>
                             </div>
                         </div>
                     </div>
@@ -67,7 +67,7 @@
                                 @click="isOpen = !isOpen" />
                             <label for="makan" class="pl-3 text-secondary-base">Makan</label>
                             <div x-show="isOpen" class="flex">
-                                <input type="text" name="jumlah_makan" id="jumlah_makan"
+                                <input type="number" name="jumlah_makan" id="jumlah_makan"
                                     class="w-3/4 border-0 focus:border-0 focus:ring-0" placeholder="Jumlah makan">
                                 <select name="harga_makan" id="harga_makan"
                                     class="w-3/4 border-0 focus:border-0 focus:ring-0">
@@ -97,7 +97,7 @@
                         </label>
                         <div class="w-full px-4 py-2 mt-4 rounded-lg bg-secondary-100 text-secondary-base">
                             <span class="block">Pilih Tanggal</span>
-                            <input type="date" name="waktu_reservasi" class="p-0 bg-transparent border-0 text-secondary-base focus:ring-0" value="{{ now()->format('Y-m-d') }}" required>
+                            <input type="date" name="waktu_reservasi" class="p-0 bg-transparent border-0 text-secondary-base focus:ring-0" required>
                         </div>
                     </div>
 
@@ -198,7 +198,6 @@
         </div>
     </div>
 
-
     {{-- Integrasi Mapbox --}}
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js'></script>
@@ -298,8 +297,8 @@
                         type: 'Feature',
                         properties: {},
                         geometry: {
-                            type: 'Point',
-                            coordinates: lngLat
+                        type: 'Point',
+                        coordinates: lngLat
                         }
                     }
                     ]
@@ -336,8 +335,8 @@
                         type: 'Feature',
                         properties: {},
                         geometry: {
-                            type: 'Point',
-                            coordinates: coordinates
+                        type: 'Point',
+                        coordinates: coordinates
                         }
                     }
                     ]
@@ -368,14 +367,16 @@
                 type: 'geojson',
                 data: {
                 type: 'FeatureCollection',
-                features: [{
+                features: [
+                    {
                     type: 'Feature',
                     properties: {},
                     geometry: {
                         type: 'Point',
                         coordinates: lngLat
+                      }
                     }
-                }]
+                ]
                 }
             },
             });
@@ -436,17 +437,16 @@
                 }
 
                 if (nearest !== -1) {
-                    visited[nearest] = true;
-                    path.push(nearest);
-                    totalDistance += minDistance;
-                    current = nearest;
+                visited[nearest] = true;
+                path.push(nearest);
+                totalDistance += minDistance;
+                current = nearest;
                 }
             }
 
             totalDistance += durations[current][0]; // Return to the initial point
             path.push(0); // Return to the initial point
             let pathCoordinates = path.map(index => coordinates[index]).filter(coordinate => coordinate !== undefined);
-            console.log(pathCoordinates);
 
             return { path: pathCoordinates, totalDistance };
         }
@@ -455,7 +455,7 @@
         async function getRoute(end) {
             var start = marker.getLngLat();
             if (coorWisata.length === 0) {
-                return;
+            return;
             }
             var coordinateString = await findShortestPath(ruteTerdekat(coorWisata), coorWisata).then((res) => res.path);
             if (coordinateString.length > 2) coordinateString = coordinateString.slice(1);
@@ -463,128 +463,89 @@
             start = marker.getLngLat();
         //   console.log(`https://api.mapbox.com/directions/v5/mapbox/driving/${coordinateString}?geometries=geojson&max_height=4&max_weight=10&access_token=${mapboxgl.accessToken}`);
             const query = await fetch(
-                `https://api.mapbox.com/directions/v5/mapbox/driving/${coordinateString}?geometries=geojson&max_height=4&max_weight=10&access_token=${mapboxgl.accessToken}`,
-                { method: 'GET' }
+            `https://api.mapbox.com/directions/v5/mapbox/driving/${coordinateString}?geometries=geojson&max_height=4&max_weight=10&access_token=${mapboxgl.accessToken}`,
+            { method: 'GET' }
             );
             const json = await query.json();
             const data = json.routes[0];
             const route = data.geometry.coordinates;
+        //   console.log(route);
             const geojson = {
-                type: 'Feature',
-                properties: {},
-                geometry: {
-                    type: 'LineString',
-                    coordinates: route.reverse()
-                }
+            type: 'Feature',
+            properties: {},
+            geometry: {
+                type: 'LineString',
+                coordinates: route
+            }
             };
             // if the route already exists on the map, we'll reset it using setData
             if (map.getSource('route')) {
-                map.getSource('route').setData(geojson);
+            map.getSource('route').setData(geojson);
             }
             // otherwise, we'll make a new request
             else {
-                map.addLayer({
-                    id: 'route',
-                    type: 'line',
-                    source: {
-                        type: 'geojson',
-                        data: geojson
-                    },
-                    layout: {
-                        'line-join': 'round',
-                        'line-cap': 'round'
-                    },
-                    paint: {
-                        'line-color': '#3887be',
-                        'line-width': 5,
-                        'line-opacity': 0.75
-                    }
-                });
-            };
+            map.addLayer({
+                id: 'route',
+                type: 'line',
+                source: {
+                type: 'geojson',
+                data: geojson
+                },
+                layout: {
+                'line-join': 'round',
+                'line-cap': 'round'
+                },
+                paint: {
+                'line-color': '#3887be',
+                'line-width': 5,
+                'line-opacity': 0.75
+                }
+            });
+            }
+
 
             // add turn instructions here at the end`
             for (let i=1; i < 5; i++) {
-                if(map.getLayer('end' + i)) {
-                    map.removeLayer('end' + i);
-                    map.removeSource('end' + i);
-                } else if(map.getLayer('routearrows')) {
-                    map.removeLayer('routearrows');
-                    map.removeSource('routearrows');
-                }
+            if(map.getLayer('end' + i)) {
+                map.removeLayer('end' + i);
+                map.removeSource('end' + i);
+            }
             }
 
+            
             $(coorWisata).each((index, coor) => {                                      
                 if (index) {
-                    map.addLayer({
-                        id: 'end' + index,
-                        type: 'circle',
-                        source: {
-                        type: 'geojson',
-                        data: {
-                            type: 'FeatureCollection',
-                            features: [
-                            {
-                                type: 'Feature',
-                                properties: {
-                                    'title': 'Wisata ' + index,
-                                    'description': namaWisata[index]
-                                },
-                                geometry: {
-                                    type: 'Point',
-                                    coordinates: coor
-                                }
-                            }
-                            ]
-                        }
-                        },
-                        paint: {
-                            'circle-radius': 10,
-                            'circle-color': 'yellow'
-                        }
-                    });
-                }
-            });
-
-            map.addLayer({
-                id: 'routearrows',
-                type: 'symbol',
-                source: {
+                map.addLayer({
+                    id: 'end' + index,
+                    type: 'circle',
+                    source: {
                     type: 'geojson',
-                    data: geojson
-                },
-                layout: {
-                    'symbol-placement': 'line',
-                    'text-field': '▶',
-                    'text-size': [
-                        'interpolate',
-                        ['linear'],
-                        ['zoom'],
-                        12,
-                        24,
-                        22,
-                        60
-                    ],
-                    'symbol-spacing': [
-                        'interpolate',
-                        ['linear'],
-                        ['zoom'],
-                        12,
-                        30,
-                        22,
-                        160
-                    ],
-                    'text-keep-upright': false
-                },
-                paint: {
-                    'text-color': '#3887be',
-                    'text-halo-color': 'hsl(55, 11%, 96%)',
-                    'text-halo-width': 3
+                    data: {
+                        type: 'FeatureCollection',
+                        features: [
+                        {
+                            type: 'Feature',
+                            properties: {
+                                'title': 'Wisata ' + index,
+                                'description': namaWisata[index]
+                            },
+                            geometry: {
+                            type: 'Point',
+                            coordinates: coor
+                            }
+                        }
+                        ]
+                    }
+                    },
+                    paint: {
+                    'circle-radius': 10,
+                    'circle-color': 'yellow'
+                    }
+                });
                 }
             });
             // add turn instructions here at the end
         }
-
-
 
     </script>
 
@@ -823,7 +784,7 @@
             modal.hide();
         });
 
-        document.addEventListener('input', function() {
+        document.addEventListener('input', function (e) {
             const maxPenumpang = {{ $bus->jumlah_kursi }};
             const value = parseInt(jumlah_penumpang.value);
             if (value > maxPenumpang) {
@@ -832,6 +793,9 @@
             } else {
                 total_penumpang = value || 0;
             }
+
+            console.log(e.target);
+
             updateTotal();
         });
 
@@ -851,13 +815,6 @@
             
         form.addEventListener('submit', async function(e) {
             e.preventDefault();
-            
-            // Check if the form is valid
-            if (!form.checkValidity()) {
-                alert(form.validationMessage)
-                return;
-            }
-                
             confirm("Apakah anda yakin ingin memesan?");
 
             // Get Token from Midtrans
