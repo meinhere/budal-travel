@@ -34,6 +34,6 @@ class DatabaseSeeder extends Seeder
             WisataSeeder::class,
         ]);
         
-        // ReservasiDetail::factory(40)->recycle(Reservasi::factory(5)->create())->create();
+        ReservasiDetail::factory(40)->recycle(Reservasi::factory(20)->create())->create();
     }
 }
