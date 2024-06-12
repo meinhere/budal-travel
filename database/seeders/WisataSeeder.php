@@ -599,27 +599,6 @@ class WisataSeeder extends Seeder
         ]);
 
         // wisata di jawa tengah
-        Wisata::create([
-            'kota_kode' => '3374',
-            'nama_wisata' => 'Taman Bunga Celosia Semarang',
-            'alamat_wisata' => 'Banyukuning, Bandungan, Semarang Regency, Central Java 50614',
-            'jam_buka' => '08:00',
-            'jam_tutup' => '16:00',
-            'tarif_masuk_wisata' => 20000,
-            'tarif_parkir' => 15000,
-            'titik_lokasi' => '-7.225358,110.3417579'
-        ]);
-
-        Wisata::create([
-            'kota_kode' => '3374',
-            'nama_wisata' => 'Museum Lawang Sewu Semarang',
-            'alamat_wisata' => 'Jl. Pemuda No.160, Sekayu, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50132',
-            'jam_buka' => '08:00',
-            'jam_tutup' => '20:00',
-            'tarif_masuk_wisata' => 20000,
-            'tarif_parkir' => 10000,
-            'titik_lokasi' => '-6.9839838,110.4095893'
-        ]);
 
         Wisata::create([
             'kota_kode' => '3313',
@@ -949,28 +928,6 @@ class WisataSeeder extends Seeder
             'tarif_masuk_wisata' => 50000,
             'tarif_parkir' => 0, 
             'titik_lokasi' => '-7.454488740307554, 110.43957051414229'
-        ]);
-
-        Wisata::create([
-            'kota_kode' => '3374',
-            'nama_wisata' => 'Taman Bunga Celosia Semarang',
-            'alamat_wisata' => 'Banyukuning, Bandungan, Semarang Regency, Central Java 50614',
-            'jam_buka' => '08:00',
-            'jam_tutup' => '16:00',
-            'tarif_masuk_wisata' => 20000,
-            'tarif_parkir' => 15000,
-            'titik_lokasi' => '-7.225358,110.3417579'
-        ]);
-
-        Wisata::create([
-            'kota_kode' => '3374',
-            'nama_wisata' => 'Museum Lawang Sewu Semarang',
-            'alamat_wisata' => 'Jl. Pemuda No.160, Sekayu, Kec. Semarang Tengah, Kota Semarang, Jawa Tengah 50132',
-            'jam_buka' => '08:00',
-            'jam_tutup' => '20:00',
-            'tarif_masuk_wisata' => 20000,
-            'tarif_parkir' => 10000,
-            'titik_lokasi' => '-6.9839838,110.4095893'
         ]);
 
 
