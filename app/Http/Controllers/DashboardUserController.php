@@ -20,7 +20,7 @@ class DashboardUserController extends Controller
     {
         $data = [
             'title' => "Kelola Users - Dashboard",
-            'background' => '/storage/img/bg/image-login-page.jpg',
+            'background' => asset('/storage/img/bg/image-login-page.jpg'),
             'users' => Login::with(['pelanggan', 'karyawan'])->paginate(10),
             'count' => Login::count(),
         ];
@@ -35,7 +35,7 @@ class DashboardUserController extends Controller
     {
         $data = [
             'title' => "Tambah User - Dashboard",
-            'background' => '/storage/img/bg/image-login-page.jpg',
+            'background' => asset('/storage/img/bg/image-login-page.jpg'),
             'role' => Role::all()->toJson(),
             'jenis_kelamin' => JenisKelamin::all()
         ];
@@ -94,7 +94,7 @@ class DashboardUserController extends Controller
 
         $data = [
             'title' => "Edit User - Dashboard",
-            'background' => '/storage/img/bg/image-login-page.jpg',
+            'background' => asset('/storage/img/bg/image-login-page.jpg'),
             'role' => Role::all()->toJson(),
             'jenis_kelamin' => JenisKelamin::all(),
             'user' => $user,

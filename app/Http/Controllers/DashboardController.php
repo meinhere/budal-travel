@@ -37,7 +37,7 @@ class DashboardController extends Controller
     public function index() {
         $data = [
             'title' => "Overview - Dashboard",
-            'background' => '/storage/img/bg/image-login-page.jpg',
+            'background' => asset('/storage/img/bg/image-login-page.jpg'),
             'count_bus' => Bus::count(),
             'count_user' => Login::count(),
             'count_wisata' => Wisata::count(),

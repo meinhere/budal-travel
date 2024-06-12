@@ -14,7 +14,10 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('/storage/img/logo.svg') }}">
 
         <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+        <link rel="stylesheet" href="{{ asset('/build/assets/app-BIGoXwAh.css') }}">
+        <script type="module" src="{{ asset('/build/assets/app-Da4RN6ke.js') }}" defer></script>
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.0/dist/cdn.min.js"></script>
 
         <title>{{ $title }}</title>
     </head>

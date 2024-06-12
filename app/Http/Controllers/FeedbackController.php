@@ -14,7 +14,7 @@ class FeedbackController extends Controller
     {
         $data = [
             'title' => "Ulasan Transaksi" - $id,
-            'background' => '/storage/img/bg/background-landing.jpg',
+            'background' => asset('/storage/img/bg/background-landing.jpg'),
         ];
 
         return view('feedback.create', $data);

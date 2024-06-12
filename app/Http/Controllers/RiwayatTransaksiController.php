@@ -14,8 +14,8 @@ class RiwayatTransaksiController extends Controller
     {
         $data = [
             'title' => "Riwayat Transaksi",
-            'background' => '/storage/img/bg/background-landing.jpg',
-            'card_background' => '/storage/img/bg/background-landing2.jpg',
+            'background' => asset('/storage/img/bg/background-landing.jpg'),
+            'card_background' => asset('/storage/img/bg/background-landing2.jpg'),
             'reservasi' => Reservasi::with(['reservasi_detail'])->where('login_id', auth()->user()->id_login)->paginate(3),
         ];
 
@@ -29,7 +29,7 @@ class RiwayatTransaksiController extends Controller
     {
         $data = [
             'title' => "Detail Riwayat Transaksi",
-            'background' => '/storage/img/bg/background-landing.jpg',
+            'background' => asset('/storage/img/bg/background-landing.jpg'),
             'reservasi' => $reservasi,
             'reservasi_detail' => ReservasiDetail::with(['wisata'])->where('reservasi_kode', $reservasi->kode_reservasi)->get(),
         ];

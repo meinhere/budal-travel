@@ -16,7 +16,7 @@ class DashboardBusController extends Controller
     {
         $data = [
             'title' => "Kelola Bus - Dashboard",
-            'background' => '/storage/img/bg/image-login-page.jpg',
+            'background' => asset('/storage/img/bg/image-login-page.jpg'),
             'bus' => Bus::with(['kategori_bus', 'status_bus'])->paginate(10),
             'count' => Bus::count()
         ];
@@ -31,7 +31,7 @@ class DashboardBusController extends Controller
     {
         $data = [
             'title' => "Tambah Bus - Dashboard",
-            'background' => '/storage/img/bg/image-login-page.jpg',
+            'background' => asset('/storage/img/bg/image-login-page.jpg'),
             'kategori' => KategoriBus::all(),
             'status_bus' => StatusBus::all()
         ];
@@ -65,7 +65,7 @@ class DashboardBusController extends Controller
     {
         $data = [
             'title' => "Edit Bus - Dashboard",
-            'background' => '/storage/img/bg/image-login-page.jpg',
+            'background' => asset('/storage/img/bg/image-login-page.jpg'),
             'kategori' => KategoriBus::all(),
             'status_bus' => StatusBus::all(),
             'bus' => $bus

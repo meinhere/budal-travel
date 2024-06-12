@@ -297,8 +297,8 @@
                         type: 'Feature',
                         properties: {},
                         geometry: {
-                        type: 'Point',
-                        coordinates: lngLat
+                            type: 'Point',
+                            coordinates: lngLat
                         }
                     }
                     ]
@@ -335,8 +335,8 @@
                         type: 'Feature',
                         properties: {},
                         geometry: {
-                        type: 'Point',
-                        coordinates: coordinates
+                            type: 'Point',
+                            coordinates: coordinates
                         }
                     }
                     ]
@@ -396,18 +396,17 @@
                     curb += ';curb';
                 }
                 const coordinateString = coordinates.map(coordinate => coordinate.join(',')).join(';');
-                // console.log(`https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${startCoor.lng},${startCoor.lat};${coordinateString}?approaches=curb${curb}&access_token=${mapboxgl.accessToken}`);
                 xhr.open('GET', `https://api.mapbox.com/directions-matrix/v1/mapbox/driving/${startCoor.lng},${startCoor.lat};${coordinateString}?approaches=curb${curb}&access_token=${mapboxgl.accessToken}`);
                 xhr.send();
                 xhr.onload = function() {
                     if (xhr.status != 200) {
-                    alert(`Error ${xhr.status}: ${xhr.statusText}`);
+                        alert(`Error ${xhr.status}: ${xhr.statusText}`);
                     } else {
-                    var response = JSON.parse(xhr.response);
-                    var durations = response.durations;
-                    // console.log(response);
-                    //   console.log(findShortestPath(durations, coordinates).path);
-                    resolve(durations);
+                        var response = JSON.parse(xhr.response);
+                        var durations = response.durations;
+                        // console.log(response);
+                        //   console.log(findShortestPath(durations, coordinates).path);
+                        resolve(durations);
                     }
                 };
             })
@@ -437,10 +436,10 @@
                 }
 
                 if (nearest !== -1) {
-                visited[nearest] = true;
-                path.push(nearest);
-                totalDistance += minDistance;
-                current = nearest;
+                    visited[nearest] = true;
+                    path.push(nearest);
+                    totalDistance += minDistance;
+                    current = nearest;
                 }
             }
 
@@ -455,28 +454,27 @@
         async function getRoute(end) {
             var start = marker.getLngLat();
             if (coorWisata.length === 0) {
-            return;
+                return;
             }
             var coordinateString = await findShortestPath(ruteTerdekat(coorWisata), coorWisata).then((res) => res.path);
             if (coordinateString.length > 2) coordinateString = coordinateString.slice(1);
             coordinateString = coordinateString.map(coordinate => coordinate.join(',')).join(';');
             start = marker.getLngLat();
-        //   console.log(`https://api.mapbox.com/directions/v5/mapbox/driving/${coordinateString}?geometries=geojson&max_height=4&max_weight=10&access_token=${mapboxgl.accessToken}`);
             const query = await fetch(
-            `https://api.mapbox.com/directions/v5/mapbox/driving/${coordinateString}?geometries=geojson&max_height=4&max_weight=10&access_token=${mapboxgl.accessToken}`,
-            { method: 'GET' }
+                `https://api.mapbox.com/directions/v5/mapbox/driving/${coordinateString}?geometries=geojson&max_height=4&max_weight=10&access_token=${mapboxgl.accessToken}`,
+                { method: 'GET' }
             );
             const json = await query.json();
             const data = json.routes[0];
             const route = data.geometry.coordinates;
         //   console.log(route);
             const geojson = {
-            type: 'Feature',
-            properties: {},
-            geometry: {
-                type: 'LineString',
-                coordinates: route
-            }
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                    type: 'LineString',
+                    coordinates: route.reverse()
+                }
             };
             // if the route already exists on the map, we'll reset it using setData
             if (map.getSource('route')) {
@@ -488,17 +486,17 @@
                 id: 'route',
                 type: 'line',
                 source: {
-                type: 'geojson',
-                data: geojson
+                    type: 'geojson',
+                    data: geojson
                 },
                 layout: {
-                'line-join': 'round',
-                'line-cap': 'round'
+                    'line-join': 'round',
+                    'line-cap': 'round'
                 },
                 paint: {
-                'line-color': '#3887be',
-                'line-width': 5,
-                'line-opacity': 0.75
+                    'line-color': '#3887be',
+                    'line-width': 5,
+                    'line-opacity': 0.75
                 }
             });
             }
@@ -506,42 +504,81 @@
 
             // add turn instructions here at the end`
             for (let i=1; i < 5; i++) {
-            if(map.getLayer('end' + i)) {
-                map.removeLayer('end' + i);
-                map.removeSource('end' + i);
-            }
+                if(map.getLayer('end' + i)) {
+                    map.removeLayer('end' + i);
+                    map.removeSource('end' + i);
+                } else if(map.getLayer('routearrows')) {
+                    map.removeLayer('routearrows');
+                    map.removeSource('routearrows');
+                }
             }
 
             
             $(coorWisata).each((index, coor) => {                                      
                 if (index) {
-                map.addLayer({
-                    id: 'end' + index,
-                    type: 'circle',
-                    source: {
-                    type: 'geojson',
-                    data: {
-                        type: 'FeatureCollection',
-                        features: [
-                        {
-                            type: 'Feature',
-                            properties: {
-                                'title': 'Wisata ' + index,
-                                'description': namaWisata[index]
-                            },
-                            geometry: {
-                            type: 'Point',
-                            coordinates: coor
+                    map.addLayer({
+                        id: 'end' + index,
+                        type: 'circle',
+                        source: {
+                        type: 'geojson',
+                        data: {
+                            type: 'FeatureCollection',
+                            features: [
+                            {
+                                type: 'Feature',
+                                properties: {
+                                    'title': 'Wisata ' + index,
+                                    'description': namaWisata[index]
+                                },
+                                geometry: {
+                                    type: 'Point',
+                                    coordinates: coor
+                                }
                             }
+                            ]
                         }
-                        ]
-                    }
-                    },
-                    paint: {
-                    'circle-radius': 10,
-                    'circle-color': 'yellow'
-                    }
-                });
+                        },
+                        paint: {
+                            'circle-radius': 10,
+                            'circle-color': 'yellow'
+                        }
+                    });
+                }
+            });
+            map.addLayer({
+                id: 'routearrows',
+                type: 'symbol',
+                source: {
+                    type: 'geojson',
+                    data: geojson
+                },
+                layout: {
+                    'symbol-placement': 'line',
+                    'text-field': '▶',
+                    'text-size': [
+                        'interpolate',
+                        ['linear'],
+                        ['zoom'],
+                        12,
+                        24,
+                        22,
+                        60
+                    ],
+                    'symbol-spacing': [
+                        'interpolate',
+                        ['linear'],
+                        ['zoom'],
+                        12,
+                        30,
+                        22,
+                        160
+                    ],
+                    'text-keep-upright': false
+                },
+                paint: {
+                    'text-color': '#3887be',
+                    'text-halo-color': 'hsl(55, 11%, 96%)',
+                    'text-halo-width': 3
                 }
             });
             // add turn instructions here at the end
@@ -763,7 +800,8 @@
                 updateCheckboxState();
 
                 // Change coordinate to the selected wisata
-                const coordinates = map._markers[0]._lngLat;
+                const coordinates = map.markers[0].lngLat;
+                // console.log(coordinates);
                 gantiTempat(coordinates);
                 ruteTerdekat(coorWisata);
                 getRoute(coordinates);
@@ -793,8 +831,6 @@
             } else {
                 total_penumpang = value || 0;
             }
-
-            console.log(e.target);
 
             updateTotal();
         });
