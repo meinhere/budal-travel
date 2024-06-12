@@ -15,7 +15,7 @@ class DashboardWisataController extends Controller
     {
         $data = [
             'title' => "Kelola Wisata - Dashboard",
-            'background' => '/storage/img/bg/image-login-page.jpg',
+            'background' => asset('/storage/img/bg/image-login-page.jpg'),
             'wisata' => Wisata::with(['kota'])->paginate(10),
             'count' => Wisata::count()
         ];
@@ -30,7 +30,7 @@ class DashboardWisataController extends Controller
     {
         $data = [
             'title' => "Tambah Wisata - Dashboard",
-            'background' => '/storage/img/bg/image-login-page.jpg',
+            'background' => asset('/storage/img/bg/image-login-page.jpg'),
             'kota' => Kota::all(),
         ];
         
@@ -69,7 +69,7 @@ class DashboardWisataController extends Controller
     {
         $data = [
             'title' => "Edit Wisata - Dashboard",
-            'background' => '/storage/img/bg/image-login-page.jpg',
+            'background' => asset('/storage/img/bg/image-login-page.jpg'),
             'kota' => Kota::all(),
             'wisata' => $wisata
         ];

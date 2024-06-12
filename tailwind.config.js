@@ -19,13 +19,6 @@ export default {
             fontFamily: {
                 sans: ["Poppins", ...defaultTheme.fontFamily.sans],
             },
-            backgroundImage: {
-                "landing-page": "url('/public/img/bg/background-landing.jpg')",
-                "landing-page-2":
-                    "url('/public/img/bg/background-landing2.jpg')",
-                "landing-page-detail":
-                    "url('/public/img/bg/background-detail.jpg')",
-            },
             colors: {
                 "primary-base": "#FFE5F1",
                 "primary-300": "#FF62BD",

@@ -38,12 +38,12 @@
             @foreach ($reservasi as $r)
 
             {{-- Total & Detail --}}
-            @php $total = 0 @endphp
+            @php $total = $r->bus->harga_sewa @endphp
             @foreach ($r->reservasi_detail as $rd)
-                @php $total += $rd->wisata->tarif_parkir + ($r->tarif_masuk == 'ya') ?  $rd->wisata->tarif_masuk_wisata : 0 @endphp
+                @php $total += $rd->wisata->tarif_parkir + ($r->tarif_masuk == 'ya') ?  $rd->wisata->tarif_masuk_wisata * $r->jumlah_penumpang : 0 @endphp
             @endforeach
             @php
-                $total += $r->bus->harga_sewa + ($r->harga_makan * $r->jumlah_makan * $r->jumlah_penumpang)
+                $total += $r->harga_makan * $r->jumlah_makan * $r->jumlah_penumpang
             @endphp
 
             <tr>
@@ -57,9 +57,9 @@
           </tbody>
         </table>
 
-				{{ $reservasi->links() }}
-
-        <button class="block px-8 py-3 mx-auto mt-6 text-sm font-semibold bg-primary-200 text-secondary-base">Lihat Lebih Banyak</button>
+		    <div class="w-full mx-auto mt-8 text-sm md:w-3/4 lg:w-2/3">
+          {{ $reservasi->links() }}
+        </div>
       </div>
   </div>
 </x-app-layout>

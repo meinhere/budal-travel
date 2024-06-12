@@ -24,7 +24,7 @@ class ReservasiController extends Controller
     public function index() {
         $data = [
             'title' => "Halaman Home",
-            'background' => '/storage/img/bg/background-landing.jpg',
+            'background' => asset('/storage/img/bg/background-landing.jpg'),
             'kota' => Kota::with('provinsi')->get(),
         ];
         return view('home', $data);
@@ -33,7 +33,7 @@ class ReservasiController extends Controller
     public function show(Kota $kota) {
         $data = [
             'title' => "Halaman Show",
-            'background' => '/storage/img/bg/background-detail.jpg',
+            'background' => asset('/storage/img/bg/background-detail.jpg'),
             'kota' => Kota::with('provinsi')->get(),
             'kode_kota' => $kota->kode_kota,
             'bus' => Bus::with([
@@ -50,7 +50,7 @@ class ReservasiController extends Controller
         $wisata = Wisata::where('kota_kode', $kota->kode_kota)->get();
         $data = [
             'title' => "Halaman Order",
-            'background' => '/storage/img/bg/background-detail.jpg',
+            'background' => asset('/storage/img/bg/background-detail.jpg'),
             'wisata' => $wisata,
             'kota' => $kota,
             'bus' => $bus,
