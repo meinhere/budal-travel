@@ -55,18 +55,18 @@
             <form id="form-reservasi" class="flex gap-6 items-center" action="" method="GET">
                 <label for="bulan">Bulan</label>
                 <select name="bulan" id="bulan" class="border border-gray-300 rounded-md">
-                    <option value="0">Januari</option>
-                    <option value="1">Februari</option>
-                    <option value="2">Maret</option>
-                    <option value="3">April</option>
-                    <option value="4">Mei</option>
-                    <option value="5">Juni</option>
-                    <option value="6">Juli</option>
-                    <option value="7">Agustus</option>
-                    <option value="8">September</option>
-                    <option value="9">Oktober</option>
-                    <option value="10">November</option>
-                    <option value="11">Desember</option>
+                    <option value="0" {{ now()->format('m') == '01' ? 'selected' : '' }}>Januari</option>
+                    <option value="1" {{ now()->format('m') == '02' ? 'selected' : '' }}>Februari</option>
+                    <option value="2" {{ now()->format('m') == '03' ? 'selected' : '' }}>Maret</option>
+                    <option value="3" {{ now()->format('m') == '04' ? 'selected' : '' }}>April</option>
+                    <option value="4" {{ now()->format('m') == '05' ? 'selected' : '' }}>Mei</option>
+                    <option value="5" {{ now()->format('m') == '06' ? 'selected' : '' }}>Juni</option>
+                    <option value="6" {{ now()->format('m') == '07' ? 'selected' : '' }}>Juli</option>
+                    <option value="7" {{ now()->format('m') == '08' ? 'selected' : '' }}>Agustus</option>
+                    <option value="8" {{ now()->format('m') == '09' ? 'selected' : '' }}>September</option>
+                    <option value="9" {{ now()->format('m') == '10' ? 'selected' : '' }}>Oktober</option>
+                    <option value="10" {{ now()->format('m') == '11' ? 'selected' : '' }}>November</option>
+                    <option value="11" {{ now()->format('m') == '12' ? 'selected' : '' }}>Desember</option>
                 </select>
                 <label for="tahun">Tahun</label>
                 <input type="number" name="tahun" id="tahun" min="2000" max="2099" step="1" value="2024" class="border border-gray-300 rounded-md">
@@ -109,7 +109,7 @@
             // }
 
             // mengisi data per hari per bulan
-            for (let i = 0; i < bulan.length; i++) {
+            for (let i = 0; i < bulanReservasi.length; i++) {
 
                 if (bulanReservasi[i] == inputBulan && tahunReservasi[i] == inputTahun) {
                     hariDipilih.push(hari[hariReservasi[i] % 7]);

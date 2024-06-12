@@ -666,7 +666,7 @@
             const totalMakan = sumTotalMakan();
             const totalTarifMasuk = sumTotalTarifMasuk();
             const totalTarifParkir = sumTotalTarifParkir();
-            let totalHarga = data_bus.harga_sewa + totalTarifParkir;
+            let totalHarga = parseInt(data_bus.harga_sewa) + totalTarifParkir;
             
             if (makananCheckbox.checked) {
                 const liMakan = document.querySelector(`li[data-id="makan"]`);
@@ -740,8 +740,8 @@
                     let li = document.createElement('li');
                     li.classList.add('text-sm');
                     li.dataset.id = id;
-                    total_wisata_tarif.push(data_wisata[id].tarif_masuk_wisata);
-                    total_parkir_wisata.push(data_wisata[id].tarif_parkir);
+                    total_wisata_tarif.push(parseInt(data_wisata[id].tarif_masuk_wisata));
+                    total_parkir_wisata.push(parseInt(data_wisata[id].tarif_parkir));
                     li.innerHTML = `
                                 ${data_wisata[id].nama_wisata}<span data-modal-target="${data_wisata[id].kode_wisata}" data-modal-toggle="${data_wisata[id].kode_wisata}"
                                 class="text-blue-500 text-[10px] hover:underline cursor-pointer"> detail</span>`;

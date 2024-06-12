@@ -19,11 +19,11 @@ class DashboardController extends Controller
         ];
 
         foreach ($reservasi as $r) {
-            $total = 0; 
+            $total = $r->bus->harga_sewa; 
             foreach ($r->reservasi_detail as $rd) {
-                $total += $rd->wisata->tarif_parkir + ($r->tarif_masuk == 'ya') ? $rd->wisata->tarif_masuk_wisata : 0;
+                $total += $rd->wisata->tarif_parkir + ($r->tarif_masuk == 'ya') ? $rd->wisata->tarif_masuk_wisata * $r->jumlah_penumpang : 0;
             }
-            $total += $r->bus->harga_sewa + ($r->harga_makan * $r->jumlah_makan * $r->jumlah_penumpang);
+            $total += $r->harga_makan * $r->jumlah_makan * $r->jumlah_penumpang;
 
             if ($r->status_reservasi_kode == '1') $result['success'] += $total;
             else $result['pending'] += $total;
@@ -52,7 +52,7 @@ class DashboardController extends Controller
         $data = [
             'title' => "Detail Transaksi - Dashboard",
             'pendapatan' => $this->sum_total(),
-            'reservasi' => Reservasi::with(['reservasi_detail' => fn ($q) => $q->with('wisata'), 'login' => fn ($q) => $q->with('pelanggan'), 'kota'])->paginate(3),
+            'reservasi' => Reservasi::with(['reservasi_detail' => fn ($q) => $q->with('wisata'), 'login' => fn ($q) => $q->with('pelanggan'), 'kota'])->paginate(4),
         ];
         
         return view('dashboard.transaction.index', $data);
@@ -60,7 +60,7 @@ class DashboardController extends Controller
     
     public function show($status) {
 
-        if ($status == "success") $reservasi = Reservasi::with(['reservasi_detail' => fn ($q) => $q->with('wisata'), 'login' => fn ($q) => $q->with('pelanggan'), 'kota'])->where('status_reservasi_kode', '1')->paginate(3);
+        if ($status == "success") $reservasi = Reservasi::with(['reservasi_detail' => fn ($q) => $q->with('wisata'), 'login' => fn ($q) => $q->with('pelanggan'), 'kota'])->where('status_reservasi_kode', '1')->paginate(4);
         else $reservasi = Reservasi::with(['reservasi_detail' => fn ($q) => $q->with('wisata'), 'login' => fn ($q) => $q->with('pelanggan'), 'kota'])->where('status_reservasi_kode', '2')->orWhere('status_reservasi_kode', '3')->paginate(3);
 
         $data = [
