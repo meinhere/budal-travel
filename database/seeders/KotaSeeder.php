@@ -127,12 +127,6 @@ class KotaSeeder extends Seeder
         // daftar kota di jawa tengah
         Kota::create([
             'provinsi_kode' => '33', 
-            'kode_kota' => '3374',
-            'nama_kota' => 'Semarang',
-        ]);
-
-        Kota::create([
-            'provinsi_kode' => '33', 
             'kode_kota' => '3308',
             'nama_kota' => 'Magelang',
         ]);
